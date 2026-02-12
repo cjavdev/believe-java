@@ -5,7 +5,9 @@ package com.believe.api.services.blocking
 import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
+import com.believe.api.errors.BelieveInvalidDataException
 import com.believe.api.models.webhooks.RegisteredWebhook
+import com.believe.api.models.webhooks.UnwrapWebhookEvent
 import com.believe.api.models.webhooks.WebhookCreateParams
 import com.believe.api.models.webhooks.WebhookCreateResponse
 import com.believe.api.models.webhooks.WebhookDeleteParams
@@ -176,6 +178,13 @@ interface WebhookService {
         params: WebhookTriggerEventParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookTriggerEventResponse
+
+    /**
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @throws BelieveInvalidDataException if the body could not be parsed.
+     */
+    fun unwrap(body: String): UnwrapWebhookEvent
 
     /** A view of [WebhookService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {

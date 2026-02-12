@@ -4,6 +4,7 @@ package com.believe.api.services.async
 
 import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
+import com.believe.api.core.http.Headers
 import com.believe.api.models.webhooks.WebhookCreateParams
 import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import java.time.OffsetDateTime
@@ -126,5 +127,22 @@ internal class WebhookServiceAsyncTest {
 
         val response = responseFuture.get()
         response.validate()
+    }
+
+    @Test
+    fun unwrap() {
+        val client =
+            BelieveOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val webhookServiceAsync = client.webhooks()
+
+        val payload =
+            "{\"created_at\":\"2019-12-27T18:11:19.117Z\",\"data\":{\"away_score\":0,\"away_team_id\":\"away_team_id\",\"completed_at\":\"2019-12-27T18:11:19.117Z\",\"home_score\":0,\"home_team_id\":\"home_team_id\",\"match_id\":\"match_id\",\"match_type\":\"league\",\"result\":\"home_win\",\"ted_post_match_quote\":\"ted_post_match_quote\",\"lesson_learned\":\"lesson_learned\",\"man_of_the_match\":\"man_of_the_match\"},\"event_id\":\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\",\"event_type\":\"match.completed\"}"
+        val webhookSecret = "whsec_c2VjcmV0Cg=="
+        val headers = Headers.builder().build()
+
+        webhookServiceAsync.unwrap(payload).validate()
     }
 }
