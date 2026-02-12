@@ -16,7 +16,9 @@ import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.core.http.json
 import com.believe.api.core.http.parseable
 import com.believe.api.core.prepare
+import com.believe.api.errors.BelieveInvalidDataException
 import com.believe.api.models.webhooks.RegisteredWebhook
+import com.believe.api.models.webhooks.UnwrapWebhookEvent
 import com.believe.api.models.webhooks.WebhookCreateParams
 import com.believe.api.models.webhooks.WebhookCreateResponse
 import com.believe.api.models.webhooks.WebhookDeleteParams
@@ -25,6 +27,7 @@ import com.believe.api.models.webhooks.WebhookListParams
 import com.believe.api.models.webhooks.WebhookRetrieveParams
 import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import com.believe.api.models.webhooks.WebhookTriggerEventResponse
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -74,6 +77,13 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     ): WebhookTriggerEventResponse =
         // post /webhooks/trigger
         withRawResponse().triggerEvent(params, requestOptions).parse()
+
+    override fun unwrap(body: String): UnwrapWebhookEvent =
+        try {
+            clientOptions.jsonMapper.readValue(body, jacksonTypeRef<UnwrapWebhookEvent>())
+        } catch (e: Exception) {
+            throw BelieveInvalidDataException("Error parsing body", e)
+        }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         WebhookService.WithRawResponse {
