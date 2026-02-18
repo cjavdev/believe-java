@@ -126,11 +126,7 @@ internal class WebhookServiceTest {
 
     @Test
     fun unwrap() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val payload =
