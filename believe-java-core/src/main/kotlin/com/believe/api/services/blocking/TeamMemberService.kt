@@ -75,6 +75,62 @@ interface TeamMemberService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TeamMemberCreateResponse
 
+    /** @see create */
+    fun create(
+        member: TeamMemberCreateParams.Member,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TeamMemberCreateResponse =
+        create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
+
+    /** @see create */
+    fun create(member: TeamMemberCreateParams.Member): TeamMemberCreateResponse =
+        create(member, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        player: TeamMemberCreateParams.Member.Player,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TeamMemberCreateResponse =
+        create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
+
+    /** @see create */
+    fun create(player: TeamMemberCreateParams.Member.Player): TeamMemberCreateResponse =
+        create(player, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        coach: TeamMemberCreateParams.Member.Coach,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TeamMemberCreateResponse =
+        create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
+
+    /** @see create */
+    fun create(coach: TeamMemberCreateParams.Member.Coach): TeamMemberCreateResponse =
+        create(coach, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TeamMemberCreateResponse =
+        create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
+
+    /** @see create */
+    fun create(medicalStaff: TeamMemberCreateParams.Member.MedicalStaff): TeamMemberCreateResponse =
+        create(medicalStaff, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TeamMemberCreateResponse =
+        create(TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager), requestOptions)
+
+    /** @see create */
+    fun create(
+        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
+    ): TeamMemberCreateResponse = create(equipmentManager, RequestOptions.none())
+
     /**
      * Retrieve detailed information about a specific team member.
      *
@@ -274,6 +330,80 @@ interface TeamMemberService {
             params: TeamMemberCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TeamMemberCreateResponse>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            member: TeamMemberCreateParams.Member,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            member: TeamMemberCreateParams.Member
+        ): HttpResponseFor<TeamMemberCreateResponse> = create(member, RequestOptions.none())
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            player: TeamMemberCreateParams.Member.Player,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            player: TeamMemberCreateParams.Member.Player
+        ): HttpResponseFor<TeamMemberCreateResponse> = create(player, RequestOptions.none())
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            coach: TeamMemberCreateParams.Member.Coach,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            coach: TeamMemberCreateParams.Member.Coach
+        ): HttpResponseFor<TeamMemberCreateResponse> = create(coach, RequestOptions.none())
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff
+        ): HttpResponseFor<TeamMemberCreateResponse> = create(medicalStaff, RequestOptions.none())
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(
+                TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
+        ): HttpResponseFor<TeamMemberCreateResponse> =
+            create(equipmentManager, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /team-members/{member_id}`, but is otherwise the

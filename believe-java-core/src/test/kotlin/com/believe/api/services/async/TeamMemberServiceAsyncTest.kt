@@ -26,20 +26,16 @@ internal class TeamMemberServiceAsyncTest {
 
         val teamMemberFuture =
             teamMemberServiceAsync.create(
-                TeamMemberCreateParams.builder()
-                    .member(
-                        TeamMemberCreateParams.Member.Player.builder()
-                            .characterId("jamie-tartt")
-                            .jerseyNumber(9L)
-                            .position(Position.FORWARD)
-                            .teamId("afc-richmond")
-                            .yearsWithTeam(3L)
-                            .assists(23L)
-                            .goalsScored(47L)
-                            .isCaptain(false)
-                            .memberType(TeamMemberCreateParams.Member.Player.MemberType.PLAYER)
-                            .build()
-                    )
+                TeamMemberCreateParams.Member.Player.builder()
+                    .characterId("jamie-tartt")
+                    .jerseyNumber(9L)
+                    .position(Position.FORWARD)
+                    .teamId("afc-richmond")
+                    .yearsWithTeam(3L)
+                    .assists(23L)
+                    .goalsScored(47L)
+                    .isCaptain(false)
+                    .memberType(TeamMemberCreateParams.Member.Player.MemberType.PLAYER)
                     .build()
             )
 
