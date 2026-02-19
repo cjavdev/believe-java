@@ -75,6 +75,65 @@ interface TeamMemberServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TeamMemberCreateResponse>
 
+    /** @see create */
+    fun create(
+        member: TeamMemberCreateParams.Member,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TeamMemberCreateResponse> =
+        create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
+
+    /** @see create */
+    fun create(member: TeamMemberCreateParams.Member): CompletableFuture<TeamMemberCreateResponse> =
+        create(member, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        player: TeamMemberCreateParams.Member.Player,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TeamMemberCreateResponse> =
+        create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
+
+    /** @see create */
+    fun create(
+        player: TeamMemberCreateParams.Member.Player
+    ): CompletableFuture<TeamMemberCreateResponse> = create(player, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        coach: TeamMemberCreateParams.Member.Coach,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TeamMemberCreateResponse> =
+        create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
+
+    /** @see create */
+    fun create(
+        coach: TeamMemberCreateParams.Member.Coach
+    ): CompletableFuture<TeamMemberCreateResponse> = create(coach, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TeamMemberCreateResponse> =
+        create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
+
+    /** @see create */
+    fun create(
+        medicalStaff: TeamMemberCreateParams.Member.MedicalStaff
+    ): CompletableFuture<TeamMemberCreateResponse> = create(medicalStaff, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TeamMemberCreateResponse> =
+        create(TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager), requestOptions)
+
+    /** @see create */
+    fun create(
+        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
+    ): CompletableFuture<TeamMemberCreateResponse> = create(equipmentManager, RequestOptions.none())
+
     /**
      * Retrieve detailed information about a specific team member.
      *
@@ -298,6 +357,74 @@ interface TeamMemberServiceAsync {
             params: TeamMemberCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>>
+
+        /** @see create */
+        fun create(
+            member: TeamMemberCreateParams.Member,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
+
+        /** @see create */
+        fun create(
+            member: TeamMemberCreateParams.Member
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(member, RequestOptions.none())
+
+        /** @see create */
+        fun create(
+            player: TeamMemberCreateParams.Member.Player,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
+
+        /** @see create */
+        fun create(
+            player: TeamMemberCreateParams.Member.Player
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(player, RequestOptions.none())
+
+        /** @see create */
+        fun create(
+            coach: TeamMemberCreateParams.Member.Coach,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
+
+        /** @see create */
+        fun create(
+            coach: TeamMemberCreateParams.Member.Coach
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(coach, RequestOptions.none())
+
+        /** @see create */
+        fun create(
+            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
+
+        /** @see create */
+        fun create(
+            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(medicalStaff, RequestOptions.none())
+
+        /** @see create */
+        fun create(
+            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+                TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager),
+                requestOptions,
+            )
+
+        /** @see create */
+        fun create(
+            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
+        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(equipmentManager, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /team-members/{member_id}`, but is otherwise the
