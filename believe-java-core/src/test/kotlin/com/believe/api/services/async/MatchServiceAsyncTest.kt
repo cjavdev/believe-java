@@ -2,7 +2,6 @@
 
 package com.believe.api.services.async
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.matches.MatchCreateParams
 import com.believe.api.models.matches.MatchResult
@@ -13,19 +12,13 @@ import com.believe.api.models.matches.TurningPoint
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class MatchServiceAsyncTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val matchFuture =
@@ -67,11 +60,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val matchFuture = matchServiceAsync.retrieve("match_id")
@@ -83,11 +72,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun update() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val matchFuture =
@@ -126,11 +111,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val pageFuture = matchServiceAsync.list()
@@ -142,11 +123,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val future = matchServiceAsync.delete("match_id")
@@ -157,11 +134,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getLesson() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val responseFuture = matchServiceAsync.getLesson("match_id")
@@ -173,11 +146,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getTurningPoints() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val responseFuture = matchServiceAsync.getTurningPoints("match_id")
@@ -189,11 +158,7 @@ internal class MatchServiceAsyncTest {
     @Disabled("Prism doesn't support callbacks yet")
     @Test
     fun streamLive() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val matchServiceAsync = client.matches()
 
         val future =

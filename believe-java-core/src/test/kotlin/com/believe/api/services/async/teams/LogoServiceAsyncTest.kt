@@ -2,26 +2,19 @@
 
 package com.believe.api.services.async.teams
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.teams.logo.LogoDeleteParams
 import com.believe.api.models.teams.logo.LogoDownloadParams
 import com.believe.api.models.teams.logo.LogoUploadParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class LogoServiceAsyncTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val logoServiceAsync = client.teams().logo()
 
         val future =
@@ -38,11 +31,7 @@ internal class LogoServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun download() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val logoServiceAsync = client.teams().logo()
 
         val responseFuture =
@@ -60,11 +49,7 @@ internal class LogoServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun upload() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val logoServiceAsync = client.teams().logo()
 
         val fileUploadFuture =

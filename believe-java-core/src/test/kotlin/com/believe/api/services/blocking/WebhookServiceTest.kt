@@ -2,7 +2,6 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.core.http.Headers
 import com.believe.api.models.webhooks.WebhookCreateParams
@@ -10,19 +9,13 @@ import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class WebhookServiceTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val webhook =
@@ -41,11 +34,7 @@ internal class WebhookServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val registeredWebhook = webhookService.retrieve("webhook_id")
@@ -56,11 +45,7 @@ internal class WebhookServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val registeredWebhooks = webhookService.list()
@@ -71,11 +56,7 @@ internal class WebhookServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val webhook = webhookService.delete("webhook_id")
@@ -86,11 +67,7 @@ internal class WebhookServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun triggerEvent() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val response =

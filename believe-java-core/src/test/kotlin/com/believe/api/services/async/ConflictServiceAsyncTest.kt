@@ -2,24 +2,17 @@
 
 package com.believe.api.services.async
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.conflicts.ConflictResolveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class ConflictServiceAsyncTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun resolve() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val conflictServiceAsync = client.conflicts()
 
         val responseFuture =
