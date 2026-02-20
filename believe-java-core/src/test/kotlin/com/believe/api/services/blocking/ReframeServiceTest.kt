@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class ReframeServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun transformNegativeThoughts() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()

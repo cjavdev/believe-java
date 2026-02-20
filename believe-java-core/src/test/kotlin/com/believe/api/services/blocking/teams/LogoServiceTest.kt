@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 internal class LogoServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -25,7 +25,7 @@ internal class LogoServiceTest {
         )
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun download() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -42,7 +42,7 @@ internal class LogoServiceTest {
         response.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun upload() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()

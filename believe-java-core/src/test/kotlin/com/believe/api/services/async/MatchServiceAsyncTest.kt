@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 
 internal class MatchServiceAsyncTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun create() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -57,7 +57,7 @@ internal class MatchServiceAsyncTest {
         match.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -69,7 +69,7 @@ internal class MatchServiceAsyncTest {
         match.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun update() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -108,7 +108,7 @@ internal class MatchServiceAsyncTest {
         match.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -120,7 +120,7 @@ internal class MatchServiceAsyncTest {
         page.response().validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -131,7 +131,7 @@ internal class MatchServiceAsyncTest {
         val response = future.get()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun getLesson() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -143,7 +143,7 @@ internal class MatchServiceAsyncTest {
         response.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun getTurningPoints() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
@@ -155,7 +155,7 @@ internal class MatchServiceAsyncTest {
         response.forEach { it.validate() }
     }
 
-    @Disabled("Prism doesn't support callbacks yet")
+    @Disabled("Mock server doesn't support callbacks yet")
     @Test
     fun streamLive() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()

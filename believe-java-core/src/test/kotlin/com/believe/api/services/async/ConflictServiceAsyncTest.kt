@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class ConflictServiceAsyncTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun resolve() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
