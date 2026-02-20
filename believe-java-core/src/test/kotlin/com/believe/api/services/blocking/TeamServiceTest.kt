@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 
 internal class TeamServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun create() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -54,7 +54,7 @@ internal class TeamServiceTest {
         team.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -65,7 +65,7 @@ internal class TeamServiceTest {
         team.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun update() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -106,7 +106,7 @@ internal class TeamServiceTest {
         team.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -117,7 +117,7 @@ internal class TeamServiceTest {
         page.response().validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -126,7 +126,7 @@ internal class TeamServiceTest {
         teamService.delete("team_id")
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun getCulture() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -137,7 +137,7 @@ internal class TeamServiceTest {
         response.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun getRivals() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -148,7 +148,7 @@ internal class TeamServiceTest {
         teams.forEach { it.validate() }
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun listLogos() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()

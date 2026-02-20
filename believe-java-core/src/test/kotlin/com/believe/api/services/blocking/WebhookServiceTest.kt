@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 internal class WebhookServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun create() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -31,7 +31,7 @@ internal class WebhookServiceTest {
         webhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -42,7 +42,7 @@ internal class WebhookServiceTest {
         registeredWebhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -53,7 +53,7 @@ internal class WebhookServiceTest {
         registeredWebhooks.forEach { it.validate() }
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -64,7 +64,7 @@ internal class WebhookServiceTest {
         webhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun triggerEvent() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()

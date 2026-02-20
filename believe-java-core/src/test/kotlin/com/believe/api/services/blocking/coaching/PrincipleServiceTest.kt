@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class PrincipleServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -19,7 +19,7 @@ internal class PrincipleServiceTest {
         coachingPrinciple.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
@@ -30,7 +30,7 @@ internal class PrincipleServiceTest {
         page.response().validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun getRandom() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()

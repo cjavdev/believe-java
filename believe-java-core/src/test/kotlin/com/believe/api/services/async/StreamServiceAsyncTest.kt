@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class StreamServiceAsyncTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun testConnection() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class PressServiceAsyncTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun simulate() {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
