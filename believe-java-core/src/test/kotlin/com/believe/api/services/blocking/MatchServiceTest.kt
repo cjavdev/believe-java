@@ -147,7 +147,7 @@ internal class MatchServiceTest {
         response.forEach { it.validate() }
     }
 
-    @Disabled("Mock server doesn't support callbacks yet")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun streamLive() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
