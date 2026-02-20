@@ -2,7 +2,6 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.models.matches.MatchCreateParams
 import com.believe.api.models.matches.MatchResult
@@ -13,19 +12,13 @@ import com.believe.api.models.matches.TurningPoint
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class MatchServiceTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val match =
@@ -66,11 +59,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val match = matchService.retrieve("match_id")
@@ -81,11 +70,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun update() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val match =
@@ -123,11 +108,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val page = matchService.list()
@@ -138,11 +119,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         matchService.delete("match_id")
@@ -151,11 +128,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getLesson() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val response = matchService.getLesson("match_id")
@@ -166,11 +139,7 @@ internal class MatchServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getTurningPoints() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         val response = matchService.getTurningPoints("match_id")
@@ -181,11 +150,7 @@ internal class MatchServiceTest {
     @Disabled("Prism doesn't support callbacks yet")
     @Test
     fun streamLive() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val matchService = client.matches()
 
         matchService.streamLive(

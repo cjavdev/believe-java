@@ -2,24 +2,17 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.models.conflicts.ConflictResolveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class ConflictServiceTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun resolve() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val conflictService = client.conflicts()
 
         val response =

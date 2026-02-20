@@ -2,23 +2,16 @@
 
 package com.believe.api.services.async.coaching
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class PrincipleServiceAsyncTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val principleServiceAsync = client.coaching().principles()
 
         val coachingPrincipleFuture = principleServiceAsync.retrieve("principle_id")
@@ -30,11 +23,7 @@ internal class PrincipleServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val principleServiceAsync = client.coaching().principles()
 
         val pageFuture = principleServiceAsync.list()
@@ -46,11 +35,7 @@ internal class PrincipleServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getRandom() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val principleServiceAsync = client.coaching().principles()
 
         val coachingPrincipleFuture = principleServiceAsync.getRandom()

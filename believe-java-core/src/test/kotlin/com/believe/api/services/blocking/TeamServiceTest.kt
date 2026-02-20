@@ -2,7 +2,6 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.models.teams.GeoLocation
 import com.believe.api.models.teams.League
@@ -11,19 +10,13 @@ import com.believe.api.models.teams.TeamUpdateParams
 import com.believe.api.models.teams.TeamValues
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class TeamServiceTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val team =
@@ -64,11 +57,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val team = teamService.retrieve("team_id")
@@ -79,11 +68,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun update() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val team =
@@ -124,11 +109,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val page = teamService.list()
@@ -139,11 +120,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         teamService.delete("team_id")
@@ -152,11 +129,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getCulture() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val response = teamService.getCulture("team_id")
@@ -167,11 +140,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getRivals() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val teams = teamService.getRivals("team_id")
@@ -182,11 +151,7 @@ internal class TeamServiceTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun listLogos() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val teamService = client.teams()
 
         val fileUploads = teamService.listLogos("team_id")

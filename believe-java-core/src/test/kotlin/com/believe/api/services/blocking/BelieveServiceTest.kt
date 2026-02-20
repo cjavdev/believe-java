@@ -2,24 +2,17 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.models.believe.BelieveSubmitParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class BelieveServiceTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun submit() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val believeService = client.believe()
 
         val response =

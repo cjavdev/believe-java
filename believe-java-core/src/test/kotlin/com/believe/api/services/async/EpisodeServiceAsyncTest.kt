@@ -2,26 +2,19 @@
 
 package com.believe.api.services.async
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.episodes.EpisodeCreateParams
 import com.believe.api.models.episodes.EpisodeUpdateParams
 import java.time.LocalDate
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class EpisodeServiceAsyncTest {
 
     @Disabled("Prism tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val episodeFuture =
@@ -62,11 +55,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val episodeFuture = episodeServiceAsync.retrieve("episode_id")
@@ -78,11 +67,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun update() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val episodeFuture =
@@ -114,11 +99,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val pageFuture = episodeServiceAsync.list()
@@ -130,11 +111,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val future = episodeServiceAsync.delete("episode_id")
@@ -145,11 +122,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun getWisdom() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val responseFuture = episodeServiceAsync.getWisdom("episode_id")
@@ -161,11 +134,7 @@ internal class EpisodeServiceAsyncTest {
     @Disabled("Prism tests are disabled")
     @Test
     fun listBySeason() {
-        val client =
-            BelieveOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val episodeServiceAsync = client.episodes()
 
         val pageFuture = episodeServiceAsync.listBySeason(0L)
