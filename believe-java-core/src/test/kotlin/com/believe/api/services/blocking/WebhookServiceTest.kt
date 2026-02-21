@@ -2,26 +2,20 @@
 
 package com.believe.api.services.blocking
 
-import com.believe.api.TestServerExtension
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.core.http.Headers
 import com.believe.api.models.webhooks.WebhookCreateParams
 import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(TestServerExtension::class)
 internal class WebhookServiceTest {
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun create() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val webhook =
@@ -37,14 +31,10 @@ internal class WebhookServiceTest {
         webhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val registeredWebhook = webhookService.retrieve("webhook_id")
@@ -52,14 +42,10 @@ internal class WebhookServiceTest {
         registeredWebhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val registeredWebhooks = webhookService.list()
@@ -67,14 +53,10 @@ internal class WebhookServiceTest {
         registeredWebhooks.forEach { it.validate() }
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val webhook = webhookService.delete("webhook_id")
@@ -82,14 +64,10 @@ internal class WebhookServiceTest {
         webhook.validate()
     }
 
-    @Disabled("Prism tests are disabled")
+    @Disabled("Mock server tests are disabled")
     @Test
     fun triggerEvent() {
-        val client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val webhookService = client.webhooks()
 
         val response =
@@ -121,5 +99,18 @@ internal class WebhookServiceTest {
             )
 
         response.validate()
+    }
+
+    @Test
+    fun unwrap() {
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
+        val webhookService = client.webhooks()
+
+        val payload =
+            "{\"created_at\":\"2019-12-27T18:11:19.117Z\",\"data\":{\"away_score\":0,\"away_team_id\":\"away_team_id\",\"completed_at\":\"2019-12-27T18:11:19.117Z\",\"home_score\":0,\"home_team_id\":\"home_team_id\",\"match_id\":\"match_id\",\"match_type\":\"league\",\"result\":\"home_win\",\"ted_post_match_quote\":\"ted_post_match_quote\",\"lesson_learned\":\"lesson_learned\",\"man_of_the_match\":\"man_of_the_match\"},\"event_id\":\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\",\"event_type\":\"match.completed\"}"
+        val webhookSecret = "whsec_c2VjcmV0Cg=="
+        val headers = Headers.builder().build()
+
+        webhookService.unwrap(payload).validate()
     }
 }

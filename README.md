@@ -1,7 +1,11 @@
 # Believe Java API Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.0.1)
-[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.0.1/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.0.1)
+<!-- x-release-please-start-version -->
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.1.0)
+[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.1.0/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.1.0)
+
+<!-- x-release-please-end -->
 
 The Believe Java SDK provides convenient access to the Believe REST API from applications written in Java.
 
@@ -16,14 +20,20 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 > Note: You may need to set environment variables in your MCP client.
 
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.0.1).
+<!-- x-release-please-start-version -->
+
+Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.1.0).
+
+<!-- x-release-please-end -->
 
 ## Installation
+
+<!-- x-release-please-start-version -->
 
 ### Gradle
 
 ```kotlin
-implementation("com.believe.api:believe-java:0.0.1")
+implementation("com.believe.api:believe-java:0.1.0")
 ```
 
 ### Maven
@@ -32,9 +42,11 @@ implementation("com.believe.api:believe-java:0.0.1")
 <dependency>
   <groupId>com.believe.api</groupId>
   <artifactId>believe-java</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0</version>
 </dependency>
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -494,6 +506,25 @@ BelieveClient client = BelieveOkHttpClient.builder()
     .build();
 ```
 
+### Connection pooling
+
+To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
+
+```java
+import com.believe.api.client.BelieveClient;
+import com.believe.api.client.okhttp.BelieveOkHttpClient;
+import java.time.Duration;
+
+BelieveClient client = BelieveOkHttpClient.builder()
+    .fromEnv()
+    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.
+    .maxIdleConnections(10)
+    .keepAliveDuration(Duration.ofMinutes(2))
+    .build();
+```
+
+If both options are unset, OkHttp's default connection pool settings are used.
+
 ### HTTPS
 
 > [!NOTE]
@@ -793,4 +824,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/believe-java/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/cjavdev/believe-java/issues) with questions, bugs, or suggestions.
