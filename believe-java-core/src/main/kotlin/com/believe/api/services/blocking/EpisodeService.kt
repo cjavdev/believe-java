@@ -11,8 +11,6 @@ import com.believe.api.models.episodes.EpisodeCreateParams
 import com.believe.api.models.episodes.EpisodeDeleteParams
 import com.believe.api.models.episodes.EpisodeGetWisdomParams
 import com.believe.api.models.episodes.EpisodeGetWisdomResponse
-import com.believe.api.models.episodes.EpisodeListBySeasonPage
-import com.believe.api.models.episodes.EpisodeListBySeasonParams
 import com.believe.api.models.episodes.EpisodeListPage
 import com.believe.api.models.episodes.EpisodeListParams
 import com.believe.api.models.episodes.EpisodeRetrieveParams
@@ -173,38 +171,6 @@ interface EpisodeService {
     /** @see getWisdom */
     fun getWisdom(episodeId: String, requestOptions: RequestOptions): EpisodeGetWisdomResponse =
         getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
-
-    /** Get a paginated list of episodes from a specific season. */
-    fun listBySeason(seasonNumber: Long): EpisodeListBySeasonPage =
-        listBySeason(seasonNumber, EpisodeListBySeasonParams.none())
-
-    /** @see listBySeason */
-    fun listBySeason(
-        seasonNumber: Long,
-        params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): EpisodeListBySeasonPage =
-        listBySeason(params.toBuilder().seasonNumber(seasonNumber).build(), requestOptions)
-
-    /** @see listBySeason */
-    fun listBySeason(
-        seasonNumber: Long,
-        params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-    ): EpisodeListBySeasonPage = listBySeason(seasonNumber, params, RequestOptions.none())
-
-    /** @see listBySeason */
-    fun listBySeason(
-        params: EpisodeListBySeasonParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): EpisodeListBySeasonPage
-
-    /** @see listBySeason */
-    fun listBySeason(params: EpisodeListBySeasonParams): EpisodeListBySeasonPage =
-        listBySeason(params, RequestOptions.none())
-
-    /** @see listBySeason */
-    fun listBySeason(seasonNumber: Long, requestOptions: RequestOptions): EpisodeListBySeasonPage =
-        listBySeason(seasonNumber, EpisodeListBySeasonParams.none(), requestOptions)
 
     /** A view of [EpisodeService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -420,51 +386,5 @@ interface EpisodeService {
             requestOptions: RequestOptions,
         ): HttpResponseFor<EpisodeGetWisdomResponse> =
             getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
-
-        /**
-         * Returns a raw HTTP response for `get /episodes/seasons/{season_number}`, but is otherwise
-         * the same as [EpisodeService.listBySeason].
-         */
-        @MustBeClosed
-        fun listBySeason(seasonNumber: Long): HttpResponseFor<EpisodeListBySeasonPage> =
-            listBySeason(seasonNumber, EpisodeListBySeasonParams.none())
-
-        /** @see listBySeason */
-        @MustBeClosed
-        fun listBySeason(
-            seasonNumber: Long,
-            params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<EpisodeListBySeasonPage> =
-            listBySeason(params.toBuilder().seasonNumber(seasonNumber).build(), requestOptions)
-
-        /** @see listBySeason */
-        @MustBeClosed
-        fun listBySeason(
-            seasonNumber: Long,
-            params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-        ): HttpResponseFor<EpisodeListBySeasonPage> =
-            listBySeason(seasonNumber, params, RequestOptions.none())
-
-        /** @see listBySeason */
-        @MustBeClosed
-        fun listBySeason(
-            params: EpisodeListBySeasonParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<EpisodeListBySeasonPage>
-
-        /** @see listBySeason */
-        @MustBeClosed
-        fun listBySeason(
-            params: EpisodeListBySeasonParams
-        ): HttpResponseFor<EpisodeListBySeasonPage> = listBySeason(params, RequestOptions.none())
-
-        /** @see listBySeason */
-        @MustBeClosed
-        fun listBySeason(
-            seasonNumber: Long,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EpisodeListBySeasonPage> =
-            listBySeason(seasonNumber, EpisodeListBySeasonParams.none(), requestOptions)
     }
 }
