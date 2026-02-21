@@ -22,8 +22,6 @@ import com.believe.api.models.episodes.EpisodeCreateParams
 import com.believe.api.models.episodes.EpisodeDeleteParams
 import com.believe.api.models.episodes.EpisodeGetWisdomParams
 import com.believe.api.models.episodes.EpisodeGetWisdomResponse
-import com.believe.api.models.episodes.EpisodeListBySeasonPageAsync
-import com.believe.api.models.episodes.EpisodeListBySeasonParams
 import com.believe.api.models.episodes.EpisodeListPageAsync
 import com.believe.api.models.episodes.EpisodeListParams
 import com.believe.api.models.episodes.EpisodeRetrieveParams
@@ -86,13 +84,6 @@ class EpisodeServiceAsyncImpl internal constructor(private val clientOptions: Cl
     ): CompletableFuture<EpisodeGetWisdomResponse> =
         // get /episodes/{episode_id}/wisdom
         withRawResponse().getWisdom(params, requestOptions).thenApply { it.parse() }
-
-    override fun listBySeason(
-        params: EpisodeListBySeasonParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<EpisodeListBySeasonPageAsync> =
-        // get /episodes/seasons/{season_number}
-        withRawResponse().listBySeason(params, requestOptions).thenApply { it.parse() }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         EpisodeServiceAsync.WithRawResponse {
@@ -296,47 +287,6 @@ class EpisodeServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 if (requestOptions.responseValidation!!) {
                                     it.validate()
                                 }
-                            }
-                    }
-                }
-        }
-
-        private val listBySeasonHandler: Handler<PaginatedResponse> =
-            jsonHandler<PaginatedResponse>(clientOptions.jsonMapper)
-
-        override fun listBySeason(
-            params: EpisodeListBySeasonParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("seasonNumber", params.seasonNumber().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("episodes", "seasons", params._pathParam(0))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { listBySeasonHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                            .let {
-                                EpisodeListBySeasonPageAsync.builder()
-                                    .service(EpisodeServiceAsyncImpl(clientOptions))
-                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
-                                    .params(params)
-                                    .response(it)
-                                    .build()
                             }
                     }
                 }

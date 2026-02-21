@@ -123,15 +123,4 @@ internal class EpisodeServiceTest {
 
         response.validate()
     }
-
-    @Disabled("Mock server tests are disabled")
-    @Test
-    fun listBySeason() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val episodeService = client.episodes()
-
-        val page = episodeService.listBySeason(0L)
-
-        page.response().validate()
-    }
 }

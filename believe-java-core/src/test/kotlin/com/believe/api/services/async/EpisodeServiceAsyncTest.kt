@@ -130,16 +130,4 @@ internal class EpisodeServiceAsyncTest {
         val response = responseFuture.get()
         response.validate()
     }
-
-    @Disabled("Mock server tests are disabled")
-    @Test
-    fun listBySeason() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val episodeServiceAsync = client.episodes()
-
-        val pageFuture = episodeServiceAsync.listBySeason(0L)
-
-        val page = pageFuture.get()
-        page.response().validate()
-    }
 }
