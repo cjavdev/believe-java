@@ -11,8 +11,6 @@ import com.believe.api.models.episodes.EpisodeCreateParams
 import com.believe.api.models.episodes.EpisodeDeleteParams
 import com.believe.api.models.episodes.EpisodeGetWisdomParams
 import com.believe.api.models.episodes.EpisodeGetWisdomResponse
-import com.believe.api.models.episodes.EpisodeListBySeasonPageAsync
-import com.believe.api.models.episodes.EpisodeListBySeasonParams
 import com.believe.api.models.episodes.EpisodeListPageAsync
 import com.believe.api.models.episodes.EpisodeListParams
 import com.believe.api.models.episodes.EpisodeRetrieveParams
@@ -193,43 +191,6 @@ interface EpisodeServiceAsync {
         requestOptions: RequestOptions,
     ): CompletableFuture<EpisodeGetWisdomResponse> =
         getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
-
-    /** Get a paginated list of episodes from a specific season. */
-    fun listBySeason(seasonNumber: Long): CompletableFuture<EpisodeListBySeasonPageAsync> =
-        listBySeason(seasonNumber, EpisodeListBySeasonParams.none())
-
-    /** @see listBySeason */
-    fun listBySeason(
-        seasonNumber: Long,
-        params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<EpisodeListBySeasonPageAsync> =
-        listBySeason(params.toBuilder().seasonNumber(seasonNumber).build(), requestOptions)
-
-    /** @see listBySeason */
-    fun listBySeason(
-        seasonNumber: Long,
-        params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-    ): CompletableFuture<EpisodeListBySeasonPageAsync> =
-        listBySeason(seasonNumber, params, RequestOptions.none())
-
-    /** @see listBySeason */
-    fun listBySeason(
-        params: EpisodeListBySeasonParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<EpisodeListBySeasonPageAsync>
-
-    /** @see listBySeason */
-    fun listBySeason(
-        params: EpisodeListBySeasonParams
-    ): CompletableFuture<EpisodeListBySeasonPageAsync> = listBySeason(params, RequestOptions.none())
-
-    /** @see listBySeason */
-    fun listBySeason(
-        seasonNumber: Long,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<EpisodeListBySeasonPageAsync> =
-        listBySeason(seasonNumber, EpisodeListBySeasonParams.none(), requestOptions)
 
     /**
      * A view of [EpisodeServiceAsync] that provides access to raw HTTP responses for each method.
@@ -441,48 +402,5 @@ interface EpisodeServiceAsync {
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
             getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
-
-        /**
-         * Returns a raw HTTP response for `get /episodes/seasons/{season_number}`, but is otherwise
-         * the same as [EpisodeServiceAsync.listBySeason].
-         */
-        fun listBySeason(
-            seasonNumber: Long
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> =
-            listBySeason(seasonNumber, EpisodeListBySeasonParams.none())
-
-        /** @see listBySeason */
-        fun listBySeason(
-            seasonNumber: Long,
-            params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> =
-            listBySeason(params.toBuilder().seasonNumber(seasonNumber).build(), requestOptions)
-
-        /** @see listBySeason */
-        fun listBySeason(
-            seasonNumber: Long,
-            params: EpisodeListBySeasonParams = EpisodeListBySeasonParams.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> =
-            listBySeason(seasonNumber, params, RequestOptions.none())
-
-        /** @see listBySeason */
-        fun listBySeason(
-            params: EpisodeListBySeasonParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>>
-
-        /** @see listBySeason */
-        fun listBySeason(
-            params: EpisodeListBySeasonParams
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> =
-            listBySeason(params, RequestOptions.none())
-
-        /** @see listBySeason */
-        fun listBySeason(
-            seasonNumber: Long,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<EpisodeListBySeasonPageAsync>> =
-            listBySeason(seasonNumber, EpisodeListBySeasonParams.none(), requestOptions)
     }
 }

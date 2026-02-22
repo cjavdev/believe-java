@@ -1,31 +1,32 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.episodes
+package com.believe.api.models.client.ws
 
 import com.believe.api.core.Params
 import com.believe.api.core.http.Headers
 import com.believe.api.core.http.QueryParams
 import java.util.Objects
-import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
-/** Get a paginated list of episodes from a specific season. */
-class EpisodeListBySeasonParams
+/**
+ * Simple WebSocket test endpoint for connectivity testing.
+ *
+ * Connect to test WebSocket functionality. The server will:
+ * 1. Send a welcome message on connection
+ * 2. Echo back any message you send
+ *
+ * ## Example
+ *
+ * ```javascript
+ * const ws = new WebSocket('ws://localhost:8000/ws/test');
+ * ws.onmessage = (event) => console.log(event.data);
+ * ws.send('Hello!');  // Server responds with echo
+ * ```
+ */
+class WTestParams
 private constructor(
-    private val seasonNumber: Long?,
-    private val limit: Long?,
-    private val skip: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
-
-    fun seasonNumber(): Optional<Long> = Optional.ofNullable(seasonNumber)
-
-    /** Maximum number of items to return (max: 100) */
-    fun limit(): Optional<Long> = Optional.ofNullable(limit)
-
-    /** Number of items to skip (offset) */
-    fun skip(): Optional<Long> = Optional.ofNullable(skip)
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -37,69 +38,23 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): EpisodeListBySeasonParams = builder().build()
+        @JvmStatic fun none(): WTestParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of [EpisodeListBySeasonParams].
-         */
+        /** Returns a mutable builder for constructing an instance of [WTestParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [EpisodeListBySeasonParams]. */
+    /** A builder for [WTestParams]. */
     class Builder internal constructor() {
 
-        private var seasonNumber: Long? = null
-        private var limit: Long? = null
-        private var skip: Long? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(episodeListBySeasonParams: EpisodeListBySeasonParams) = apply {
-            seasonNumber = episodeListBySeasonParams.seasonNumber
-            limit = episodeListBySeasonParams.limit
-            skip = episodeListBySeasonParams.skip
-            additionalHeaders = episodeListBySeasonParams.additionalHeaders.toBuilder()
-            additionalQueryParams = episodeListBySeasonParams.additionalQueryParams.toBuilder()
+        internal fun from(wTestParams: WTestParams) = apply {
+            additionalHeaders = wTestParams.additionalHeaders.toBuilder()
+            additionalQueryParams = wTestParams.additionalQueryParams.toBuilder()
         }
-
-        fun seasonNumber(seasonNumber: Long?) = apply { this.seasonNumber = seasonNumber }
-
-        /**
-         * Alias for [Builder.seasonNumber].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun seasonNumber(seasonNumber: Long) = seasonNumber(seasonNumber as Long?)
-
-        /** Alias for calling [Builder.seasonNumber] with `seasonNumber.orElse(null)`. */
-        fun seasonNumber(seasonNumber: Optional<Long>) = seasonNumber(seasonNumber.getOrNull())
-
-        /** Maximum number of items to return (max: 100) */
-        fun limit(limit: Long?) = apply { this.limit = limit }
-
-        /**
-         * Alias for [Builder.limit].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun limit(limit: Long) = limit(limit as Long?)
-
-        /** Alias for calling [Builder.limit] with `limit.orElse(null)`. */
-        fun limit(limit: Optional<Long>) = limit(limit.getOrNull())
-
-        /** Number of items to skip (offset) */
-        fun skip(skip: Long?) = apply { this.skip = skip }
-
-        /**
-         * Alias for [Builder.skip].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun skip(skip: Long) = skip(skip as Long?)
-
-        /** Alias for calling [Builder.skip] with `skip.orElse(null)`. */
-        fun skip(skip: Optional<Long>) = skip(skip.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -200,53 +155,30 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [EpisodeListBySeasonParams].
+         * Returns an immutable instance of [WTestParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): EpisodeListBySeasonParams =
-            EpisodeListBySeasonParams(
-                seasonNumber,
-                limit,
-                skip,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+        fun build(): WTestParams =
+            WTestParams(additionalHeaders.build(), additionalQueryParams.build())
     }
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> seasonNumber?.toString() ?: ""
-            else -> ""
-        }
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                limit?.let { put("limit", it.toString()) }
-                skip?.let { put("skip", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return other is EpisodeListBySeasonParams &&
-            seasonNumber == other.seasonNumber &&
-            limit == other.limit &&
-            skip == other.skip &&
+        return other is WTestParams &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(seasonNumber, limit, skip, additionalHeaders, additionalQueryParams)
+    override fun hashCode(): Int = Objects.hash(additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "EpisodeListBySeasonParams{seasonNumber=$seasonNumber, limit=$limit, skip=$skip, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "WTestParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
