@@ -1,3 +1,5 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.believe.api.core.http
 
 import com.believe.api.core.DefaultSleeper

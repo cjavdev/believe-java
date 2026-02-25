@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1 (2026-02-25)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/cjavdev/believe-java/compare/v0.2.0...v0.2.1)
+
+### Chores
+
+* drop apache dependency ([01b4473](https://github.com/cjavdev/believe-java/commit/01b4473a2bee937341bdf6e081cc42fa8971776c))
+* **internal:** expand imports ([e486dbe](https://github.com/cjavdev/believe-java/commit/e486dbe248def8f97df3886ecbf0e7ae21998fdb))
+* make `Properties` more resilient to `null` ([144282b](https://github.com/cjavdev/believe-java/commit/144282bf060969c16fd59fafa2ee6dd11391921c))
+
 ## 0.2.0 (2026-02-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/cjavdev/believe-java/compare/v0.1.0...v0.2.0)
