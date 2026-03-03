@@ -13,6 +13,7 @@ import com.believe.api.models.coaching.principles.PrincipleRetrieveParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 interface PrincipleService {
 
     /**

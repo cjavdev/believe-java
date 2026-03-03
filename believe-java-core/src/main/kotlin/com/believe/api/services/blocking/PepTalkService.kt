@@ -10,6 +10,7 @@ import com.believe.api.models.peptalk.PepTalkRetrieveResponse
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 interface PepTalkService {
 
     /**

@@ -34,6 +34,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Memorable quotes from the show */
 class QuoteServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     QuoteServiceAsync {
 

@@ -17,6 +17,7 @@ import com.believe.api.models.characters.CharacterUpdateParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Operations related to Ted Lasso characters */
 interface CharacterService {
 
     /**

@@ -20,6 +20,7 @@ import com.believe.api.models.press.PressSimulateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 class PressServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PressServiceAsync {
 

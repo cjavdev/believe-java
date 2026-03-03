@@ -20,6 +20,7 @@ import com.believe.api.models.reframe.ReframeTransformNegativeThoughtsResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 class ReframeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ReframeServiceAsync {
 

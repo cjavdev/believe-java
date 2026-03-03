@@ -14,6 +14,7 @@ import com.believe.api.models.teams.logo.LogoUploadParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Operations related to football teams */
 interface LogoService {
 
     /**

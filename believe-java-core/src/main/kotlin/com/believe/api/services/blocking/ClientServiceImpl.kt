@@ -21,6 +21,7 @@ class ClientServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientService =
         ClientServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
     override fun ws(): WService = ws
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,7 @@ class ClientServiceImpl internal constructor(private val clientOptions: ClientOp
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
         override fun ws(): WService.WithRawResponse = ws
     }
 }

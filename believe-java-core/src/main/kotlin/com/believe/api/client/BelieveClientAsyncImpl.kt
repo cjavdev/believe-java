@@ -150,34 +150,49 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClientAsync =
         BelieveClientAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Operations related to Ted Lasso characters */
     override fun characters(): CharacterServiceAsync = characters
 
+    /** Operations related to football teams */
     override fun teams(): TeamServiceAsync = teams
 
     override fun matches(): MatchServiceAsync = matches
 
+    /** Operations related to TV episodes */
     override fun episodes(): EpisodeServiceAsync = episodes
 
+    /** Memorable quotes from the show */
     override fun quotes(): QuoteServiceAsync = quotes
 
+    /** Interactive endpoints for motivation and guidance */
     override fun believe(): BelieveServiceAsync = believe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun conflicts(): ConflictServiceAsync = conflicts
 
+    /** Interactive endpoints for motivation and guidance */
     override fun reframe(): ReframeServiceAsync = reframe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun press(): PressServiceAsync = press
 
     override fun coaching(): CoachingServiceAsync = coaching
 
+    /** Interactive endpoints for motivation and guidance */
     override fun biscuits(): BiscuitServiceAsync = biscuits
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun pepTalk(): PepTalkServiceAsync = pepTalk
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun stream(): StreamServiceAsync = stream
 
+    /**
+     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
+     */
     override fun teamMembers(): TeamMemberServiceAsync = teamMembers
 
+    /** Register webhook endpoints and trigger events for testing */
     override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun health(): HealthServiceAsync = health
@@ -280,34 +295,50 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Operations related to Ted Lasso characters */
         override fun characters(): CharacterServiceAsync.WithRawResponse = characters
 
+        /** Operations related to football teams */
         override fun teams(): TeamServiceAsync.WithRawResponse = teams
 
         override fun matches(): MatchServiceAsync.WithRawResponse = matches
 
+        /** Operations related to TV episodes */
         override fun episodes(): EpisodeServiceAsync.WithRawResponse = episodes
 
+        /** Memorable quotes from the show */
         override fun quotes(): QuoteServiceAsync.WithRawResponse = quotes
 
+        /** Interactive endpoints for motivation and guidance */
         override fun believe(): BelieveServiceAsync.WithRawResponse = believe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun conflicts(): ConflictServiceAsync.WithRawResponse = conflicts
 
+        /** Interactive endpoints for motivation and guidance */
         override fun reframe(): ReframeServiceAsync.WithRawResponse = reframe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun press(): PressServiceAsync.WithRawResponse = press
 
         override fun coaching(): CoachingServiceAsync.WithRawResponse = coaching
 
+        /** Interactive endpoints for motivation and guidance */
         override fun biscuits(): BiscuitServiceAsync.WithRawResponse = biscuits
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun pepTalk(): PepTalkServiceAsync.WithRawResponse = pepTalk
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun stream(): StreamServiceAsync.WithRawResponse = stream
 
+        /**
+         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
+         * Managers
+         */
         override fun teamMembers(): TeamMemberServiceAsync.WithRawResponse = teamMembers
 
+        /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
 
         override fun health(): HealthServiceAsync.WithRawResponse = health

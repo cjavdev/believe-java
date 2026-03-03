@@ -17,6 +17,7 @@ import com.believe.api.models.client.ws.WTestParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
 class WServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     WServiceAsync {
 

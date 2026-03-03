@@ -19,6 +19,7 @@ import com.believe.api.models.stream.StreamTestConnectionResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 class StreamServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     StreamServiceAsync {
 

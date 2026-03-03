@@ -31,6 +31,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Register webhook endpoints and trigger events for testing */
 class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     WebhookService {
 

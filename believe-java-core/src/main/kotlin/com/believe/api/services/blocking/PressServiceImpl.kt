@@ -19,6 +19,7 @@ import com.believe.api.models.press.PressSimulateParams
 import com.believe.api.models.press.PressSimulateResponse
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 class PressServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     PressService {
 

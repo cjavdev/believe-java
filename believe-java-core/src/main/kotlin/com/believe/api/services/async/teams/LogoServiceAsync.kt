@@ -14,6 +14,7 @@ import com.believe.api.models.teams.logo.LogoUploadParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Operations related to football teams */
 interface LogoServiceAsync {
 
     /**

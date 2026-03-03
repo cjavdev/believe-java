@@ -10,6 +10,7 @@ import com.believe.api.models.press.PressSimulateResponse
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 interface PressService {
 
     /**

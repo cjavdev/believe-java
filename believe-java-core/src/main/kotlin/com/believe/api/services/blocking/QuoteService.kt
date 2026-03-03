@@ -22,6 +22,7 @@ import com.believe.api.models.quotes.QuoteUpdateParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Memorable quotes from the show */
 interface QuoteService {
 
     /**

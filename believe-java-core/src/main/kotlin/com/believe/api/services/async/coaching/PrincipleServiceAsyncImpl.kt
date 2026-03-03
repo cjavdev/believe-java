@@ -25,6 +25,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Interactive endpoints for motivation and guidance */
 class PrincipleServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PrincipleServiceAsync {
 
