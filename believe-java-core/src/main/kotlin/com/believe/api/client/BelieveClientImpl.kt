@@ -123,34 +123,49 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient =
         BelieveClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Operations related to Ted Lasso characters */
     override fun characters(): CharacterService = characters
 
+    /** Operations related to football teams */
     override fun teams(): TeamService = teams
 
     override fun matches(): MatchService = matches
 
+    /** Operations related to TV episodes */
     override fun episodes(): EpisodeService = episodes
 
+    /** Memorable quotes from the show */
     override fun quotes(): QuoteService = quotes
 
+    /** Interactive endpoints for motivation and guidance */
     override fun believe(): BelieveService = believe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun conflicts(): ConflictService = conflicts
 
+    /** Interactive endpoints for motivation and guidance */
     override fun reframe(): ReframeService = reframe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun press(): PressService = press
 
     override fun coaching(): CoachingService = coaching
 
+    /** Interactive endpoints for motivation and guidance */
     override fun biscuits(): BiscuitService = biscuits
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun pepTalk(): PepTalkService = pepTalk
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun stream(): StreamService = stream
 
+    /**
+     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
+     */
     override fun teamMembers(): TeamMemberService = teamMembers
 
+    /** Register webhook endpoints and trigger events for testing */
     override fun webhooks(): WebhookService = webhooks
 
     override fun health(): HealthService = health
@@ -253,34 +268,50 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Operations related to Ted Lasso characters */
         override fun characters(): CharacterService.WithRawResponse = characters
 
+        /** Operations related to football teams */
         override fun teams(): TeamService.WithRawResponse = teams
 
         override fun matches(): MatchService.WithRawResponse = matches
 
+        /** Operations related to TV episodes */
         override fun episodes(): EpisodeService.WithRawResponse = episodes
 
+        /** Memorable quotes from the show */
         override fun quotes(): QuoteService.WithRawResponse = quotes
 
+        /** Interactive endpoints for motivation and guidance */
         override fun believe(): BelieveService.WithRawResponse = believe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun conflicts(): ConflictService.WithRawResponse = conflicts
 
+        /** Interactive endpoints for motivation and guidance */
         override fun reframe(): ReframeService.WithRawResponse = reframe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun press(): PressService.WithRawResponse = press
 
         override fun coaching(): CoachingService.WithRawResponse = coaching
 
+        /** Interactive endpoints for motivation and guidance */
         override fun biscuits(): BiscuitService.WithRawResponse = biscuits
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun pepTalk(): PepTalkService.WithRawResponse = pepTalk
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun stream(): StreamService.WithRawResponse = stream
 
+        /**
+         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
+         * Managers
+         */
         override fun teamMembers(): TeamMemberService.WithRawResponse = teamMembers
 
+        /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookService.WithRawResponse = webhooks
 
         override fun health(): HealthService.WithRawResponse = health

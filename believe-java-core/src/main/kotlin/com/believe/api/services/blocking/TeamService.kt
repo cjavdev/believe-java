@@ -22,6 +22,7 @@ import com.believe.api.services.blocking.teams.LogoService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Operations related to football teams */
 interface TeamService {
 
     /**
@@ -36,6 +37,7 @@ interface TeamService {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamService
 
+    /** Operations related to football teams */
     fun logo(): LogoService
 
     /** Add a new team to the league. */
@@ -244,6 +246,7 @@ interface TeamService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamService.WithRawResponse
 
+        /** Operations related to football teams */
         fun logo(): LogoService.WithRawResponse
 
         /**

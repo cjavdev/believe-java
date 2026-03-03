@@ -36,6 +36,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to football teams */
 class TeamServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     TeamServiceAsync {
 
@@ -50,6 +51,7 @@ class TeamServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamServiceAsync =
         TeamServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Operations related to football teams */
     override fun logo(): LogoServiceAsync = logo
 
     override fun create(
@@ -125,6 +127,7 @@ class TeamServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Operations related to football teams */
         override fun logo(): LogoServiceAsync.WithRawResponse = logo
 
         private val createHandler: Handler<Team> = jsonHandler<Team>(clientOptions.jsonMapper)

@@ -16,6 +16,7 @@ import com.believe.api.core.prepare
 import com.believe.api.models.client.ws.WTestParams
 import java.util.function.Consumer
 
+/** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
 class WServiceImpl internal constructor(private val clientOptions: ClientOptions) : WService {
 
     private val withRawResponse: WService.WithRawResponse by lazy {

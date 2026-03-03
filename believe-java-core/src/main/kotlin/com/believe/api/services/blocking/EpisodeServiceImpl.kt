@@ -30,6 +30,7 @@ import com.believe.api.models.episodes.PaginatedResponse
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to TV episodes */
 class EpisodeServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     EpisodeService {
 

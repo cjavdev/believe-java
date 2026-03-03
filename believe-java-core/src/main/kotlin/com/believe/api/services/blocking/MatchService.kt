@@ -36,6 +36,7 @@ interface MatchService {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): MatchService
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     fun commentary(): CommentaryService
 
     /** Schedule a new match. */
@@ -269,6 +270,7 @@ interface MatchService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): MatchService.WithRawResponse
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         fun commentary(): CommentaryService.WithRawResponse
 
         /**

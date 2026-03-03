@@ -19,6 +19,7 @@ import com.believe.api.models.webhooks.WebhookTriggerEventResponse
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Register webhook endpoints and trigger events for testing */
 interface WebhookService {
 
     /**

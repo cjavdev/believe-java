@@ -20,6 +20,7 @@ import com.believe.api.models.conflicts.ConflictResolveResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 class ConflictServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ConflictServiceAsync {
 

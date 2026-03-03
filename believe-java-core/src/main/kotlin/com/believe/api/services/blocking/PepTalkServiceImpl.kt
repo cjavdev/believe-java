@@ -18,6 +18,7 @@ import com.believe.api.models.peptalk.PepTalkRetrieveParams
 import com.believe.api.models.peptalk.PepTalkRetrieveResponse
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 class PepTalkServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     PepTalkService {
 

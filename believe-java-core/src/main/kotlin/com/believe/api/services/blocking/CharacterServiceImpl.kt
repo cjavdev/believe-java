@@ -29,6 +29,7 @@ import com.believe.api.models.characters.CharacterUpdateParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to Ted Lasso characters */
 class CharacterServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CharacterService {
 

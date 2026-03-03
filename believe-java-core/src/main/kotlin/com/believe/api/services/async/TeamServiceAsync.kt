@@ -22,6 +22,7 @@ import com.believe.api.services.async.teams.LogoServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Operations related to football teams */
 interface TeamServiceAsync {
 
     /**
@@ -36,6 +37,7 @@ interface TeamServiceAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamServiceAsync
 
+    /** Operations related to football teams */
     fun logo(): LogoServiceAsync
 
     /** Add a new team to the league. */
@@ -268,6 +270,7 @@ interface TeamServiceAsync {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamServiceAsync.WithRawResponse
 
+        /** Operations related to football teams */
         fun logo(): LogoServiceAsync.WithRawResponse
 
         /**

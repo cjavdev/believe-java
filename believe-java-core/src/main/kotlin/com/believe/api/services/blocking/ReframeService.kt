@@ -10,6 +10,7 @@ import com.believe.api.models.reframe.ReframeTransformNegativeThoughtsResponse
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 interface ReframeService {
 
     /**

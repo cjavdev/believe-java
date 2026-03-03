@@ -13,6 +13,7 @@ import com.believe.api.models.coaching.principles.PrincipleRetrieveParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 interface PrincipleServiceAsync {
 
     /**

@@ -18,6 +18,7 @@ import com.believe.api.models.episodes.EpisodeUpdateParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Operations related to TV episodes */
 interface EpisodeService {
 
     /**

@@ -24,6 +24,7 @@ import com.believe.api.models.teammembers.TeamMemberUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
 interface TeamMemberServiceAsync {
 
     /**

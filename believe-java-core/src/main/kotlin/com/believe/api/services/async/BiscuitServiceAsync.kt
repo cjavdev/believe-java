@@ -13,6 +13,7 @@ import com.believe.api.models.biscuits.BiscuitRetrieveParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Interactive endpoints for motivation and guidance */
 interface BiscuitServiceAsync {
 
     /**

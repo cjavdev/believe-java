@@ -35,6 +35,7 @@ import com.believe.api.services.blocking.teams.LogoServiceImpl
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to football teams */
 class TeamServiceImpl internal constructor(private val clientOptions: ClientOptions) : TeamService {
 
     private val withRawResponse: TeamService.WithRawResponse by lazy {
@@ -48,6 +49,7 @@ class TeamServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamService =
         TeamServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Operations related to football teams */
     override fun logo(): LogoService = logo
 
     override fun create(params: TeamCreateParams, requestOptions: RequestOptions): Team =
@@ -109,6 +111,7 @@ class TeamServiceImpl internal constructor(private val clientOptions: ClientOpti
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Operations related to football teams */
         override fun logo(): LogoService.WithRawResponse = logo
 
         private val createHandler: Handler<Team> = jsonHandler<Team>(clientOptions.jsonMapper)

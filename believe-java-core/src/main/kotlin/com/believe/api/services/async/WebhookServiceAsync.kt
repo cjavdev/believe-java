@@ -19,6 +19,7 @@ import com.believe.api.models.webhooks.WebhookTriggerEventResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Register webhook endpoints and trigger events for testing */
 interface WebhookServiceAsync {
 
     /**

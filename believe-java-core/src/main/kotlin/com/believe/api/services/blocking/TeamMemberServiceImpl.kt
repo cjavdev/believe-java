@@ -39,6 +39,7 @@ import com.believe.api.models.teammembers.TeamMemberUpdateResponse
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
 class TeamMemberServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     TeamMemberService {
 

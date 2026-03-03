@@ -10,6 +10,7 @@ import com.believe.api.models.matches.commentary.CommentaryStreamResponse
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 interface CommentaryService {
 
     /**
