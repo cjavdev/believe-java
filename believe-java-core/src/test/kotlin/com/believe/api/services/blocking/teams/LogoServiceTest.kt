@@ -52,7 +52,7 @@ internal class LogoServiceTest {
             logoService.upload(
                 LogoUploadParams.builder()
                     .teamId("team_id")
-                    .file("some content".byteInputStream())
+                    .file("Example data".byteInputStream())
                     .build()
             )
 

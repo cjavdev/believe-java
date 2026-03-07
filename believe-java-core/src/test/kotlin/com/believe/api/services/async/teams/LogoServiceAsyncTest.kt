@@ -56,7 +56,7 @@ internal class LogoServiceAsyncTest {
             logoServiceAsync.upload(
                 LogoUploadParams.builder()
                     .teamId("team_id")
-                    .file("some content".byteInputStream())
+                    .file("Example data".byteInputStream())
                     .build()
             )
 
