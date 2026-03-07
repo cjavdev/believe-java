@@ -11,7 +11,7 @@ internal class LogoUploadParamsTest {
 
     @Test
     fun create() {
-        LogoUploadParams.builder().teamId("team_id").file("some content".byteInputStream()).build()
+        LogoUploadParams.builder().teamId("team_id").file("Example data".byteInputStream()).build()
     }
 
     @Test
@@ -19,7 +19,7 @@ internal class LogoUploadParamsTest {
         val params =
             LogoUploadParams.builder()
                 .teamId("team_id")
-                .file("some content".byteInputStream())
+                .file("Example data".byteInputStream())
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("team_id")
@@ -32,7 +32,7 @@ internal class LogoUploadParamsTest {
         val params =
             LogoUploadParams.builder()
                 .teamId("team_id")
-                .file("some content".byteInputStream())
+                .file("Example data".byteInputStream())
                 .build()
 
         val body = params._body()
@@ -46,7 +46,7 @@ internal class LogoUploadParamsTest {
                 InputStream::class.java,
             )
             .isEqualTo(
-                mapOf("file" to MultipartField.of("some content".byteInputStream())).mapValues {
+                mapOf("file" to MultipartField.of("Example data".byteInputStream())).mapValues {
                     (_, field) ->
                     field.map { (it as? ByteArray)?.inputStream() ?: it }
                 }
