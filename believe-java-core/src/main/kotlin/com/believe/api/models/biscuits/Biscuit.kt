@@ -367,6 +367,10 @@ private constructor(
 
             @JvmField val OATMEAL_RAISIN = of("oatmeal_raisin")
 
+            @JvmField val SNICKERDOODLE = of("snickerdoodle")
+
+            @JvmField val LEMON_DRIZZLE = of("lemon_drizzle")
+
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -376,6 +380,8 @@ private constructor(
             SHORTBREAD,
             CHOCOLATE_CHIP,
             OATMEAL_RAISIN,
+            SNICKERDOODLE,
+            LEMON_DRIZZLE,
         }
 
         /**
@@ -392,6 +398,8 @@ private constructor(
             SHORTBREAD,
             CHOCOLATE_CHIP,
             OATMEAL_RAISIN,
+            SNICKERDOODLE,
+            LEMON_DRIZZLE,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -409,6 +417,8 @@ private constructor(
                 SHORTBREAD -> Value.SHORTBREAD
                 CHOCOLATE_CHIP -> Value.CHOCOLATE_CHIP
                 OATMEAL_RAISIN -> Value.OATMEAL_RAISIN
+                SNICKERDOODLE -> Value.SNICKERDOODLE
+                LEMON_DRIZZLE -> Value.LEMON_DRIZZLE
                 else -> Value._UNKNOWN
             }
 
@@ -427,6 +437,8 @@ private constructor(
                 SHORTBREAD -> Known.SHORTBREAD
                 CHOCOLATE_CHIP -> Known.CHOCOLATE_CHIP
                 OATMEAL_RAISIN -> Known.OATMEAL_RAISIN
+                SNICKERDOODLE -> Known.SNICKERDOODLE
+                LEMON_DRIZZLE -> Known.LEMON_DRIZZLE
                 else -> throw BelieveInvalidDataException("Unknown Type: $value")
             }
 
