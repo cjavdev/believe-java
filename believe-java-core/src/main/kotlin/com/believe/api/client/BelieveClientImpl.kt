@@ -49,6 +49,8 @@ import com.believe.api.services.blocking.TeamMemberService
 import com.believe.api.services.blocking.TeamMemberServiceImpl
 import com.believe.api.services.blocking.TeamService
 import com.believe.api.services.blocking.TeamServiceImpl
+import com.believe.api.services.blocking.TicketSaleService
+import com.believe.api.services.blocking.TicketSaleServiceImpl
 import com.believe.api.services.blocking.VersionService
 import com.believe.api.services.blocking.VersionServiceImpl
 import com.believe.api.services.blocking.WebhookService
@@ -110,6 +112,10 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptionsWithUserAgent) }
 
+    private val ticketSales: TicketSaleService by lazy {
+        TicketSaleServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val health: HealthService by lazy { HealthServiceImpl(clientOptionsWithUserAgent) }
 
     private val version: VersionService by lazy { VersionServiceImpl(clientOptionsWithUserAgent) }
@@ -167,6 +173,9 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     /** Register webhook endpoints and trigger events for testing */
     override fun webhooks(): WebhookService = webhooks
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    override fun ticketSales(): TicketSaleService = ticketSales
 
     override fun health(): HealthService = health
 
@@ -249,6 +258,10 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
             WebhookServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val ticketSales: TicketSaleService.WithRawResponse by lazy {
+            TicketSaleServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val health: HealthService.WithRawResponse by lazy {
             HealthServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -313,6 +326,11 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
         /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookService.WithRawResponse = webhooks
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        override fun ticketSales(): TicketSaleService.WithRawResponse = ticketSales
 
         override fun health(): HealthService.WithRawResponse = health
 

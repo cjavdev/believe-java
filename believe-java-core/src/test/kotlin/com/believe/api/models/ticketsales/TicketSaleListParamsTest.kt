@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import com.believe.api.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
@@ -15,7 +15,7 @@ internal class TicketSaleListParamsTest {
             .currency("currency")
             .limit(10L)
             .matchId("match_id")
-            .purchaseMethod(TicketSaleListParams.PurchaseMethod.ONLINE)
+            .purchaseMethod(PurchaseMethod.ONLINE)
             .skip(0L)
             .build()
     }
@@ -28,7 +28,7 @@ internal class TicketSaleListParamsTest {
                 .currency("currency")
                 .limit(10L)
                 .matchId("match_id")
-                .purchaseMethod(TicketSaleListParams.PurchaseMethod.ONLINE)
+                .purchaseMethod(PurchaseMethod.ONLINE)
                 .skip(0L)
                 .build()
 

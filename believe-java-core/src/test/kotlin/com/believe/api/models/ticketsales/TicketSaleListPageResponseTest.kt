@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import com.believe.api.core.jsonMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
@@ -14,13 +14,13 @@ internal class TicketSaleListPageResponseTest {
         val ticketSaleListPageResponse =
             TicketSaleListPageResponse.builder()
                 .addData(
-                    TicketSaleListResponse.builder()
+                    TicketSale.builder()
                         .id("ts-001")
                         .buyerName("Mae Green")
                         .currency("GBP")
                         .discount("9.00")
                         .matchId("match-001")
-                        .purchaseMethod(TicketSaleListResponse.PurchaseMethod.ONLINE)
+                        .purchaseMethod(PurchaseMethod.ONLINE)
                         .quantity(2L)
                         .subtotal("90.00")
                         .tax("16.20")
@@ -40,13 +40,13 @@ internal class TicketSaleListPageResponseTest {
 
         assertThat(ticketSaleListPageResponse.data())
             .containsExactly(
-                TicketSaleListResponse.builder()
+                TicketSale.builder()
                     .id("ts-001")
                     .buyerName("Mae Green")
                     .currency("GBP")
                     .discount("9.00")
                     .matchId("match-001")
-                    .purchaseMethod(TicketSaleListResponse.PurchaseMethod.ONLINE)
+                    .purchaseMethod(PurchaseMethod.ONLINE)
                     .quantity(2L)
                     .subtotal("90.00")
                     .tax("16.20")
@@ -70,13 +70,13 @@ internal class TicketSaleListPageResponseTest {
         val ticketSaleListPageResponse =
             TicketSaleListPageResponse.builder()
                 .addData(
-                    TicketSaleListResponse.builder()
+                    TicketSale.builder()
                         .id("ts-001")
                         .buyerName("Mae Green")
                         .currency("GBP")
                         .discount("9.00")
                         .matchId("match-001")
-                        .purchaseMethod(TicketSaleListResponse.PurchaseMethod.ONLINE)
+                        .purchaseMethod(PurchaseMethod.ONLINE)
                         .quantity(2L)
                         .subtotal("90.00")
                         .tax("16.20")

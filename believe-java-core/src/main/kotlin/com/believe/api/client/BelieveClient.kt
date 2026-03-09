@@ -23,6 +23,7 @@ import com.believe.api.services.blocking.ReframeService
 import com.believe.api.services.blocking.StreamService
 import com.believe.api.services.blocking.TeamMemberService
 import com.believe.api.services.blocking.TeamService
+import com.believe.api.services.blocking.TicketSaleService
 import com.believe.api.services.blocking.VersionService
 import com.believe.api.services.blocking.WebhookService
 import com.google.errorprone.annotations.MustBeClosed
@@ -108,6 +109,9 @@ interface BelieveClient {
 
     /** Register webhook endpoints and trigger events for testing */
     fun webhooks(): WebhookService
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    fun ticketSales(): TicketSaleService
 
     fun health(): HealthService
 
@@ -201,6 +205,11 @@ interface BelieveClient {
 
         /** Register webhook endpoints and trigger events for testing */
         fun webhooks(): WebhookService.WithRawResponse
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        fun ticketSales(): TicketSaleService.WithRawResponse
 
         fun health(): HealthService.WithRawResponse
 

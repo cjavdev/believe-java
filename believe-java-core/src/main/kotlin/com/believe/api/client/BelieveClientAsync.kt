@@ -23,6 +23,7 @@ import com.believe.api.services.async.ReframeServiceAsync
 import com.believe.api.services.async.StreamServiceAsync
 import com.believe.api.services.async.TeamMemberServiceAsync
 import com.believe.api.services.async.TeamServiceAsync
+import com.believe.api.services.async.TicketSaleServiceAsync
 import com.believe.api.services.async.VersionServiceAsync
 import com.believe.api.services.async.WebhookServiceAsync
 import java.util.concurrent.CompletableFuture
@@ -108,6 +109,9 @@ interface BelieveClientAsync {
 
     /** Register webhook endpoints and trigger events for testing */
     fun webhooks(): WebhookServiceAsync
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    fun ticketSales(): TicketSaleServiceAsync
 
     fun health(): HealthServiceAsync
 
@@ -206,6 +210,11 @@ interface BelieveClientAsync {
 
         /** Register webhook endpoints and trigger events for testing */
         fun webhooks(): WebhookServiceAsync.WithRawResponse
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        fun ticketSales(): TicketSaleServiceAsync.WithRawResponse
 
         fun health(): HealthServiceAsync.WithRawResponse
 

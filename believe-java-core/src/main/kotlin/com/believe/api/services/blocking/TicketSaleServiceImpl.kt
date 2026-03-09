@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.services.blocking.client
+package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
@@ -17,16 +17,14 @@ import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.core.http.json
 import com.believe.api.core.http.parseable
 import com.believe.api.core.prepare
-import com.believe.api.models.client.ticketsales.TicketSaleCreateParams
-import com.believe.api.models.client.ticketsales.TicketSaleCreateResponse
-import com.believe.api.models.client.ticketsales.TicketSaleDeleteParams
-import com.believe.api.models.client.ticketsales.TicketSaleListPage
-import com.believe.api.models.client.ticketsales.TicketSaleListPageResponse
-import com.believe.api.models.client.ticketsales.TicketSaleListParams
-import com.believe.api.models.client.ticketsales.TicketSaleRetrieveParams
-import com.believe.api.models.client.ticketsales.TicketSaleRetrieveResponse
-import com.believe.api.models.client.ticketsales.TicketSaleUpdateParams
-import com.believe.api.models.client.ticketsales.TicketSaleUpdateResponse
+import com.believe.api.models.ticketsales.TicketSale
+import com.believe.api.models.ticketsales.TicketSaleCreateParams
+import com.believe.api.models.ticketsales.TicketSaleDeleteParams
+import com.believe.api.models.ticketsales.TicketSaleListPage
+import com.believe.api.models.ticketsales.TicketSaleListPageResponse
+import com.believe.api.models.ticketsales.TicketSaleListParams
+import com.believe.api.models.ticketsales.TicketSaleRetrieveParams
+import com.believe.api.models.ticketsales.TicketSaleUpdateParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -46,21 +44,21 @@ class TicketSaleServiceImpl internal constructor(private val clientOptions: Clie
     override fun create(
         params: TicketSaleCreateParams,
         requestOptions: RequestOptions,
-    ): TicketSaleCreateResponse =
+    ): TicketSale =
         // post /ticket-sales
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: TicketSaleRetrieveParams,
         requestOptions: RequestOptions,
-    ): TicketSaleRetrieveResponse =
+    ): TicketSale =
         // get /ticket-sales/{ticket_sale_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: TicketSaleUpdateParams,
         requestOptions: RequestOptions,
-    ): TicketSaleUpdateResponse =
+    ): TicketSale =
         // patch /ticket-sales/{ticket_sale_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -89,13 +87,13 @@ class TicketSaleServiceImpl internal constructor(private val clientOptions: Clie
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<TicketSaleCreateResponse> =
-            jsonHandler<TicketSaleCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<TicketSale> =
+            jsonHandler<TicketSale>(clientOptions.jsonMapper)
 
         override fun create(
             params: TicketSaleCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TicketSaleCreateResponse> {
+        ): HttpResponseFor<TicketSale> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -117,13 +115,13 @@ class TicketSaleServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val retrieveHandler: Handler<TicketSaleRetrieveResponse> =
-            jsonHandler<TicketSaleRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<TicketSale> =
+            jsonHandler<TicketSale>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: TicketSaleRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TicketSaleRetrieveResponse> {
+        ): HttpResponseFor<TicketSale> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("ticketSaleId", params.ticketSaleId().getOrNull())
@@ -147,13 +145,13 @@ class TicketSaleServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val updateHandler: Handler<TicketSaleUpdateResponse> =
-            jsonHandler<TicketSaleUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<TicketSale> =
+            jsonHandler<TicketSale>(clientOptions.jsonMapper)
 
         override fun update(
             params: TicketSaleUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TicketSaleUpdateResponse> {
+        ): HttpResponseFor<TicketSale> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("ticketSaleId", params.ticketSaleId().getOrNull())

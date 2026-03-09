@@ -49,6 +49,8 @@ import com.believe.api.services.async.TeamMemberServiceAsync
 import com.believe.api.services.async.TeamMemberServiceAsyncImpl
 import com.believe.api.services.async.TeamServiceAsync
 import com.believe.api.services.async.TeamServiceAsyncImpl
+import com.believe.api.services.async.TicketSaleServiceAsync
+import com.believe.api.services.async.TicketSaleServiceAsyncImpl
 import com.believe.api.services.async.VersionServiceAsync
 import com.believe.api.services.async.VersionServiceAsyncImpl
 import com.believe.api.services.async.WebhookServiceAsync
@@ -131,6 +133,10 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
         WebhookServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val ticketSales: TicketSaleServiceAsync by lazy {
+        TicketSaleServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val health: HealthServiceAsync by lazy {
         HealthServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -194,6 +200,9 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
 
     /** Register webhook endpoints and trigger events for testing */
     override fun webhooks(): WebhookServiceAsync = webhooks
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    override fun ticketSales(): TicketSaleServiceAsync = ticketSales
 
     override fun health(): HealthServiceAsync = health
 
@@ -276,6 +285,10 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
             WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val ticketSales: TicketSaleServiceAsync.WithRawResponse by lazy {
+            TicketSaleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val health: HealthServiceAsync.WithRawResponse by lazy {
             HealthServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -340,6 +353,11 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
 
         /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        override fun ticketSales(): TicketSaleServiceAsync.WithRawResponse = ticketSales
 
         override fun health(): HealthServiceAsync.WithRawResponse = health
 

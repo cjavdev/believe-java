@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import com.believe.api.core.ExcludeMissing
 import com.believe.api.core.JsonField
@@ -21,7 +21,7 @@ import kotlin.jvm.optionals.getOrNull
 class TicketSaleListPageResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val data: JsonField<List<TicketSaleListResponse>>,
+    private val data: JsonField<List<TicketSale>>,
     private val hasMore: JsonField<Boolean>,
     private val limit: JsonField<Long>,
     private val page: JsonField<Long>,
@@ -33,9 +33,7 @@ private constructor(
 
     @JsonCreator
     private constructor(
-        @JsonProperty("data")
-        @ExcludeMissing
-        data: JsonField<List<TicketSaleListResponse>> = JsonMissing.of(),
+        @JsonProperty("data") @ExcludeMissing data: JsonField<List<TicketSale>> = JsonMissing.of(),
         @JsonProperty("has_more") @ExcludeMissing hasMore: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("limit") @ExcludeMissing limit: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("page") @ExcludeMissing page: JsonField<Long> = JsonMissing.of(),
@@ -48,7 +46,7 @@ private constructor(
      * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun data(): List<TicketSaleListResponse> = data.getRequired("data")
+    fun data(): List<TicketSale> = data.getRequired("data")
 
     /**
      * Whether there are more items after this page.
@@ -97,9 +95,7 @@ private constructor(
      *
      * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("data")
-    @ExcludeMissing
-    fun _data(): JsonField<List<TicketSaleListResponse>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<TicketSale>> = data
 
     /**
      * Returns the raw JSON value of [hasMore].
@@ -177,7 +173,7 @@ private constructor(
     /** A builder for [TicketSaleListPageResponse]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<TicketSaleListResponse>>? = null
+        private var data: JsonField<MutableList<TicketSale>>? = null
         private var hasMore: JsonField<Boolean>? = null
         private var limit: JsonField<Long>? = null
         private var page: JsonField<Long>? = null
@@ -198,25 +194,25 @@ private constructor(
             additionalProperties = ticketSaleListPageResponse.additionalProperties.toMutableMap()
         }
 
-        fun data(data: List<TicketSaleListResponse>) = data(JsonField.of(data))
+        fun data(data: List<TicketSale>) = data(JsonField.of(data))
 
         /**
          * Sets [Builder.data] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.data] with a well-typed `List<TicketSaleListResponse>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.data] with a well-typed `List<TicketSale>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun data(data: JsonField<List<TicketSaleListResponse>>) = apply {
+        fun data(data: JsonField<List<TicketSale>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
         /**
-         * Adds a single [TicketSaleListResponse] to [Builder.data].
+         * Adds a single [TicketSale] to [Builder.data].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addData(data: TicketSaleListResponse) = apply {
+        fun addData(data: TicketSale) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)
