@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,7 +14,7 @@ internal class TicketSaleCreateParamsTest {
             .currency("GBP")
             .discount("9.00")
             .matchId("match-001")
-            .purchaseMethod(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+            .purchaseMethod(PurchaseMethod.ONLINE)
             .quantity(2L)
             .subtotal("90.00")
             .tax("16.20")
@@ -33,7 +33,7 @@ internal class TicketSaleCreateParamsTest {
                 .currency("GBP")
                 .discount("9.00")
                 .matchId("match-001")
-                .purchaseMethod(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+                .purchaseMethod(PurchaseMethod.ONLINE)
                 .quantity(2L)
                 .subtotal("90.00")
                 .tax("16.20")
@@ -49,7 +49,7 @@ internal class TicketSaleCreateParamsTest {
         assertThat(body.currency()).isEqualTo("GBP")
         assertThat(body.discount()).isEqualTo("9.00")
         assertThat(body.matchId()).isEqualTo("match-001")
-        assertThat(body.purchaseMethod()).isEqualTo(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+        assertThat(body.purchaseMethod()).isEqualTo(PurchaseMethod.ONLINE)
         assertThat(body.quantity()).isEqualTo(2L)
         assertThat(body.subtotal()).isEqualTo("90.00")
         assertThat(body.tax()).isEqualTo("16.20")
@@ -67,7 +67,7 @@ internal class TicketSaleCreateParamsTest {
                 .currency("GBP")
                 .discount("9.00")
                 .matchId("match-001")
-                .purchaseMethod(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+                .purchaseMethod(PurchaseMethod.ONLINE)
                 .quantity(2L)
                 .subtotal("90.00")
                 .tax("16.20")
@@ -81,7 +81,7 @@ internal class TicketSaleCreateParamsTest {
         assertThat(body.currency()).isEqualTo("GBP")
         assertThat(body.discount()).isEqualTo("9.00")
         assertThat(body.matchId()).isEqualTo("match-001")
-        assertThat(body.purchaseMethod()).isEqualTo(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+        assertThat(body.purchaseMethod()).isEqualTo(PurchaseMethod.ONLINE)
         assertThat(body.quantity()).isEqualTo(2L)
         assertThat(body.subtotal()).isEqualTo("90.00")
         assertThat(body.tax()).isEqualTo("16.20")

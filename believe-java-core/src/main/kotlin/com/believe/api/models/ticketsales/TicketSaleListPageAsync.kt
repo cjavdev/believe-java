@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
-import com.believe.api.services.async.client.TicketSaleServiceAsync
+import com.believe.api.services.async.TicketSaleServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
@@ -20,15 +20,14 @@ private constructor(
     private val streamHandlerExecutor: Executor,
     private val params: TicketSaleListParams,
     private val response: TicketSaleListPageResponse,
-) : PageAsync<TicketSaleListResponse> {
+) : PageAsync<TicketSale> {
 
     /**
      * Delegates to [TicketSaleListPageResponse], but gracefully handles missing data.
      *
      * @see TicketSaleListPageResponse.data
      */
-    fun data(): List<TicketSaleListResponse> =
-        response._data().getOptional("data").getOrNull() ?: emptyList()
+    fun data(): List<TicketSale> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [TicketSaleListPageResponse], but gracefully handles missing data.
@@ -44,7 +43,7 @@ private constructor(
      */
     fun skip(): Optional<Long> = response._skip().getOptional("skip")
 
-    override fun items(): List<TicketSaleListResponse> = data()
+    override fun items(): List<TicketSale> = data()
 
     override fun hasNextPage(): Boolean {
         if (items().isEmpty()) {
@@ -64,8 +63,7 @@ private constructor(
     override fun nextPage(): CompletableFuture<TicketSaleListPageAsync> =
         service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<TicketSaleListResponse> =
-        AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<TicketSale> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): TicketSaleListParams = params

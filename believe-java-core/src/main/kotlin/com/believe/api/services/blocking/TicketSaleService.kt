@@ -1,25 +1,23 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.services.async.client
+package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponse
 import com.believe.api.core.http.HttpResponseFor
-import com.believe.api.models.client.ticketsales.TicketSaleCreateParams
-import com.believe.api.models.client.ticketsales.TicketSaleCreateResponse
-import com.believe.api.models.client.ticketsales.TicketSaleDeleteParams
-import com.believe.api.models.client.ticketsales.TicketSaleListPageAsync
-import com.believe.api.models.client.ticketsales.TicketSaleListParams
-import com.believe.api.models.client.ticketsales.TicketSaleRetrieveParams
-import com.believe.api.models.client.ticketsales.TicketSaleRetrieveResponse
-import com.believe.api.models.client.ticketsales.TicketSaleUpdateParams
-import com.believe.api.models.client.ticketsales.TicketSaleUpdateResponse
-import java.util.concurrent.CompletableFuture
+import com.believe.api.models.ticketsales.TicketSale
+import com.believe.api.models.ticketsales.TicketSaleCreateParams
+import com.believe.api.models.ticketsales.TicketSaleDeleteParams
+import com.believe.api.models.ticketsales.TicketSaleListPage
+import com.believe.api.models.ticketsales.TicketSaleListParams
+import com.believe.api.models.ticketsales.TicketSaleRetrieveParams
+import com.believe.api.models.ticketsales.TicketSaleUpdateParams
+import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
-interface TicketSaleServiceAsync {
+interface TicketSaleService {
 
     /**
      * Returns a view of this service that provides access to raw HTTP responses for each method.
@@ -31,20 +29,19 @@ interface TicketSaleServiceAsync {
      *
      * The original service is not modified.
      */
-    fun withOptions(modifier: Consumer<ClientOptions.Builder>): TicketSaleServiceAsync
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): TicketSaleService
 
     /** Record a new ticket sale. */
-    fun create(params: TicketSaleCreateParams): CompletableFuture<TicketSaleCreateResponse> =
-        create(params, RequestOptions.none())
+    fun create(params: TicketSaleCreateParams): TicketSale = create(params, RequestOptions.none())
 
     /** @see create */
     fun create(
         params: TicketSaleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleCreateResponse>
+    ): TicketSale
 
     /** Retrieve detailed information about a specific ticket sale. */
-    fun retrieve(ticketSaleId: String): CompletableFuture<TicketSaleRetrieveResponse> =
+    fun retrieve(ticketSaleId: String): TicketSale =
         retrieve(ticketSaleId, TicketSaleRetrieveParams.none())
 
     /** @see retrieve */
@@ -52,35 +49,30 @@ interface TicketSaleServiceAsync {
         ticketSaleId: String,
         params: TicketSaleRetrieveParams = TicketSaleRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleRetrieveResponse> =
-        retrieve(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
+    ): TicketSale = retrieve(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
         ticketSaleId: String,
         params: TicketSaleRetrieveParams = TicketSaleRetrieveParams.none(),
-    ): CompletableFuture<TicketSaleRetrieveResponse> =
-        retrieve(ticketSaleId, params, RequestOptions.none())
+    ): TicketSale = retrieve(ticketSaleId, params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         params: TicketSaleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleRetrieveResponse>
+    ): TicketSale
 
     /** @see retrieve */
-    fun retrieve(params: TicketSaleRetrieveParams): CompletableFuture<TicketSaleRetrieveResponse> =
+    fun retrieve(params: TicketSaleRetrieveParams): TicketSale =
         retrieve(params, RequestOptions.none())
 
     /** @see retrieve */
-    fun retrieve(
-        ticketSaleId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<TicketSaleRetrieveResponse> =
+    fun retrieve(ticketSaleId: String, requestOptions: RequestOptions): TicketSale =
         retrieve(ticketSaleId, TicketSaleRetrieveParams.none(), requestOptions)
 
     /** Update specific fields of an existing ticket sale. */
-    fun update(ticketSaleId: String): CompletableFuture<TicketSaleUpdateResponse> =
+    fun update(ticketSaleId: String): TicketSale =
         update(ticketSaleId, TicketSaleUpdateParams.none())
 
     /** @see update */
@@ -88,90 +80,77 @@ interface TicketSaleServiceAsync {
         ticketSaleId: String,
         params: TicketSaleUpdateParams = TicketSaleUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleUpdateResponse> =
-        update(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
+    ): TicketSale = update(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
     /** @see update */
     fun update(
         ticketSaleId: String,
         params: TicketSaleUpdateParams = TicketSaleUpdateParams.none(),
-    ): CompletableFuture<TicketSaleUpdateResponse> =
-        update(ticketSaleId, params, RequestOptions.none())
+    ): TicketSale = update(ticketSaleId, params, RequestOptions.none())
 
     /** @see update */
     fun update(
         params: TicketSaleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleUpdateResponse>
+    ): TicketSale
 
     /** @see update */
-    fun update(params: TicketSaleUpdateParams): CompletableFuture<TicketSaleUpdateResponse> =
-        update(params, RequestOptions.none())
+    fun update(params: TicketSaleUpdateParams): TicketSale = update(params, RequestOptions.none())
 
     /** @see update */
-    fun update(
-        ticketSaleId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<TicketSaleUpdateResponse> =
+    fun update(ticketSaleId: String, requestOptions: RequestOptions): TicketSale =
         update(ticketSaleId, TicketSaleUpdateParams.none(), requestOptions)
 
     /**
      * Get a paginated list of all ticket sales with optional filtering. With 300 records, this
      * endpoint is ideal for practicing pagination.
      */
-    fun list(): CompletableFuture<TicketSaleListPageAsync> = list(TicketSaleListParams.none())
+    fun list(): TicketSaleListPage = list(TicketSaleListParams.none())
 
     /** @see list */
     fun list(
         params: TicketSaleListParams = TicketSaleListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TicketSaleListPageAsync>
+    ): TicketSaleListPage
 
     /** @see list */
-    fun list(
-        params: TicketSaleListParams = TicketSaleListParams.none()
-    ): CompletableFuture<TicketSaleListPageAsync> = list(params, RequestOptions.none())
+    fun list(params: TicketSaleListParams = TicketSaleListParams.none()): TicketSaleListPage =
+        list(params, RequestOptions.none())
 
     /** @see list */
-    fun list(requestOptions: RequestOptions): CompletableFuture<TicketSaleListPageAsync> =
+    fun list(requestOptions: RequestOptions): TicketSaleListPage =
         list(TicketSaleListParams.none(), requestOptions)
 
     /** Remove a ticket sale from the database. */
-    fun delete(ticketSaleId: String): CompletableFuture<Void?> =
-        delete(ticketSaleId, TicketSaleDeleteParams.none())
+    fun delete(ticketSaleId: String) = delete(ticketSaleId, TicketSaleDeleteParams.none())
 
     /** @see delete */
     fun delete(
         ticketSaleId: String,
         params: TicketSaleDeleteParams = TicketSaleDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?> =
-        delete(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
+    ) = delete(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
     /** @see delete */
     fun delete(
         ticketSaleId: String,
         params: TicketSaleDeleteParams = TicketSaleDeleteParams.none(),
-    ): CompletableFuture<Void?> = delete(ticketSaleId, params, RequestOptions.none())
+    ) = delete(ticketSaleId, params, RequestOptions.none())
 
     /** @see delete */
     fun delete(
         params: TicketSaleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?>
+    )
 
     /** @see delete */
-    fun delete(params: TicketSaleDeleteParams): CompletableFuture<Void?> =
-        delete(params, RequestOptions.none())
+    fun delete(params: TicketSaleDeleteParams) = delete(params, RequestOptions.none())
 
     /** @see delete */
-    fun delete(ticketSaleId: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
+    fun delete(ticketSaleId: String, requestOptions: RequestOptions) =
         delete(ticketSaleId, TicketSaleDeleteParams.none(), requestOptions)
 
-    /**
-     * A view of [TicketSaleServiceAsync] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [TicketSaleService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -181,170 +160,175 @@ interface TicketSaleServiceAsync {
          */
         fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
-        ): TicketSaleServiceAsync.WithRawResponse
+        ): TicketSaleService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /ticket-sales`, but is otherwise the same as
-         * [TicketSaleServiceAsync.create].
+         * [TicketSaleService.create].
          */
-        fun create(
-            params: TicketSaleCreateParams
-        ): CompletableFuture<HttpResponseFor<TicketSaleCreateResponse>> =
+        @MustBeClosed
+        fun create(params: TicketSaleCreateParams): HttpResponseFor<TicketSale> =
             create(params, RequestOptions.none())
 
         /** @see create */
+        @MustBeClosed
         fun create(
             params: TicketSaleCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleCreateResponse>>
+        ): HttpResponseFor<TicketSale>
 
         /**
          * Returns a raw HTTP response for `get /ticket-sales/{ticket_sale_id}`, but is otherwise
-         * the same as [TicketSaleServiceAsync.retrieve].
+         * the same as [TicketSaleService.retrieve].
          */
-        fun retrieve(
-            ticketSaleId: String
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>> =
+        @MustBeClosed
+        fun retrieve(ticketSaleId: String): HttpResponseFor<TicketSale> =
             retrieve(ticketSaleId, TicketSaleRetrieveParams.none())
 
         /** @see retrieve */
+        @MustBeClosed
         fun retrieve(
             ticketSaleId: String,
             params: TicketSaleRetrieveParams = TicketSaleRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>> =
+        ): HttpResponseFor<TicketSale> =
             retrieve(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
         /** @see retrieve */
+        @MustBeClosed
         fun retrieve(
             ticketSaleId: String,
             params: TicketSaleRetrieveParams = TicketSaleRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>> =
-            retrieve(ticketSaleId, params, RequestOptions.none())
+        ): HttpResponseFor<TicketSale> = retrieve(ticketSaleId, params, RequestOptions.none())
 
         /** @see retrieve */
+        @MustBeClosed
         fun retrieve(
             params: TicketSaleRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>>
+        ): HttpResponseFor<TicketSale>
 
         /** @see retrieve */
-        fun retrieve(
-            params: TicketSaleRetrieveParams
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>> =
+        @MustBeClosed
+        fun retrieve(params: TicketSaleRetrieveParams): HttpResponseFor<TicketSale> =
             retrieve(params, RequestOptions.none())
 
         /** @see retrieve */
+        @MustBeClosed
         fun retrieve(
             ticketSaleId: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TicketSaleRetrieveResponse>> =
+        ): HttpResponseFor<TicketSale> =
             retrieve(ticketSaleId, TicketSaleRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /ticket-sales/{ticket_sale_id}`, but is otherwise
-         * the same as [TicketSaleServiceAsync.update].
+         * the same as [TicketSaleService.update].
          */
-        fun update(
-            ticketSaleId: String
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>> =
+        @MustBeClosed
+        fun update(ticketSaleId: String): HttpResponseFor<TicketSale> =
             update(ticketSaleId, TicketSaleUpdateParams.none())
 
         /** @see update */
+        @MustBeClosed
         fun update(
             ticketSaleId: String,
             params: TicketSaleUpdateParams = TicketSaleUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>> =
+        ): HttpResponseFor<TicketSale> =
             update(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
         /** @see update */
+        @MustBeClosed
         fun update(
             ticketSaleId: String,
             params: TicketSaleUpdateParams = TicketSaleUpdateParams.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>> =
-            update(ticketSaleId, params, RequestOptions.none())
+        ): HttpResponseFor<TicketSale> = update(ticketSaleId, params, RequestOptions.none())
 
         /** @see update */
+        @MustBeClosed
         fun update(
             params: TicketSaleUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>>
+        ): HttpResponseFor<TicketSale>
 
         /** @see update */
-        fun update(
-            params: TicketSaleUpdateParams
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>> =
+        @MustBeClosed
+        fun update(params: TicketSaleUpdateParams): HttpResponseFor<TicketSale> =
             update(params, RequestOptions.none())
 
         /** @see update */
+        @MustBeClosed
         fun update(
             ticketSaleId: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TicketSaleUpdateResponse>> =
+        ): HttpResponseFor<TicketSale> =
             update(ticketSaleId, TicketSaleUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /ticket-sales`, but is otherwise the same as
-         * [TicketSaleServiceAsync.list].
+         * [TicketSaleService.list].
          */
-        fun list(): CompletableFuture<HttpResponseFor<TicketSaleListPageAsync>> =
-            list(TicketSaleListParams.none())
+        @MustBeClosed
+        fun list(): HttpResponseFor<TicketSaleListPage> = list(TicketSaleListParams.none())
 
         /** @see list */
+        @MustBeClosed
         fun list(
             params: TicketSaleListParams = TicketSaleListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TicketSaleListPageAsync>>
+        ): HttpResponseFor<TicketSaleListPage>
 
         /** @see list */
+        @MustBeClosed
         fun list(
             params: TicketSaleListParams = TicketSaleListParams.none()
-        ): CompletableFuture<HttpResponseFor<TicketSaleListPageAsync>> =
-            list(params, RequestOptions.none())
+        ): HttpResponseFor<TicketSaleListPage> = list(params, RequestOptions.none())
 
         /** @see list */
-        fun list(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<TicketSaleListPageAsync>> =
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<TicketSaleListPage> =
             list(TicketSaleListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /ticket-sales/{ticket_sale_id}`, but is otherwise
-         * the same as [TicketSaleServiceAsync.delete].
+         * the same as [TicketSaleService.delete].
          */
-        fun delete(ticketSaleId: String): CompletableFuture<HttpResponse> =
+        @MustBeClosed
+        fun delete(ticketSaleId: String): HttpResponse =
             delete(ticketSaleId, TicketSaleDeleteParams.none())
 
         /** @see delete */
+        @MustBeClosed
         fun delete(
             ticketSaleId: String,
             params: TicketSaleDeleteParams = TicketSaleDeleteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse> =
+        ): HttpResponse =
             delete(params.toBuilder().ticketSaleId(ticketSaleId).build(), requestOptions)
 
         /** @see delete */
+        @MustBeClosed
         fun delete(
             ticketSaleId: String,
             params: TicketSaleDeleteParams = TicketSaleDeleteParams.none(),
-        ): CompletableFuture<HttpResponse> = delete(ticketSaleId, params, RequestOptions.none())
+        ): HttpResponse = delete(ticketSaleId, params, RequestOptions.none())
 
         /** @see delete */
+        @MustBeClosed
         fun delete(
             params: TicketSaleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse>
+        ): HttpResponse
 
         /** @see delete */
-        fun delete(params: TicketSaleDeleteParams): CompletableFuture<HttpResponse> =
+        @MustBeClosed
+        fun delete(params: TicketSaleDeleteParams): HttpResponse =
             delete(params, RequestOptions.none())
 
         /** @see delete */
-        fun delete(
-            ticketSaleId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponse> =
+        @MustBeClosed
+        fun delete(ticketSaleId: String, requestOptions: RequestOptions): HttpResponse =
             delete(ticketSaleId, TicketSaleDeleteParams.none(), requestOptions)
     }
 }

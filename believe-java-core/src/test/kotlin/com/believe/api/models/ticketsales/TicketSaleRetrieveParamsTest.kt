@@ -1,20 +1,20 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class TicketSaleDeleteParamsTest {
+internal class TicketSaleRetrieveParamsTest {
 
     @Test
     fun create() {
-        TicketSaleDeleteParams.builder().ticketSaleId("ticket_sale_id").build()
+        TicketSaleRetrieveParams.builder().ticketSaleId("ticket_sale_id").build()
     }
 
     @Test
     fun pathParams() {
-        val params = TicketSaleDeleteParams.builder().ticketSaleId("ticket_sale_id").build()
+        val params = TicketSaleRetrieveParams.builder().ticketSaleId("ticket_sale_id").build()
 
         assertThat(params._pathParam(0)).isEqualTo("ticket_sale_id")
         // out-of-bound path param

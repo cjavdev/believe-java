@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.models.client.ticketsales
+package com.believe.api.models.ticketsales
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,7 +17,7 @@ internal class TicketSaleUpdateParamsTest {
             .currency("currency")
             .discount("discount")
             .matchId("match_id")
-            .purchaseMethod(TicketSaleUpdateParams.PurchaseMethod.ONLINE)
+            .purchaseMethod(PurchaseMethod.ONLINE)
             .quantity(1L)
             .subtotal("subtotal")
             .tax("tax")
@@ -46,7 +46,7 @@ internal class TicketSaleUpdateParamsTest {
                 .currency("currency")
                 .discount("discount")
                 .matchId("match_id")
-                .purchaseMethod(TicketSaleUpdateParams.PurchaseMethod.ONLINE)
+                .purchaseMethod(PurchaseMethod.ONLINE)
                 .quantity(1L)
                 .subtotal("subtotal")
                 .tax("tax")
@@ -62,7 +62,7 @@ internal class TicketSaleUpdateParamsTest {
         assertThat(body.currency()).contains("currency")
         assertThat(body.discount()).contains("discount")
         assertThat(body.matchId()).contains("match_id")
-        assertThat(body.purchaseMethod()).contains(TicketSaleUpdateParams.PurchaseMethod.ONLINE)
+        assertThat(body.purchaseMethod()).contains(PurchaseMethod.ONLINE)
         assertThat(body.quantity()).contains(1L)
         assertThat(body.subtotal()).contains("subtotal")
         assertThat(body.tax()).contains("tax")

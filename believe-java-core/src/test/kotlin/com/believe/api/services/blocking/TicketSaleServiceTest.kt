@@ -1,10 +1,11 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.believe.api.services.blocking.client
+package com.believe.api.services.blocking
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
-import com.believe.api.models.client.ticketsales.TicketSaleCreateParams
-import com.believe.api.models.client.ticketsales.TicketSaleUpdateParams
+import com.believe.api.models.ticketsales.PurchaseMethod
+import com.believe.api.models.ticketsales.TicketSaleCreateParams
+import com.believe.api.models.ticketsales.TicketSaleUpdateParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -14,7 +15,7 @@ internal class TicketSaleServiceTest {
     @Test
     fun create() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val ticketSaleService = client.client().ticketSales()
+        val ticketSaleService = client.ticketSales()
 
         val ticketSale =
             ticketSaleService.create(
@@ -23,7 +24,7 @@ internal class TicketSaleServiceTest {
                     .currency("GBP")
                     .discount("9.00")
                     .matchId("match-001")
-                    .purchaseMethod(TicketSaleCreateParams.PurchaseMethod.ONLINE)
+                    .purchaseMethod(PurchaseMethod.ONLINE)
                     .quantity(2L)
                     .subtotal("90.00")
                     .tax("16.20")
@@ -41,7 +42,7 @@ internal class TicketSaleServiceTest {
     @Test
     fun retrieve() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val ticketSaleService = client.client().ticketSales()
+        val ticketSaleService = client.ticketSales()
 
         val ticketSale = ticketSaleService.retrieve("ticket_sale_id")
 
@@ -52,7 +53,7 @@ internal class TicketSaleServiceTest {
     @Test
     fun update() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val ticketSaleService = client.client().ticketSales()
+        val ticketSaleService = client.ticketSales()
 
         val ticketSale =
             ticketSaleService.update(
@@ -64,7 +65,7 @@ internal class TicketSaleServiceTest {
                     .currency("currency")
                     .discount("discount")
                     .matchId("match_id")
-                    .purchaseMethod(TicketSaleUpdateParams.PurchaseMethod.ONLINE)
+                    .purchaseMethod(PurchaseMethod.ONLINE)
                     .quantity(1L)
                     .subtotal("subtotal")
                     .tax("tax")
@@ -80,7 +81,7 @@ internal class TicketSaleServiceTest {
     @Test
     fun list() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val ticketSaleService = client.client().ticketSales()
+        val ticketSaleService = client.ticketSales()
 
         val page = ticketSaleService.list()
 
@@ -91,7 +92,7 @@ internal class TicketSaleServiceTest {
     @Test
     fun delete() {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val ticketSaleService = client.client().ticketSales()
+        val ticketSaleService = client.ticketSales()
 
         ticketSaleService.delete("ticket_sale_id")
     }
