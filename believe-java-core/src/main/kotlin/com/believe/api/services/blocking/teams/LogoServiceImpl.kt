@@ -26,6 +26,7 @@ import com.believe.api.models.teams.logo.LogoUploadParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to football teams */
 class LogoServiceImpl internal constructor(private val clientOptions: ClientOptions) : LogoService {
 
     private val withRawResponse: LogoService.WithRawResponse by lazy {

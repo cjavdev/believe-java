@@ -24,6 +24,7 @@ import com.believe.api.models.coaching.principles.PrincipleRetrieveParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Interactive endpoints for motivation and guidance */
 class PrincipleServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     PrincipleService {
 

@@ -75,6 +75,14 @@ class QuoteTheme @JsonCreator private constructor(private val value: JsonField<S
 
         @JvmField val INTEGRITY = of("integrity")
 
+        @JvmField val INTIMIDATION = of("intimidation")
+
+        @JvmField val AMBITION = of("ambition")
+
+        @JvmField val NARCISSISM = of("narcissism")
+
+        @JvmField val MATURITY = of("maturity")
+
         @JvmStatic fun of(value: String) = QuoteTheme(JsonField.of(value))
     }
 
@@ -107,6 +115,10 @@ class QuoteTheme @JsonCreator private constructor(private val value: JsonField<S
         CONFLICT,
         HONESTY,
         INTEGRITY,
+        INTIMIDATION,
+        AMBITION,
+        NARCISSISM,
+        MATURITY,
     }
 
     /**
@@ -146,6 +158,10 @@ class QuoteTheme @JsonCreator private constructor(private val value: JsonField<S
         CONFLICT,
         HONESTY,
         INTEGRITY,
+        INTIMIDATION,
+        AMBITION,
+        NARCISSISM,
+        MATURITY,
         /** An enum member indicating that [QuoteTheme] was instantiated with an unknown value. */
         _UNKNOWN,
     }
@@ -186,6 +202,10 @@ class QuoteTheme @JsonCreator private constructor(private val value: JsonField<S
             CONFLICT -> Value.CONFLICT
             HONESTY -> Value.HONESTY
             INTEGRITY -> Value.INTEGRITY
+            INTIMIDATION -> Value.INTIMIDATION
+            AMBITION -> Value.AMBITION
+            NARCISSISM -> Value.NARCISSISM
+            MATURITY -> Value.MATURITY
             else -> Value._UNKNOWN
         }
 
@@ -226,6 +246,10 @@ class QuoteTheme @JsonCreator private constructor(private val value: JsonField<S
             CONFLICT -> Known.CONFLICT
             HONESTY -> Known.HONESTY
             INTEGRITY -> Known.INTEGRITY
+            INTIMIDATION -> Known.INTIMIDATION
+            AMBITION -> Known.AMBITION
+            NARCISSISM -> Known.NARCISSISM
+            MATURITY -> Known.MATURITY
             else -> throw BelieveInvalidDataException("Unknown QuoteTheme: $value")
         }
 

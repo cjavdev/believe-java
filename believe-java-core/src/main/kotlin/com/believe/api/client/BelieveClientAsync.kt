@@ -23,6 +23,7 @@ import com.believe.api.services.async.ReframeServiceAsync
 import com.believe.api.services.async.StreamServiceAsync
 import com.believe.api.services.async.TeamMemberServiceAsync
 import com.believe.api.services.async.TeamServiceAsync
+import com.believe.api.services.async.TicketSaleServiceAsync
 import com.believe.api.services.async.VersionServiceAsync
 import com.believe.api.services.async.WebhookServiceAsync
 import java.util.concurrent.CompletableFuture
@@ -64,35 +65,53 @@ interface BelieveClientAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClientAsync
 
+    /** Operations related to Ted Lasso characters */
     fun characters(): CharacterServiceAsync
 
+    /** Operations related to football teams */
     fun teams(): TeamServiceAsync
 
     fun matches(): MatchServiceAsync
 
+    /** Operations related to TV episodes */
     fun episodes(): EpisodeServiceAsync
 
+    /** Memorable quotes from the show */
     fun quotes(): QuoteServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun believe(): BelieveServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun conflicts(): ConflictServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun reframe(): ReframeServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun press(): PressServiceAsync
 
     fun coaching(): CoachingServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun biscuits(): BiscuitServiceAsync
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     fun pepTalk(): PepTalkServiceAsync
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     fun stream(): StreamServiceAsync
 
+    /**
+     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
+     */
     fun teamMembers(): TeamMemberServiceAsync
 
+    /** Register webhook endpoints and trigger events for testing */
     fun webhooks(): WebhookServiceAsync
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    fun ticketSales(): TicketSaleServiceAsync
 
     fun health(): HealthServiceAsync
 
@@ -146,35 +165,56 @@ interface BelieveClientAsync {
             modifier: Consumer<ClientOptions.Builder>
         ): BelieveClientAsync.WithRawResponse
 
+        /** Operations related to Ted Lasso characters */
         fun characters(): CharacterServiceAsync.WithRawResponse
 
+        /** Operations related to football teams */
         fun teams(): TeamServiceAsync.WithRawResponse
 
         fun matches(): MatchServiceAsync.WithRawResponse
 
+        /** Operations related to TV episodes */
         fun episodes(): EpisodeServiceAsync.WithRawResponse
 
+        /** Memorable quotes from the show */
         fun quotes(): QuoteServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun believe(): BelieveServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun conflicts(): ConflictServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun reframe(): ReframeServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun press(): PressServiceAsync.WithRawResponse
 
         fun coaching(): CoachingServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun biscuits(): BiscuitServiceAsync.WithRawResponse
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         fun pepTalk(): PepTalkServiceAsync.WithRawResponse
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         fun stream(): StreamServiceAsync.WithRawResponse
 
+        /**
+         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
+         * Managers
+         */
         fun teamMembers(): TeamMemberServiceAsync.WithRawResponse
 
+        /** Register webhook endpoints and trigger events for testing */
         fun webhooks(): WebhookServiceAsync.WithRawResponse
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        fun ticketSales(): TicketSaleServiceAsync.WithRawResponse
 
         fun health(): HealthServiceAsync.WithRawResponse
 

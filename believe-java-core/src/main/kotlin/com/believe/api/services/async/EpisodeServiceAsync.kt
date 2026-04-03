@@ -18,6 +18,7 @@ import com.believe.api.models.episodes.EpisodeUpdateParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Operations related to TV episodes */
 interface EpisodeServiceAsync {
 
     /**

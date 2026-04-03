@@ -19,6 +19,7 @@ import com.believe.api.models.peptalk.PepTalkRetrieveResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 class PepTalkServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PepTalkServiceAsync {
 

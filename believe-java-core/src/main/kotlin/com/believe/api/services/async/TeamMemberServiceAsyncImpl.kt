@@ -40,6 +40,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
 class TeamMemberServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     TeamMemberServiceAsync {
 

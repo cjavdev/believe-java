@@ -5,6 +5,7 @@ package com.believe.api.models.webhooks
 import com.believe.api.core.BaseDeserializer
 import com.believe.api.core.BaseSerializer
 import com.believe.api.core.JsonValue
+import com.believe.api.core.allMaxBy
 import com.believe.api.core.getOrThrow
 import com.believe.api.errors.BelieveInvalidDataException
 import com.fasterxml.jackson.core.JsonGenerator
@@ -16,7 +17,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.util.Objects
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 /** Webhook event sent when a match completes. */
 @JsonDeserialize(using = UnwrapWebhookEvent.Deserializer::class)
@@ -172,22 +172,27 @@ private constructor(
 
         override fun ObjectCodec.deserialize(node: JsonNode): UnwrapWebhookEvent {
             val json = JsonValue.fromJsonNode(node)
-            val eventType = json.asObject().getOrNull()?.get("event_type")?.asString()?.getOrNull()
 
-            when (eventType) {
-                "match.completed" -> {
-                    return tryDeserialize(node, jacksonTypeRef<MatchCompletedWebhookEvent>())?.let {
-                        UnwrapWebhookEvent(matchCompleted = it, _json = json)
-                    } ?: UnwrapWebhookEvent(_json = json)
-                }
-                "team_member.transferred" -> {
-                    return tryDeserialize(node, jacksonTypeRef<TeamMemberTransferredWebhookEvent>())
-                        ?.let { UnwrapWebhookEvent(teamMemberTransferred = it, _json = json) }
-                        ?: UnwrapWebhookEvent(_json = json)
-                }
+            val bestMatches =
+                sequenceOf(
+                        tryDeserialize(node, jacksonTypeRef<MatchCompletedWebhookEvent>())?.let {
+                            UnwrapWebhookEvent(matchCompleted = it, _json = json)
+                        },
+                        tryDeserialize(node, jacksonTypeRef<TeamMemberTransferredWebhookEvent>())
+                            ?.let { UnwrapWebhookEvent(teamMemberTransferred = it, _json = json) },
+                    )
+                    .filterNotNull()
+                    .allMaxBy { it.validity() }
+                    .toList()
+            return when (bestMatches.size) {
+                // This can happen if what we're deserializing is completely incompatible with all
+                // the possible variants (e.g. deserializing from boolean).
+                0 -> UnwrapWebhookEvent(_json = json)
+                1 -> bestMatches.single()
+                // If there's more than one match with the highest validity, then use the first
+                // completely valid match, or simply the first match if none are completely valid.
+                else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
             }
-
-            return UnwrapWebhookEvent(_json = json)
         }
     }
 

@@ -27,6 +27,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Operations related to football teams */
 class LogoServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     LogoServiceAsync {
 

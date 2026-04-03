@@ -22,6 +22,7 @@ import com.believe.api.models.quotes.QuoteUpdateParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Memorable quotes from the show */
 interface QuoteServiceAsync {
 
     /**

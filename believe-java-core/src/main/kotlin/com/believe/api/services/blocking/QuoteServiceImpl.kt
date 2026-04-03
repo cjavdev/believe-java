@@ -33,6 +33,7 @@ import com.believe.api.models.quotes.QuoteUpdateParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Memorable quotes from the show */
 class QuoteServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     QuoteService {
 

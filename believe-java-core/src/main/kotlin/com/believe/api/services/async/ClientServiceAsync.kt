@@ -20,6 +20,7 @@ interface ClientServiceAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientServiceAsync
 
+    /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
     fun ws(): WServiceAsync
 
     /**
@@ -36,6 +37,7 @@ interface ClientServiceAsync {
             modifier: Consumer<ClientOptions.Builder>
         ): ClientServiceAsync.WithRawResponse
 
+        /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
         fun ws(): WServiceAsync.WithRawResponse
     }
 }

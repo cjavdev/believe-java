@@ -21,6 +21,7 @@ class CoachingServiceImpl internal constructor(private val clientOptions: Client
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CoachingService =
         CoachingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Interactive endpoints for motivation and guidance */
     override fun principles(): PrincipleService = principles
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,7 @@ class CoachingServiceImpl internal constructor(private val clientOptions: Client
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Interactive endpoints for motivation and guidance */
         override fun principles(): PrincipleService.WithRawResponse = principles
     }
 }

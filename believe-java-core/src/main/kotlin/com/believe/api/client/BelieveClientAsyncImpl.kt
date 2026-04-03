@@ -49,6 +49,8 @@ import com.believe.api.services.async.TeamMemberServiceAsync
 import com.believe.api.services.async.TeamMemberServiceAsyncImpl
 import com.believe.api.services.async.TeamServiceAsync
 import com.believe.api.services.async.TeamServiceAsyncImpl
+import com.believe.api.services.async.TicketSaleServiceAsync
+import com.believe.api.services.async.TicketSaleServiceAsyncImpl
 import com.believe.api.services.async.VersionServiceAsync
 import com.believe.api.services.async.VersionServiceAsyncImpl
 import com.believe.api.services.async.WebhookServiceAsync
@@ -131,6 +133,10 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
         WebhookServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val ticketSales: TicketSaleServiceAsync by lazy {
+        TicketSaleServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val health: HealthServiceAsync by lazy {
         HealthServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -150,35 +156,53 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClientAsync =
         BelieveClientAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    /** Operations related to Ted Lasso characters */
     override fun characters(): CharacterServiceAsync = characters
 
+    /** Operations related to football teams */
     override fun teams(): TeamServiceAsync = teams
 
     override fun matches(): MatchServiceAsync = matches
 
+    /** Operations related to TV episodes */
     override fun episodes(): EpisodeServiceAsync = episodes
 
+    /** Memorable quotes from the show */
     override fun quotes(): QuoteServiceAsync = quotes
 
+    /** Interactive endpoints for motivation and guidance */
     override fun believe(): BelieveServiceAsync = believe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun conflicts(): ConflictServiceAsync = conflicts
 
+    /** Interactive endpoints for motivation and guidance */
     override fun reframe(): ReframeServiceAsync = reframe
 
+    /** Interactive endpoints for motivation and guidance */
     override fun press(): PressServiceAsync = press
 
     override fun coaching(): CoachingServiceAsync = coaching
 
+    /** Interactive endpoints for motivation and guidance */
     override fun biscuits(): BiscuitServiceAsync = biscuits
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun pepTalk(): PepTalkServiceAsync = pepTalk
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     override fun stream(): StreamServiceAsync = stream
 
+    /**
+     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
+     */
     override fun teamMembers(): TeamMemberServiceAsync = teamMembers
 
+    /** Register webhook endpoints and trigger events for testing */
     override fun webhooks(): WebhookServiceAsync = webhooks
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    override fun ticketSales(): TicketSaleServiceAsync = ticketSales
 
     override fun health(): HealthServiceAsync = health
 
@@ -261,6 +285,10 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
             WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val ticketSales: TicketSaleServiceAsync.WithRawResponse by lazy {
+            TicketSaleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val health: HealthServiceAsync.WithRawResponse by lazy {
             HealthServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -280,35 +308,56 @@ class BelieveClientAsyncImpl(private val clientOptions: ClientOptions) : Believe
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        /** Operations related to Ted Lasso characters */
         override fun characters(): CharacterServiceAsync.WithRawResponse = characters
 
+        /** Operations related to football teams */
         override fun teams(): TeamServiceAsync.WithRawResponse = teams
 
         override fun matches(): MatchServiceAsync.WithRawResponse = matches
 
+        /** Operations related to TV episodes */
         override fun episodes(): EpisodeServiceAsync.WithRawResponse = episodes
 
+        /** Memorable quotes from the show */
         override fun quotes(): QuoteServiceAsync.WithRawResponse = quotes
 
+        /** Interactive endpoints for motivation and guidance */
         override fun believe(): BelieveServiceAsync.WithRawResponse = believe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun conflicts(): ConflictServiceAsync.WithRawResponse = conflicts
 
+        /** Interactive endpoints for motivation and guidance */
         override fun reframe(): ReframeServiceAsync.WithRawResponse = reframe
 
+        /** Interactive endpoints for motivation and guidance */
         override fun press(): PressServiceAsync.WithRawResponse = press
 
         override fun coaching(): CoachingServiceAsync.WithRawResponse = coaching
 
+        /** Interactive endpoints for motivation and guidance */
         override fun biscuits(): BiscuitServiceAsync.WithRawResponse = biscuits
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun pepTalk(): PepTalkServiceAsync.WithRawResponse = pepTalk
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         override fun stream(): StreamServiceAsync.WithRawResponse = stream
 
+        /**
+         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
+         * Managers
+         */
         override fun teamMembers(): TeamMemberServiceAsync.WithRawResponse = teamMembers
 
+        /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        override fun ticketSales(): TicketSaleServiceAsync.WithRawResponse = ticketSales
 
         override fun health(): HealthServiceAsync.WithRawResponse = health
 

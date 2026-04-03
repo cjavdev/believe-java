@@ -9,6 +9,7 @@ import com.believe.api.models.client.ws.WTestParams
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
+/** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
 interface WService {
 
     /**

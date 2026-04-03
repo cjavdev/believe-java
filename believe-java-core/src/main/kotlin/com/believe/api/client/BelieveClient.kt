@@ -23,6 +23,7 @@ import com.believe.api.services.blocking.ReframeService
 import com.believe.api.services.blocking.StreamService
 import com.believe.api.services.blocking.TeamMemberService
 import com.believe.api.services.blocking.TeamService
+import com.believe.api.services.blocking.TicketSaleService
 import com.believe.api.services.blocking.VersionService
 import com.believe.api.services.blocking.WebhookService
 import com.google.errorprone.annotations.MustBeClosed
@@ -64,35 +65,53 @@ interface BelieveClient {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient
 
+    /** Operations related to Ted Lasso characters */
     fun characters(): CharacterService
 
+    /** Operations related to football teams */
     fun teams(): TeamService
 
     fun matches(): MatchService
 
+    /** Operations related to TV episodes */
     fun episodes(): EpisodeService
 
+    /** Memorable quotes from the show */
     fun quotes(): QuoteService
 
+    /** Interactive endpoints for motivation and guidance */
     fun believe(): BelieveService
 
+    /** Interactive endpoints for motivation and guidance */
     fun conflicts(): ConflictService
 
+    /** Interactive endpoints for motivation and guidance */
     fun reframe(): ReframeService
 
+    /** Interactive endpoints for motivation and guidance */
     fun press(): PressService
 
     fun coaching(): CoachingService
 
+    /** Interactive endpoints for motivation and guidance */
     fun biscuits(): BiscuitService
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     fun pepTalk(): PepTalkService
 
+    /** Server-Sent Events (SSE) streaming endpoints */
     fun stream(): StreamService
 
+    /**
+     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
+     */
     fun teamMembers(): TeamMemberService
 
+    /** Register webhook endpoints and trigger events for testing */
     fun webhooks(): WebhookService
+
+    /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
+    fun ticketSales(): TicketSaleService
 
     fun health(): HealthService
 
@@ -141,35 +160,56 @@ interface BelieveClient {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient.WithRawResponse
 
+        /** Operations related to Ted Lasso characters */
         fun characters(): CharacterService.WithRawResponse
 
+        /** Operations related to football teams */
         fun teams(): TeamService.WithRawResponse
 
         fun matches(): MatchService.WithRawResponse
 
+        /** Operations related to TV episodes */
         fun episodes(): EpisodeService.WithRawResponse
 
+        /** Memorable quotes from the show */
         fun quotes(): QuoteService.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun believe(): BelieveService.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun conflicts(): ConflictService.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun reframe(): ReframeService.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun press(): PressService.WithRawResponse
 
         fun coaching(): CoachingService.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun biscuits(): BiscuitService.WithRawResponse
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         fun pepTalk(): PepTalkService.WithRawResponse
 
+        /** Server-Sent Events (SSE) streaming endpoints */
         fun stream(): StreamService.WithRawResponse
 
+        /**
+         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
+         * Managers
+         */
         fun teamMembers(): TeamMemberService.WithRawResponse
 
+        /** Register webhook endpoints and trigger events for testing */
         fun webhooks(): WebhookService.WithRawResponse
+
+        /**
+         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
+         */
+        fun ticketSales(): TicketSaleService.WithRawResponse
 
         fun health(): HealthService.WithRawResponse
 

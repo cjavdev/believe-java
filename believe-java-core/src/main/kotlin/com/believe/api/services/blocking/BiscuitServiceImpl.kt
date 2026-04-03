@@ -24,6 +24,7 @@ import com.believe.api.models.biscuits.BiscuitRetrieveParams
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Interactive endpoints for motivation and guidance */
 class BiscuitServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BiscuitService {
 

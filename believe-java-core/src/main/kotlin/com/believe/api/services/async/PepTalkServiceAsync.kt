@@ -10,6 +10,7 @@ import com.believe.api.models.peptalk.PepTalkRetrieveResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Server-Sent Events (SSE) streaming endpoints */
 interface PepTalkServiceAsync {
 
     /**

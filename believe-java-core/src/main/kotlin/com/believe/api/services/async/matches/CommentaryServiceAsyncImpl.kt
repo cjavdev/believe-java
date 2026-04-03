@@ -22,6 +22,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+/** Server-Sent Events (SSE) streaming endpoints */
 class CommentaryServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CommentaryServiceAsync {
 

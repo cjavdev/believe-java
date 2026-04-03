@@ -20,6 +20,7 @@ interface CoachingServiceAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): CoachingServiceAsync
 
+    /** Interactive endpoints for motivation and guidance */
     fun principles(): PrincipleServiceAsync
 
     /**
@@ -36,6 +37,7 @@ interface CoachingServiceAsync {
             modifier: Consumer<ClientOptions.Builder>
         ): CoachingServiceAsync.WithRawResponse
 
+        /** Interactive endpoints for motivation and guidance */
         fun principles(): PrincipleServiceAsync.WithRawResponse
     }
 }

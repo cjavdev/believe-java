@@ -17,6 +17,7 @@ import com.believe.api.models.characters.CharacterUpdateParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+/** Operations related to Ted Lasso characters */
 interface CharacterServiceAsync {
 
     /**
