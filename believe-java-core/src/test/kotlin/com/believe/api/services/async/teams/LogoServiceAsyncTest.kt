@@ -6,6 +6,7 @@ import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.teams.logo.LogoDeleteParams
 import com.believe.api.models.teams.logo.LogoDownloadParams
 import com.believe.api.models.teams.logo.LogoUploadParams
+import java.io.ByteArrayInputStream
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -14,53 +15,50 @@ internal class LogoServiceAsyncTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val logoServiceAsync = client.teams().logo()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoServiceAsync = client.teams().logo()
 
-        val future =
-            logoServiceAsync.delete(
-                LogoDeleteParams.builder()
-                    .teamId("team_id")
-                    .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+      val future = logoServiceAsync.delete(LogoDeleteParams.builder()
+          .teamId("team_id")
+          .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
 
-        val response = future.get()
+      val response = future.get()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun download() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val logoServiceAsync = client.teams().logo()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoServiceAsync = client.teams().logo()
 
-        val responseFuture =
-            logoServiceAsync.download(
-                LogoDownloadParams.builder()
-                    .teamId("team_id")
-                    .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+      val responseFuture = logoServiceAsync.download(LogoDownloadParams.builder()
+          .teamId("team_id")
+          .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
 
-        val response = responseFuture.get()
-        response.validate()
+      val response = responseFuture.get()
+      response.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun upload() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val logoServiceAsync = client.teams().logo()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoServiceAsync = client.teams().logo()
 
-        val fileUploadFuture =
-            logoServiceAsync.upload(
-                LogoUploadParams.builder()
-                    .teamId("team_id")
-                    .file("Example data".byteInputStream())
-                    .build()
-            )
+      val fileUploadFuture = logoServiceAsync.upload(LogoUploadParams.builder()
+          .teamId("team_id")
+          .file("Example data".byteInputStream())
+          .build())
 
-        val fileUpload = fileUploadFuture.get()
-        fileUpload.validate()
+      val fileUpload = fileUploadFuture.get()
+      fileUpload.validate()
     }
 }

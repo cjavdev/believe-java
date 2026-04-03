@@ -3,6 +3,7 @@
 package com.believe.api.services.blocking.matches
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.matches.commentary.CommentaryStreamParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,11 +12,13 @@ internal class CommentaryServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun stream() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val commentaryService = client.matches().commentary()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val commentaryService = client.matches().commentary()
 
-        val response = commentaryService.stream("match_id")
+      val response = commentaryService.stream("match_id")
 
-        response.validate()
+      response.validate()
     }
 }

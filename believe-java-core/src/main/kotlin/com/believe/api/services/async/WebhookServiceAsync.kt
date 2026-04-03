@@ -16,15 +16,14 @@ import com.believe.api.models.webhooks.WebhookListParams
 import com.believe.api.models.webhooks.WebhookRetrieveParams
 import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import com.believe.api.models.webhooks.WebhookTriggerEventResponse
+import com.believe.api.services.async.WebhookServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 /** Register webhook endpoints and trigger events for testing */
 interface WebhookServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -55,101 +54,108 @@ interface WebhookServiceAsync {
      * Store the returned `secret` securely - you'll need it to verify webhook signatures.
      */
     fun create(params: WebhookCreateParams): CompletableFuture<WebhookCreateResponse> =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: WebhookCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<WebhookCreateResponse>
+    fun create(params: WebhookCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<WebhookCreateResponse>
 
     /** Get details of a specific webhook endpoint. */
     fun retrieve(webhookId: String): CompletableFuture<RegisteredWebhook> =
-        retrieve(webhookId, WebhookRetrieveParams.none())
+        retrieve(
+          webhookId, WebhookRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        webhookId: String,
-        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<RegisteredWebhook> =
-        retrieve(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+    fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<RegisteredWebhook> =
+        retrieve(
+          params.toBuilder()
+              .webhookId(webhookId)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        webhookId: String,
-        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-    ): CompletableFuture<RegisteredWebhook> = retrieve(webhookId, params, RequestOptions.none())
+    fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none()): CompletableFuture<RegisteredWebhook> =
+        retrieve(
+          webhookId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: WebhookRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<RegisteredWebhook>
+    fun retrieve(params: WebhookRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<RegisteredWebhook>
 
     /** @see retrieve */
     fun retrieve(params: WebhookRetrieveParams): CompletableFuture<RegisteredWebhook> =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        webhookId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<RegisteredWebhook> =
-        retrieve(webhookId, WebhookRetrieveParams.none(), requestOptions)
+    fun retrieve(webhookId: String, requestOptions: RequestOptions): CompletableFuture<RegisteredWebhook> =
+        retrieve(
+          webhookId,
+          WebhookRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Get a list of all registered webhook endpoints. */
     fun list(): CompletableFuture<List<RegisteredWebhook>> = list(WebhookListParams.none())
 
     /** @see list */
-    fun list(
-        params: WebhookListParams = WebhookListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<List<RegisteredWebhook>>
+    fun list(params: WebhookListParams = WebhookListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<List<RegisteredWebhook>>
 
     /** @see list */
-    fun list(
-        params: WebhookListParams = WebhookListParams.none()
-    ): CompletableFuture<List<RegisteredWebhook>> = list(params, RequestOptions.none())
+    fun list(params: WebhookListParams = WebhookListParams.none()): CompletableFuture<List<RegisteredWebhook>> =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<List<RegisteredWebhook>> =
-        list(WebhookListParams.none(), requestOptions)
+        list(
+          WebhookListParams.none(), requestOptions
+        )
 
     /** Unregister a webhook endpoint. It will no longer receive events. */
     fun delete(webhookId: String): CompletableFuture<WebhookDeleteResponse> =
-        delete(webhookId, WebhookDeleteParams.none())
+        delete(
+          webhookId, WebhookDeleteParams.none()
+        )
 
     /** @see delete */
-    fun delete(
-        webhookId: String,
-        params: WebhookDeleteParams = WebhookDeleteParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<WebhookDeleteResponse> =
-        delete(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+    fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<WebhookDeleteResponse> =
+        delete(
+          params.toBuilder()
+              .webhookId(webhookId)
+              .build(), requestOptions
+        )
 
     /** @see delete */
-    fun delete(
-        webhookId: String,
-        params: WebhookDeleteParams = WebhookDeleteParams.none(),
-    ): CompletableFuture<WebhookDeleteResponse> = delete(webhookId, params, RequestOptions.none())
+    fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none()): CompletableFuture<WebhookDeleteResponse> =
+        delete(
+          webhookId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        params: WebhookDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<WebhookDeleteResponse>
+    fun delete(params: WebhookDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<WebhookDeleteResponse>
 
     /** @see delete */
     fun delete(params: WebhookDeleteParams): CompletableFuture<WebhookDeleteResponse> =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
-    fun delete(
-        webhookId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookDeleteResponse> =
-        delete(webhookId, WebhookDeleteParams.none(), requestOptions)
+    fun delete(webhookId: String, requestOptions: RequestOptions): CompletableFuture<WebhookDeleteResponse> =
+        delete(
+          webhookId,
+          WebhookDeleteParams.none(),
+          requestOptions,
+        )
 
     /**
      * Trigger a webhook event and deliver it to all subscribed endpoints.
@@ -179,15 +185,13 @@ interface WebhookServiceAsync {
      * )
      * ```
      */
-    fun triggerEvent(
-        params: WebhookTriggerEventParams
-    ): CompletableFuture<WebhookTriggerEventResponse> = triggerEvent(params, RequestOptions.none())
+    fun triggerEvent(params: WebhookTriggerEventParams): CompletableFuture<WebhookTriggerEventResponse> =
+        triggerEvent(
+          params, RequestOptions.none()
+        )
 
     /** @see triggerEvent */
-    fun triggerEvent(
-        params: WebhookTriggerEventParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<WebhookTriggerEventResponse>
+    fun triggerEvent(params: WebhookTriggerEventParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<WebhookTriggerEventResponse>
 
     /**
      * Unwraps a webhook event from its JSON representation.
@@ -196,9 +200,7 @@ interface WebhookServiceAsync {
      */
     fun unwrap(body: String): UnwrapWebhookEvent
 
-    /**
-     * A view of [WebhookServiceAsync] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [WebhookServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -206,145 +208,120 @@ interface WebhookServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): WebhookServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /webhooks`, but is otherwise the same as
-         * [WebhookServiceAsync.create].
-         */
-        fun create(
-            params: WebhookCreateParams
-        ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>> =
-            create(params, RequestOptions.none())
+        /** Returns a raw HTTP response for `post /webhooks`, but is otherwise the             same as [WebhookServiceAsync.create]. */
+        fun create(params: WebhookCreateParams): CompletableFuture<HttpResponseFor<WebhookCreateResponse>> =
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
-        fun create(
-            params: WebhookCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>>
+        fun create(params: WebhookCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<WebhookCreateResponse>>
 
-        /**
-         * Returns a raw HTTP response for `get /webhooks/{webhook_id}`, but is otherwise the same
-         * as [WebhookServiceAsync.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /webhooks/{webhook_id}`, but is otherwise the             same as [WebhookServiceAsync.retrieve]. */
         fun retrieve(webhookId: String): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
-            retrieve(webhookId, WebhookRetrieveParams.none())
+            retrieve(
+              webhookId, WebhookRetrieveParams.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            webhookId: String,
-            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
-            retrieve(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+        fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
+            retrieve(
+              params.toBuilder()
+                  .webhookId(webhookId)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            webhookId: String,
-            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
-            retrieve(webhookId, params, RequestOptions.none())
+        fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none()): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
+            retrieve(
+              webhookId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: WebhookRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<RegisteredWebhook>>
+        fun retrieve(params: WebhookRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<RegisteredWebhook>>
 
         /** @see retrieve */
-        fun retrieve(
-            params: WebhookRetrieveParams
-        ): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(params: WebhookRetrieveParams): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            webhookId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
-            retrieve(webhookId, WebhookRetrieveParams.none(), requestOptions)
+        fun retrieve(webhookId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<RegisteredWebhook>> =
+            retrieve(
+              webhookId,
+              WebhookRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /webhooks`, but is otherwise the same as
-         * [WebhookServiceAsync.list].
-         */
-        fun list(): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> =
-            list(WebhookListParams.none())
+        /** Returns a raw HTTP response for `get /webhooks`, but is otherwise the             same as [WebhookServiceAsync.list]. */
+        fun list(): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> = list(WebhookListParams.none())
 
         /** @see list */
-        fun list(
-            params: WebhookListParams = WebhookListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>>
+        fun list(params: WebhookListParams = WebhookListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>>
 
         /** @see list */
-        fun list(
-            params: WebhookListParams = WebhookListParams.none()
-        ): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> =
-            list(params, RequestOptions.none())
+        fun list(params: WebhookListParams = WebhookListParams.none()): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
-        fun list(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> =
-            list(WebhookListParams.none(), requestOptions)
+        fun list(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<List<RegisteredWebhook>>> =
+            list(
+              WebhookListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `delete /webhooks/{webhook_id}`, but is otherwise the
-         * same as [WebhookServiceAsync.delete].
-         */
+        /** Returns a raw HTTP response for `delete /webhooks/{webhook_id}`, but is otherwise the             same as [WebhookServiceAsync.delete]. */
         fun delete(webhookId: String): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
-            delete(webhookId, WebhookDeleteParams.none())
+            delete(
+              webhookId, WebhookDeleteParams.none()
+            )
 
         /** @see delete */
-        fun delete(
-            webhookId: String,
-            params: WebhookDeleteParams = WebhookDeleteParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
-            delete(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+        fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
+            delete(
+              params.toBuilder()
+                  .webhookId(webhookId)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
-        fun delete(
-            webhookId: String,
-            params: WebhookDeleteParams = WebhookDeleteParams.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
-            delete(webhookId, params, RequestOptions.none())
+        fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none()): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
+            delete(
+              webhookId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
-        fun delete(
-            params: WebhookDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>>
+        fun delete(params: WebhookDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>>
 
         /** @see delete */
-        fun delete(
-            params: WebhookDeleteParams
-        ): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
-            delete(params, RequestOptions.none())
+        fun delete(params: WebhookDeleteParams): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
-        fun delete(
-            webhookId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
-            delete(webhookId, WebhookDeleteParams.none(), requestOptions)
+        fun delete(webhookId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<WebhookDeleteResponse>> =
+            delete(
+              webhookId,
+              WebhookDeleteParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `post /webhooks/trigger`, but is otherwise the same as
-         * [WebhookServiceAsync.triggerEvent].
-         */
-        fun triggerEvent(
-            params: WebhookTriggerEventParams
-        ): CompletableFuture<HttpResponseFor<WebhookTriggerEventResponse>> =
-            triggerEvent(params, RequestOptions.none())
+        /** Returns a raw HTTP response for `post /webhooks/trigger`, but is otherwise the             same as [WebhookServiceAsync.triggerEvent]. */
+        fun triggerEvent(params: WebhookTriggerEventParams): CompletableFuture<HttpResponseFor<WebhookTriggerEventResponse>> =
+            triggerEvent(
+              params, RequestOptions.none()
+            )
 
         /** @see triggerEvent */
-        fun triggerEvent(
-            params: WebhookTriggerEventParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookTriggerEventResponse>>
+        fun triggerEvent(params: WebhookTriggerEventParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<WebhookTriggerEventResponse>>
     }
 }

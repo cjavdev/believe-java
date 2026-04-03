@@ -6,6 +6,7 @@ package com.believe.api.core.handlers
 
 import com.believe.api.core.JsonMissing
 import com.believe.api.core.JsonValue
+import com.believe.api.core.handlers.jsonHandler
 import com.believe.api.core.http.HttpResponse
 import com.believe.api.core.http.HttpResponse.Handler
 import com.believe.api.errors.BadRequestException
@@ -33,7 +34,9 @@ internal fun errorBodyHandler(jsonMapper: JsonMapper): Handler<JsonValue> {
 }
 
 @JvmSynthetic
-internal fun errorHandler(errorBodyHandler: Handler<JsonValue>): Handler<HttpResponse> =
+internal fun errorHandler(
+    errorBodyHandler: Handler<JsonValue>
+): Handler<HttpResponse> =
     object : Handler<HttpResponse> {
         override fun handle(response: HttpResponse): HttpResponse =
             when (val statusCode = response.statusCode()) {

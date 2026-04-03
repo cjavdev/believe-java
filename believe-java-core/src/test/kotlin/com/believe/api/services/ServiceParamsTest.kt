@@ -27,30 +27,27 @@ internal class ServiceParamsTest {
 
     @BeforeEach
     fun beforeEach(wmRuntimeInfo: WireMockRuntimeInfo) {
-        client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(wmRuntimeInfo.httpBaseUrl)
-                .apiKey("My API Key")
-                .build()
+      client = BelieveOkHttpClient.builder()
+          .baseUrl(wmRuntimeInfo.httpBaseUrl)
+          .apiKey("My API Key")
+          .build()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val characterService = client.characters()
-        stubFor(get(anyUrl()).willReturn(ok("{}")))
+      val characterService = client.characters()
+      stubFor(get(anyUrl()).willReturn(ok("{}")))
 
-        characterService.list(
-            CharacterListParams.builder()
-                .putAdditionalHeader("Secret-Header", "42")
-                .putAdditionalQueryParam("secret_query_param", "42")
-                .build()
-        )
+      characterService.list(CharacterListParams.builder()
+          .putAdditionalHeader("Secret-Header", "42")
+          .putAdditionalQueryParam("secret_query_param", "42")
+          .build())
 
-        verify(
-            getRequestedFor(anyUrl())
-                .withHeader("Secret-Header", equalTo("42"))
-                .withQueryParam("secret_query_param", equalTo("42"))
-        )
+      verify(
+          getRequestedFor(anyUrl())
+              .withHeader("Secret-Header", equalTo("42"))
+              .withQueryParam("secret_query_param", equalTo("42"))
+      )
     }
 }

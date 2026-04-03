@@ -10,11 +10,9 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import java.util.Objects
 
-class TeamGetCultureResponse
-@JsonCreator
-private constructor(
-    @com.fasterxml.jackson.annotation.JsonValue
-    private val additionalProperties: Map<String, JsonValue>
+class TeamGetCultureResponse @JsonCreator private constructor(
+    @com.fasterxml.jackson.annotation.JsonValue private val additionalProperties: Map<String, JsonValue>,
+
 ) {
 
     @JsonAnyGetter
@@ -26,7 +24,8 @@ private constructor(
     companion object {
 
         /** Returns a mutable builder for constructing an instance of [TeamGetCultureResponse]. */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TeamGetCultureResponse]. */
@@ -35,47 +34,55 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(teamGetCultureResponse: TeamGetCultureResponse) = apply {
-            additionalProperties = teamGetCultureResponse.additionalProperties.toMutableMap()
-        }
+        internal fun from(teamGetCultureResponse: TeamGetCultureResponse) =
+            apply {
+                additionalProperties = teamGetCultureResponse.additionalProperties.toMutableMap()
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [TeamGetCultureResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): TeamGetCultureResponse =
-            TeamGetCultureResponse(additionalProperties.toImmutable())
+        fun build(): TeamGetCultureResponse = TeamGetCultureResponse(additionalProperties.toImmutable())
     }
 
     private var validated: Boolean = false
 
-    fun validate(): TeamGetCultureResponse = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): TeamGetCultureResponse =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        validated = true
-    }
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -91,15 +98,14 @@ private constructor(
      * Used for best match union deserialization.
      */
     @JvmSynthetic
-    internal fun validity(): Int =
-        additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+    internal fun validity(): Int = additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamGetCultureResponse && additionalProperties == other.additionalProperties
+      return other is TeamGetCultureResponse && additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy { Objects.hash(additionalProperties) }

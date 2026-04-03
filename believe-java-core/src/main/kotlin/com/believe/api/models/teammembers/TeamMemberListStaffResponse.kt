@@ -8,6 +8,8 @@ import com.believe.api.core.JsonValue
 import com.believe.api.core.allMaxBy
 import com.believe.api.core.getOrThrow
 import com.believe.api.errors.BelieveInvalidDataException
+import com.believe.api.models.teammembers.EquipmentManager
+import com.believe.api.models.teammembers.MedicalStaff
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.JsonNode
@@ -21,11 +23,11 @@ import java.util.Optional
 /** Full medical staff model with ID. */
 @JsonDeserialize(using = TeamMemberListStaffResponse.Deserializer::class)
 @JsonSerialize(using = TeamMemberListStaffResponse.Serializer::class)
-class TeamMemberListStaffResponse
-private constructor(
+class TeamMemberListStaffResponse private constructor(
     private val medicalStaff: MedicalStaff? = null,
     private val equipmentManager: EquipmentManager? = null,
     private val _json: JsonValue? = null,
+
 ) {
 
     /** Full medical staff model with ID. */
@@ -55,24 +57,23 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): TeamMemberListStaffResponse = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): TeamMemberListStaffResponse =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        accept(
-            object : Visitor<Unit> {
+            accept(object : Visitor<Unit> {
                 override fun visitMedicalStaff(medicalStaff: MedicalStaff) {
-                    medicalStaff.validate()
+                  medicalStaff.validate()
                 }
 
                 override fun visitEquipmentManager(equipmentManager: EquipmentManager) {
-                    equipmentManager.validate()
+                  equipmentManager.validate()
                 }
-            }
-        )
-        validated = true
-    }
+            })
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -89,25 +90,20 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        accept(
-            object : Visitor<Int> {
-                override fun visitMedicalStaff(medicalStaff: MedicalStaff) = medicalStaff.validity()
+        accept(object : Visitor<Int> {
+            override fun visitMedicalStaff(medicalStaff: MedicalStaff) = medicalStaff.validity()
 
-                override fun visitEquipmentManager(equipmentManager: EquipmentManager) =
-                    equipmentManager.validity()
+            override fun visitEquipmentManager(equipmentManager: EquipmentManager) = equipmentManager.validity()
 
-                override fun unknown(json: JsonValue?) = 0
-            }
-        )
+            override fun unknown(json: JsonValue?) = 0
+        })
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberListStaffResponse &&
-            medicalStaff == other.medicalStaff &&
-            equipmentManager == other.equipmentManager
+      return other is TeamMemberListStaffResponse && medicalStaff == other.medicalStaff && equipmentManager == other.equipmentManager
     }
 
     override fun hashCode(): Int = Objects.hash(medicalStaff, equipmentManager)
@@ -115,8 +111,7 @@ private constructor(
     override fun toString(): String =
         when {
             medicalStaff != null -> "TeamMemberListStaffResponse{medicalStaff=$medicalStaff}"
-            equipmentManager != null ->
-                "TeamMemberListStaffResponse{equipmentManager=$equipmentManager}"
+            equipmentManager != null -> "TeamMemberListStaffResponse{equipmentManager=$equipmentManager}"
             _json != null -> "TeamMemberListStaffResponse{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid TeamMemberListStaffResponse")
         }
@@ -125,19 +120,14 @@ private constructor(
 
         /** Full medical staff model with ID. */
         @JvmStatic
-        fun ofMedicalStaff(medicalStaff: MedicalStaff) =
-            TeamMemberListStaffResponse(medicalStaff = medicalStaff)
+        fun ofMedicalStaff(medicalStaff: MedicalStaff) = TeamMemberListStaffResponse(medicalStaff = medicalStaff)
 
         /** Full equipment manager model with ID. */
         @JvmStatic
-        fun ofEquipmentManager(equipmentManager: EquipmentManager) =
-            TeamMemberListStaffResponse(equipmentManager = equipmentManager)
+        fun ofEquipmentManager(equipmentManager: EquipmentManager) = TeamMemberListStaffResponse(equipmentManager = equipmentManager)
     }
 
-    /**
-     * An interface that defines how to map each variant of [TeamMemberListStaffResponse] to a value
-     * of type [T].
-     */
+    /** An interface that defines how to map each variant of [TeamMemberListStaffResponse] to a value of type [T]. */
     interface Visitor<out T> {
 
         /** Full medical staff model with ID. */
@@ -149,62 +139,54 @@ private constructor(
         /**
          * Maps an unknown variant of [TeamMemberListStaffResponse] to a value of type [T].
          *
-         * An instance of [TeamMemberListStaffResponse] can contain an unknown variant if it was
-         * deserialized from data that doesn't match any known variant. For example, if the SDK is
-         * on an older version than the API, then the API may respond with new variants that the SDK
-         * is unaware of.
+         * An instance of [TeamMemberListStaffResponse] can contain an unknown variant if it was deserialized from data
+         * that doesn't match any known variant. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new variants that the SDK is unaware of.
          *
          * @throws BelieveInvalidDataException in the default implementation.
          */
         fun unknown(json: JsonValue?): T {
-            throw BelieveInvalidDataException("Unknown TeamMemberListStaffResponse: $json")
+          throw BelieveInvalidDataException("Unknown TeamMemberListStaffResponse: $json")
         }
     }
 
-    internal class Deserializer :
-        BaseDeserializer<TeamMemberListStaffResponse>(TeamMemberListStaffResponse::class) {
+    internal class Deserializer : BaseDeserializer<TeamMemberListStaffResponse>(TeamMemberListStaffResponse::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): TeamMemberListStaffResponse {
-            val json = JsonValue.fromJsonNode(node)
+          val json = JsonValue.fromJsonNode(node)
 
-            val bestMatches =
-                sequenceOf(
-                        tryDeserialize(node, jacksonTypeRef<MedicalStaff>())?.let {
-                            TeamMemberListStaffResponse(medicalStaff = it, _json = json)
-                        },
-                        tryDeserialize(node, jacksonTypeRef<EquipmentManager>())?.let {
-                            TeamMemberListStaffResponse(equipmentManager = it, _json = json)
-                        },
-                    )
-                    .filterNotNull()
-                    .allMaxBy { it.validity() }
-                    .toList()
-            return when (bestMatches.size) {
-                // This can happen if what we're deserializing is completely incompatible with all
-                // the possible variants (e.g. deserializing from boolean).
-                0 -> TeamMemberListStaffResponse(_json = json)
-                1 -> bestMatches.single()
-                // If there's more than one match with the highest validity, then use the first
-                // completely valid match, or simply the first match if none are completely valid.
-                else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
-            }
+          val bestMatches = sequenceOf(
+                  tryDeserialize(node, jacksonTypeRef<MedicalStaff>())
+                      ?.let {
+                          TeamMemberListStaffResponse(medicalStaff = it, _json = json)
+                      },
+                  tryDeserialize(node, jacksonTypeRef<EquipmentManager>())
+                      ?.let {
+                          TeamMemberListStaffResponse(equipmentManager = it, _json = json)
+                      }
+              )
+              .filterNotNull()
+              .allMaxBy { it.validity() }
+              .toList()
+          return when (bestMatches.size) {
+              // This can happen if what we're deserializing is completely incompatible with all the possible variants (e.g. deserializing from boolean).
+              0 -> TeamMemberListStaffResponse(_json = json)
+              1 -> bestMatches.single()
+              // If there's more than one match with the highest validity, then use the first completely valid match, or simply the first match if none are completely valid.
+              else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+          }
         }
     }
 
-    internal class Serializer :
-        BaseSerializer<TeamMemberListStaffResponse>(TeamMemberListStaffResponse::class) {
+    internal class Serializer : BaseSerializer<TeamMemberListStaffResponse>(TeamMemberListStaffResponse::class) {
 
-        override fun serialize(
-            value: TeamMemberListStaffResponse,
-            generator: JsonGenerator,
-            provider: SerializerProvider,
-        ) {
-            when {
-                value.medicalStaff != null -> generator.writeObject(value.medicalStaff)
-                value.equipmentManager != null -> generator.writeObject(value.equipmentManager)
-                value._json != null -> generator.writeObject(value._json)
-                else -> throw IllegalStateException("Invalid TeamMemberListStaffResponse")
-            }
+        override fun serialize(value: TeamMemberListStaffResponse, generator: JsonGenerator, provider: SerializerProvider) {
+          when {
+              value.medicalStaff != null -> generator.writeObject(value.medicalStaff)
+              value.equipmentManager != null -> generator.writeObject(value.equipmentManager)
+              value._json != null -> generator.writeObject(value._json)
+              else -> throw IllegalStateException("Invalid TeamMemberListStaffResponse")
+          }
         }
     }
 }

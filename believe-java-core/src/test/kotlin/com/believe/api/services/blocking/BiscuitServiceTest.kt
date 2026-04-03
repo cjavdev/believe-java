@@ -3,6 +3,9 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.biscuits.BiscuitGetFreshParams
+import com.believe.api.models.biscuits.BiscuitListParams
+import com.believe.api.models.biscuits.BiscuitRetrieveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,33 +14,39 @@ internal class BiscuitServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val biscuitService = client.biscuits()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitService = client.biscuits()
 
-        val biscuit = biscuitService.retrieve("biscuit_id")
+      val biscuit = biscuitService.retrieve("biscuit_id")
 
-        biscuit.validate()
+      biscuit.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val biscuitService = client.biscuits()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitService = client.biscuits()
 
-        val page = biscuitService.list()
+      val page = biscuitService.list()
 
-        page.response().validate()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun getFresh() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val biscuitService = client.biscuits()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitService = client.biscuits()
 
-        val biscuit = biscuitService.getFresh()
+      val biscuit = biscuitService.getFresh()
 
-        biscuit.validate()
+      biscuit.validate()
     }
 }

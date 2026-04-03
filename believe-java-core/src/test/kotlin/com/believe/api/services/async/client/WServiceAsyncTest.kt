@@ -3,6 +3,7 @@
 package com.believe.api.services.async.client
 
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
+import com.believe.api.models.client.ws.WTestParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,11 +12,13 @@ internal class WServiceAsyncTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun test() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val wServiceAsync = client.client().ws()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val wServiceAsync = client.client().ws()
 
-        val future = wServiceAsync.test()
+      val future = wServiceAsync.test()
 
-        val response = future.get()
+      val response = future.get()
     }
 }

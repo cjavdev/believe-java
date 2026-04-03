@@ -18,88 +18,71 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** Reframed perspective response. */
-class ReframeTransformNegativeThoughtsResponse
-@JsonCreator(mode = JsonCreator.Mode.DISABLED)
-private constructor(
+class ReframeTransformNegativeThoughtsResponse @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
     private val dailyAffirmation: JsonField<String>,
     private val originalThought: JsonField<String>,
     private val reframedThought: JsonField<String>,
     private val tedPerspective: JsonField<String>,
     private val drSharonInsight: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
+
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("daily_affirmation")
-        @ExcludeMissing
-        dailyAffirmation: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("original_thought")
-        @ExcludeMissing
-        originalThought: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("reframed_thought")
-        @ExcludeMissing
-        reframedThought: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ted_perspective")
-        @ExcludeMissing
-        tedPerspective: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("dr_sharon_insight")
-        @ExcludeMissing
-        drSharonInsight: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("daily_affirmation") @ExcludeMissing dailyAffirmation: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("original_thought") @ExcludeMissing originalThought: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("reframed_thought") @ExcludeMissing reframedThought: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ted_perspective") @ExcludeMissing tedPerspective: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dr_sharon_insight") @ExcludeMissing drSharonInsight: JsonField<String> = JsonMissing.of()
     ) : this(
-        dailyAffirmation,
-        originalThought,
-        reframedThought,
-        tedPerspective,
-        drSharonInsight,
-        mutableMapOf(),
+      dailyAffirmation,
+      originalThought,
+      reframedThought,
+      tedPerspective,
+      drSharonInsight,
+      mutableMapOf(),
     )
 
     /**
      * A daily affirmation to practice
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun dailyAffirmation(): String = dailyAffirmation.getRequired("daily_affirmation")
 
     /**
      * The original negative thought
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun originalThought(): String = originalThought.getRequired("original_thought")
 
     /**
      * The thought reframed positively
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun reframedThought(): String = reframedThought.getRequired("reframed_thought")
 
     /**
      * Ted's take on this thought
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun tedPerspective(): String = tedPerspective.getRequired("ted_perspective")
 
     /**
      * Dr. Sharon's therapeutic insight
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value).
      */
     fun drSharonInsight(): Optional<String> = drSharonInsight.getOptional("dr_sharon_insight")
 
     /**
      * Returns the raw JSON value of [dailyAffirmation].
      *
-     * Unlike [dailyAffirmation], this method doesn't throw if the JSON field has an unexpected
-     * type.
+     * Unlike [dailyAffirmation], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("daily_affirmation")
     @ExcludeMissing
@@ -143,23 +126,22 @@ private constructor(
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
-        additionalProperties.put(key, value)
+      additionalProperties.put(key, value)
     }
 
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalProperties)
+    fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [ReframeTransformNegativeThoughtsResponse].
+         * Returns a mutable builder for constructing an instance of [ReframeTransformNegativeThoughtsResponse].
          *
          * The following fields are required:
+         *
          * ```java
          * .dailyAffirmation()
          * .originalThought()
@@ -167,7 +149,8 @@ private constructor(
          * .tedPerspective()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [ReframeTransformNegativeThoughtsResponse]. */
@@ -181,62 +164,57 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(
-            reframeTransformNegativeThoughtsResponse: ReframeTransformNegativeThoughtsResponse
-        ) = apply {
-            dailyAffirmation = reframeTransformNegativeThoughtsResponse.dailyAffirmation
-            originalThought = reframeTransformNegativeThoughtsResponse.originalThought
-            reframedThought = reframeTransformNegativeThoughtsResponse.reframedThought
-            tedPerspective = reframeTransformNegativeThoughtsResponse.tedPerspective
-            drSharonInsight = reframeTransformNegativeThoughtsResponse.drSharonInsight
-            additionalProperties =
-                reframeTransformNegativeThoughtsResponse.additionalProperties.toMutableMap()
-        }
+        internal fun from(reframeTransformNegativeThoughtsResponse: ReframeTransformNegativeThoughtsResponse) =
+            apply {
+                dailyAffirmation = reframeTransformNegativeThoughtsResponse.dailyAffirmation
+                originalThought = reframeTransformNegativeThoughtsResponse.originalThought
+                reframedThought = reframeTransformNegativeThoughtsResponse.reframedThought
+                tedPerspective = reframeTransformNegativeThoughtsResponse.tedPerspective
+                drSharonInsight = reframeTransformNegativeThoughtsResponse.drSharonInsight
+                additionalProperties = reframeTransformNegativeThoughtsResponse.additionalProperties.toMutableMap()
+            }
 
         /** A daily affirmation to practice */
-        fun dailyAffirmation(dailyAffirmation: String) =
-            dailyAffirmation(JsonField.of(dailyAffirmation))
+        fun dailyAffirmation(dailyAffirmation: String) = dailyAffirmation(JsonField.of(dailyAffirmation))
 
         /**
          * Sets [Builder.dailyAffirmation] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.dailyAffirmation] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.dailyAffirmation] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun dailyAffirmation(dailyAffirmation: JsonField<String>) = apply {
-            this.dailyAffirmation = dailyAffirmation
-        }
+        fun dailyAffirmation(dailyAffirmation: JsonField<String>) =
+            apply {
+                this.dailyAffirmation = dailyAffirmation
+            }
 
         /** The original negative thought */
-        fun originalThought(originalThought: String) =
-            originalThought(JsonField.of(originalThought))
+        fun originalThought(originalThought: String) = originalThought(JsonField.of(originalThought))
 
         /**
          * Sets [Builder.originalThought] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.originalThought] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.originalThought] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun originalThought(originalThought: JsonField<String>) = apply {
-            this.originalThought = originalThought
-        }
+        fun originalThought(originalThought: JsonField<String>) =
+            apply {
+                this.originalThought = originalThought
+            }
 
         /** The thought reframed positively */
-        fun reframedThought(reframedThought: String) =
-            reframedThought(JsonField.of(reframedThought))
+        fun reframedThought(reframedThought: String) = reframedThought(JsonField.of(reframedThought))
 
         /**
          * Sets [Builder.reframedThought] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.reframedThought] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.reframedThought] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun reframedThought(reframedThought: JsonField<String>) = apply {
-            this.reframedThought = reframedThought
-        }
+        fun reframedThought(reframedThought: JsonField<String>) =
+            apply {
+                this.reframedThought = reframedThought
+            }
 
         /** Ted's take on this thought */
         fun tedPerspective(tedPerspective: String) = tedPerspective(JsonField.of(tedPerspective))
@@ -244,51 +222,56 @@ private constructor(
         /**
          * Sets [Builder.tedPerspective] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.tedPerspective] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.tedPerspective] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun tedPerspective(tedPerspective: JsonField<String>) = apply {
-            this.tedPerspective = tedPerspective
-        }
+        fun tedPerspective(tedPerspective: JsonField<String>) =
+            apply {
+                this.tedPerspective = tedPerspective
+            }
 
         /** Dr. Sharon's therapeutic insight */
-        fun drSharonInsight(drSharonInsight: String?) =
-            drSharonInsight(JsonField.ofNullable(drSharonInsight))
+        fun drSharonInsight(drSharonInsight: String?) = drSharonInsight(JsonField.ofNullable(drSharonInsight))
 
         /** Alias for calling [Builder.drSharonInsight] with `drSharonInsight.orElse(null)`. */
-        fun drSharonInsight(drSharonInsight: Optional<String>) =
-            drSharonInsight(drSharonInsight.getOrNull())
+        fun drSharonInsight(drSharonInsight: Optional<String>) = drSharonInsight(drSharonInsight.getOrNull())
 
         /**
          * Sets [Builder.drSharonInsight] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.drSharonInsight] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.drSharonInsight] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun drSharonInsight(drSharonInsight: JsonField<String>) = apply {
-            this.drSharonInsight = drSharonInsight
-        }
+        fun drSharonInsight(drSharonInsight: JsonField<String>) =
+            apply {
+                this.drSharonInsight = drSharonInsight
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [ReframeTransformNegativeThoughtsResponse].
@@ -296,6 +279,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .dailyAffirmation()
          * .originalThought()
@@ -307,29 +291,38 @@ private constructor(
          */
         fun build(): ReframeTransformNegativeThoughtsResponse =
             ReframeTransformNegativeThoughtsResponse(
-                checkRequired("dailyAffirmation", dailyAffirmation),
-                checkRequired("originalThought", originalThought),
-                checkRequired("reframedThought", reframedThought),
-                checkRequired("tedPerspective", tedPerspective),
-                drSharonInsight,
-                additionalProperties.toMutableMap(),
+              checkRequired(
+                "dailyAffirmation", dailyAffirmation
+              ),
+              checkRequired(
+                "originalThought", originalThought
+              ),
+              checkRequired(
+                "reframedThought", reframedThought
+              ),
+              checkRequired(
+                "tedPerspective", tedPerspective
+              ),
+              drSharonInsight,
+              additionalProperties.toMutableMap(),
             )
     }
 
     private var validated: Boolean = false
 
-    fun validate(): ReframeTransformNegativeThoughtsResponse = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): ReframeTransformNegativeThoughtsResponse =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        dailyAffirmation()
-        originalThought()
-        reframedThought()
-        tedPerspective()
-        drSharonInsight()
-        validated = true
-    }
+            dailyAffirmation()
+            originalThought()
+            reframedThought()
+            tedPerspective()
+            drSharonInsight()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -345,40 +338,19 @@ private constructor(
      * Used for best match union deserialization.
      */
     @JvmSynthetic
-    internal fun validity(): Int =
-        (if (dailyAffirmation.asKnown().isPresent) 1 else 0) +
-            (if (originalThought.asKnown().isPresent) 1 else 0) +
-            (if (reframedThought.asKnown().isPresent) 1 else 0) +
-            (if (tedPerspective.asKnown().isPresent) 1 else 0) +
-            (if (drSharonInsight.asKnown().isPresent) 1 else 0)
+    internal fun validity(): Int = (if (dailyAffirmation.asKnown().isPresent) 1 else 0) + (if (originalThought.asKnown().isPresent) 1 else 0) + (if (reframedThought.asKnown().isPresent) 1 else 0) + (if (tedPerspective.asKnown().isPresent) 1 else 0) + (if (drSharonInsight.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ReframeTransformNegativeThoughtsResponse &&
-            dailyAffirmation == other.dailyAffirmation &&
-            originalThought == other.originalThought &&
-            reframedThought == other.reframedThought &&
-            tedPerspective == other.tedPerspective &&
-            drSharonInsight == other.drSharonInsight &&
-            additionalProperties == other.additionalProperties
+      return other is ReframeTransformNegativeThoughtsResponse && dailyAffirmation == other.dailyAffirmation && originalThought == other.originalThought && reframedThought == other.reframedThought && tedPerspective == other.tedPerspective && drSharonInsight == other.drSharonInsight && additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy {
-        Objects.hash(
-            dailyAffirmation,
-            originalThought,
-            reframedThought,
-            tedPerspective,
-            drSharonInsight,
-            additionalProperties,
-        )
-    }
+    private val hashCode: Int by lazy { Objects.hash(dailyAffirmation, originalThought, reframedThought, tedPerspective, drSharonInsight, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "ReframeTransformNegativeThoughtsResponse{dailyAffirmation=$dailyAffirmation, originalThought=$originalThought, reframedThought=$reframedThought, tedPerspective=$tedPerspective, drSharonInsight=$drSharonInsight, additionalProperties=$additionalProperties}"
+    override fun toString() = "ReframeTransformNegativeThoughtsResponse{dailyAffirmation=$dailyAffirmation, originalThought=$originalThought, reframedThought=$reframedThought, tedPerspective=$tedPerspective, drSharonInsight=$drSharonInsight, additionalProperties=$additionalProperties}"
 }

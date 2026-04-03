@@ -5,6 +5,9 @@ package com.believe.api.models.episodes
 import com.believe.api.core.AutoPager
 import com.believe.api.core.Page
 import com.believe.api.core.checkRequired
+import com.believe.api.models.episodes.Episode
+import com.believe.api.models.episodes.EpisodeListParams
+import com.believe.api.models.episodes.PaginatedResponse
 import com.believe.api.services.blocking.EpisodeService
 import java.util.Objects
 import java.util.Optional
@@ -12,11 +15,11 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see EpisodeService.list */
-class EpisodeListPage
-private constructor(
+class EpisodeListPage private constructor(
     private val service: EpisodeService,
     private val params: EpisodeListParams,
     private val response: PaginatedResponse,
+
 ) : Page<Episode> {
 
     /**
@@ -43,18 +46,20 @@ private constructor(
     override fun items(): List<Episode> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): EpisodeListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): EpisodeListPage = service.list(nextPageParams())
@@ -75,13 +80,15 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [EpisodeListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [EpisodeListPage]. */
@@ -92,19 +99,29 @@ private constructor(
         private var response: PaginatedResponse? = null
 
         @JvmSynthetic
-        internal fun from(episodeListPage: EpisodeListPage) = apply {
-            service = episodeListPage.service
-            params = episodeListPage.params
-            response = episodeListPage.response
-        }
+        internal fun from(episodeListPage: EpisodeListPage) =
+            apply {
+                service = episodeListPage.service
+                params = episodeListPage.params
+                response = episodeListPage.response
+            }
 
-        fun service(service: EpisodeService) = apply { this.service = service }
+        fun service(service: EpisodeService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: EpisodeListParams) = apply { this.params = params }
+        fun params(params: EpisodeListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: PaginatedResponse) = apply { this.response = response }
+        fun response(response: PaginatedResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [EpisodeListPage].
@@ -112,6 +129,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -122,25 +140,27 @@ private constructor(
          */
         fun build(): EpisodeListPage =
             EpisodeListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is EpisodeListPage &&
-            service == other.service &&
-            params == other.params &&
-            response == other.response
+      return other is EpisodeListPage && service == other.service && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, response)
 
-    override fun toString() =
-        "EpisodeListPage{service=$service, params=$params, response=$response}"
+    override fun toString() = "EpisodeListPage{service=$service, params=$params, response=$response}"
 }

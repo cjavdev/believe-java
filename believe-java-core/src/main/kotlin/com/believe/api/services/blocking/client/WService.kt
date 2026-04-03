@@ -6,15 +6,14 @@ import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponse
 import com.believe.api.models.client.ws.WTestParams
+import com.believe.api.services.blocking.client.WService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
 interface WService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -38,20 +37,24 @@ interface WService {
      * ws.onmessage = (event) => console.log(event.data);
      * ws.send('Hello!');  // Server responds with echo
      * ```
+     *
      */
     fun test() = test(WTestParams.none())
 
     /** @see test */
-    fun test(
-        params: WTestParams = WTestParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    )
+    fun test(params: WTestParams = WTestParams.none(), requestOptions: RequestOptions = RequestOptions.none())
 
     /** @see test */
-    fun test(params: WTestParams = WTestParams.none()) = test(params, RequestOptions.none())
+    fun test(params: WTestParams = WTestParams.none()) =
+        test(
+          params, RequestOptions.none()
+        )
 
     /** @see test */
-    fun test(requestOptions: RequestOptions) = test(WTestParams.none(), requestOptions)
+    fun test(requestOptions: RequestOptions) =
+        test(
+          WTestParams.none(), requestOptions
+        )
 
     /** A view of [WService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -63,27 +66,26 @@ interface WService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): WService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /ws/test`, but is otherwise the same as
-         * [WService.test].
-         */
-        @MustBeClosed fun test(): HttpResponse = test(WTestParams.none())
+        /** Returns a raw HTTP response for `get /ws/test`, but is otherwise the             same as [WService.test]. */
+        @MustBeClosed
+        fun test(): HttpResponse = test(WTestParams.none())
 
         /** @see test */
         @MustBeClosed
-        fun test(
-            params: WTestParams = WTestParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun test(params: WTestParams = WTestParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
 
         /** @see test */
         @MustBeClosed
         fun test(params: WTestParams = WTestParams.none()): HttpResponse =
-            test(params, RequestOptions.none())
+            test(
+              params, RequestOptions.none()
+            )
 
         /** @see test */
         @MustBeClosed
         fun test(requestOptions: RequestOptions): HttpResponse =
-            test(WTestParams.none(), requestOptions)
+            test(
+              WTestParams.none(), requestOptions
+            )
     }
 }

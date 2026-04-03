@@ -3,14 +3,13 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
+import com.believe.api.services.blocking.CoachingService
 import com.believe.api.services.blocking.coaching.PrincipleService
 import java.util.function.Consumer
 
 interface CoachingService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**

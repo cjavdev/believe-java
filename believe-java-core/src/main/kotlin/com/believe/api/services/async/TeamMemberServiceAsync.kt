@@ -21,15 +21,14 @@ import com.believe.api.models.teammembers.TeamMemberRetrieveParams
 import com.believe.api.models.teammembers.TeamMemberRetrieveResponse
 import com.believe.api.models.teammembers.TeamMemberUpdateParams
 import com.believe.api.models.teammembers.TeamMemberUpdateResponse
+import com.believe.api.services.async.TeamMemberServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 /** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
 interface TeamMemberServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -42,18 +41,15 @@ interface TeamMemberServiceAsync {
     /**
      * Add a new team member to a team.
      *
-     * The request body is a **union type (oneOf)** - you must include the `member_type`
-     * discriminator field:
+     * The request body is a **union type (oneOf)** - you must include the `member_type` discriminator field:
      * - `"member_type": "player"` - Creates a player (requires position, jersey_number, etc.)
      * - `"member_type": "coach"` - Creates a coach (requires specialty, etc.)
      * - `"member_type": "medical_staff"` - Creates medical staff (requires medical specialty, etc.)
-     * - `"member_type": "equipment_manager"` - Creates equipment manager (requires
-     *   responsibilities, etc.)
+     * - `"member_type": "equipment_manager"` - Creates equipment manager (requires responsibilities, etc.)
      *
      * The `character_id` field references an existing character from `/characters/{id}`.
      *
      * **Example for creating a player:**
-     *
      * ```json
      * {
      *   "member_type": "player",
@@ -68,72 +64,74 @@ interface TeamMemberServiceAsync {
      * ```
      */
     fun create(params: TeamMemberCreateParams): CompletableFuture<TeamMemberCreateResponse> =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: TeamMemberCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse>
+    fun create(params: TeamMemberCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse>
 
     /** @see create */
-    fun create(
-        member: TeamMemberCreateParams.Member,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse> =
-        create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
+    fun create(member: TeamMemberCreateParams.Member, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          TeamMemberCreateParams.builder()
+              .member(member)
+              .build(), requestOptions
+        )
 
     /** @see create */
     fun create(member: TeamMemberCreateParams.Member): CompletableFuture<TeamMemberCreateResponse> =
-        create(member, RequestOptions.none())
+        create(
+          member, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        player: TeamMemberCreateParams.Member.Player,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse> =
-        create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
+    fun create(player: TeamMemberCreateParams.Member.Player, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          TeamMemberCreateParams.Member.ofPlayer(player), requestOptions
+        )
 
     /** @see create */
-    fun create(
-        player: TeamMemberCreateParams.Member.Player
-    ): CompletableFuture<TeamMemberCreateResponse> = create(player, RequestOptions.none())
+    fun create(player: TeamMemberCreateParams.Member.Player): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          player, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        coach: TeamMemberCreateParams.Member.Coach,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse> =
-        create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
+    fun create(coach: TeamMemberCreateParams.Member.Coach, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          TeamMemberCreateParams.Member.ofCoach(coach), requestOptions
+        )
 
     /** @see create */
-    fun create(
-        coach: TeamMemberCreateParams.Member.Coach
-    ): CompletableFuture<TeamMemberCreateResponse> = create(coach, RequestOptions.none())
+    fun create(coach: TeamMemberCreateParams.Member.Coach): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          coach, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse> =
-        create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
+    fun create(medicalStaff: TeamMemberCreateParams.Member.MedicalStaff, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions
+        )
 
     /** @see create */
-    fun create(
-        medicalStaff: TeamMemberCreateParams.Member.MedicalStaff
-    ): CompletableFuture<TeamMemberCreateResponse> = create(medicalStaff, RequestOptions.none())
+    fun create(medicalStaff: TeamMemberCreateParams.Member.MedicalStaff): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          medicalStaff, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberCreateResponse> =
-        create(TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager), requestOptions)
+    fun create(equipmentManager: TeamMemberCreateParams.Member.EquipmentManager, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager), requestOptions
+        )
 
     /** @see create */
-    fun create(
-        equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
-    ): CompletableFuture<TeamMemberCreateResponse> = create(equipmentManager, RequestOptions.none())
+    fun create(equipmentManager: TeamMemberCreateParams.Member.EquipmentManager): CompletableFuture<TeamMemberCreateResponse> =
+        create(
+          equipmentManager, RequestOptions.none()
+        )
 
     /**
      * Retrieve detailed information about a specific team member.
@@ -147,192 +145,190 @@ interface TeamMemberServiceAsync {
      * Use `character_id` to fetch full character details from `/characters/{character_id}`.
      */
     fun retrieve(memberId: String): CompletableFuture<TeamMemberRetrieveResponse> =
-        retrieve(memberId, TeamMemberRetrieveParams.none())
+        retrieve(
+          memberId, TeamMemberRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        memberId: String,
-        params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberRetrieveResponse> =
-        retrieve(params.toBuilder().memberId(memberId).build(), requestOptions)
+    fun retrieve(memberId: String, params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberRetrieveResponse> =
+        retrieve(
+          params.toBuilder()
+              .memberId(memberId)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        memberId: String,
-        params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(),
-    ): CompletableFuture<TeamMemberRetrieveResponse> =
-        retrieve(memberId, params, RequestOptions.none())
+    fun retrieve(memberId: String, params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none()): CompletableFuture<TeamMemberRetrieveResponse> =
+        retrieve(
+          memberId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: TeamMemberRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberRetrieveResponse>
+    fun retrieve(params: TeamMemberRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberRetrieveResponse>
 
     /** @see retrieve */
     fun retrieve(params: TeamMemberRetrieveParams): CompletableFuture<TeamMemberRetrieveResponse> =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        memberId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<TeamMemberRetrieveResponse> =
-        retrieve(memberId, TeamMemberRetrieveParams.none(), requestOptions)
+    fun retrieve(memberId: String, requestOptions: RequestOptions): CompletableFuture<TeamMemberRetrieveResponse> =
+        retrieve(
+          memberId,
+          TeamMemberRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Update specific fields of an existing team member. Fields vary by member type. */
-    fun update(
-        memberId: String,
-        params: TeamMemberUpdateParams,
-    ): CompletableFuture<TeamMemberUpdateResponse> = update(memberId, params, RequestOptions.none())
+    fun update(memberId: String, params: TeamMemberUpdateParams): CompletableFuture<TeamMemberUpdateResponse> =
+        update(
+          memberId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        memberId: String,
-        params: TeamMemberUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberUpdateResponse> =
-        update(params.toBuilder().memberId(memberId).build(), requestOptions)
+    fun update(memberId: String, params: TeamMemberUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberUpdateResponse> =
+        update(
+          params.toBuilder()
+              .memberId(memberId)
+              .build(), requestOptions
+        )
 
     /** @see update */
     fun update(params: TeamMemberUpdateParams): CompletableFuture<TeamMemberUpdateResponse> =
-        update(params, RequestOptions.none())
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
-    fun update(
-        params: TeamMemberUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberUpdateResponse>
+    fun update(params: TeamMemberUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberUpdateResponse>
 
     /**
      * Get a paginated list of all team members.
      *
-     * This endpoint demonstrates **union types (oneOf)** in the response. Each team member can be
-     * one of: Player, Coach, MedicalStaff, or EquipmentManager. The `member_type` field acts as a
-     * discriminator to determine the shape of each object.
+     * This endpoint demonstrates **union types (oneOf)** in the response.
+     * Each team member can be one of: Player, Coach, MedicalStaff, or EquipmentManager.
+     * The `member_type` field acts as a discriminator to determine the shape of each object.
      */
     fun list(): CompletableFuture<TeamMemberListPageAsync> = list(TeamMemberListParams.none())
 
     /** @see list */
-    fun list(
-        params: TeamMemberListParams = TeamMemberListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberListPageAsync>
+    fun list(params: TeamMemberListParams = TeamMemberListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberListPageAsync>
 
     /** @see list */
-    fun list(
-        params: TeamMemberListParams = TeamMemberListParams.none()
-    ): CompletableFuture<TeamMemberListPageAsync> = list(params, RequestOptions.none())
+    fun list(params: TeamMemberListParams = TeamMemberListParams.none()): CompletableFuture<TeamMemberListPageAsync> =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<TeamMemberListPageAsync> =
-        list(TeamMemberListParams.none(), requestOptions)
+        list(
+          TeamMemberListParams.none(), requestOptions
+        )
 
     /** Remove a team member from the roster. */
     fun delete(memberId: String): CompletableFuture<Void?> =
-        delete(memberId, TeamMemberDeleteParams.none())
+        delete(
+          memberId, TeamMemberDeleteParams.none()
+        )
 
     /** @see delete */
-    fun delete(
-        memberId: String,
-        params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?> =
-        delete(params.toBuilder().memberId(memberId).build(), requestOptions)
+    fun delete(memberId: String, params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?> =
+        delete(
+          params.toBuilder()
+              .memberId(memberId)
+              .build(), requestOptions
+        )
 
     /** @see delete */
-    fun delete(
-        memberId: String,
-        params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(),
-    ): CompletableFuture<Void?> = delete(memberId, params, RequestOptions.none())
+    fun delete(memberId: String, params: TeamMemberDeleteParams = TeamMemberDeleteParams.none()): CompletableFuture<Void?> =
+        delete(
+          memberId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        params: TeamMemberDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?>
+    fun delete(params: TeamMemberDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?>
 
     /** @see delete */
     fun delete(params: TeamMemberDeleteParams): CompletableFuture<Void?> =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
     fun delete(memberId: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
-        delete(memberId, TeamMemberDeleteParams.none(), requestOptions)
+        delete(
+          memberId,
+          TeamMemberDeleteParams.none(),
+          requestOptions,
+        )
 
     /** Get only coaches (filtered subset of team members). */
-    fun listCoaches(): CompletableFuture<TeamMemberListCoachesPageAsync> =
-        listCoaches(TeamMemberListCoachesParams.none())
+    fun listCoaches(): CompletableFuture<TeamMemberListCoachesPageAsync> = listCoaches(TeamMemberListCoachesParams.none())
 
     /** @see listCoaches */
-    fun listCoaches(
-        params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberListCoachesPageAsync>
+    fun listCoaches(params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberListCoachesPageAsync>
 
     /** @see listCoaches */
-    fun listCoaches(
-        params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none()
-    ): CompletableFuture<TeamMemberListCoachesPageAsync> =
-        listCoaches(params, RequestOptions.none())
+    fun listCoaches(params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none()): CompletableFuture<TeamMemberListCoachesPageAsync> =
+        listCoaches(
+          params, RequestOptions.none()
+        )
 
     /** @see listCoaches */
-    fun listCoaches(
-        requestOptions: RequestOptions
-    ): CompletableFuture<TeamMemberListCoachesPageAsync> =
-        listCoaches(TeamMemberListCoachesParams.none(), requestOptions)
+    fun listCoaches(requestOptions: RequestOptions): CompletableFuture<TeamMemberListCoachesPageAsync> =
+        listCoaches(
+          TeamMemberListCoachesParams.none(), requestOptions
+        )
 
     /** Get only players (filtered subset of team members). */
-    fun listPlayers(): CompletableFuture<TeamMemberListPlayersPageAsync> =
-        listPlayers(TeamMemberListPlayersParams.none())
+    fun listPlayers(): CompletableFuture<TeamMemberListPlayersPageAsync> = listPlayers(TeamMemberListPlayersParams.none())
 
     /** @see listPlayers */
-    fun listPlayers(
-        params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberListPlayersPageAsync>
+    fun listPlayers(params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberListPlayersPageAsync>
 
     /** @see listPlayers */
-    fun listPlayers(
-        params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none()
-    ): CompletableFuture<TeamMemberListPlayersPageAsync> =
-        listPlayers(params, RequestOptions.none())
+    fun listPlayers(params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none()): CompletableFuture<TeamMemberListPlayersPageAsync> =
+        listPlayers(
+          params, RequestOptions.none()
+        )
 
     /** @see listPlayers */
-    fun listPlayers(
-        requestOptions: RequestOptions
-    ): CompletableFuture<TeamMemberListPlayersPageAsync> =
-        listPlayers(TeamMemberListPlayersParams.none(), requestOptions)
+    fun listPlayers(requestOptions: RequestOptions): CompletableFuture<TeamMemberListPlayersPageAsync> =
+        listPlayers(
+          TeamMemberListPlayersParams.none(), requestOptions
+        )
 
     /**
      * Get all staff members (medical staff and equipment managers).
      *
-     * This demonstrates a **narrower union type** - the response is oneOf MedicalStaff or
-     * EquipmentManager.
+     * This demonstrates a **narrower union type** - the response is oneOf MedicalStaff or EquipmentManager.
      */
-    fun listStaff(): CompletableFuture<TeamMemberListStaffPageAsync> =
-        listStaff(TeamMemberListStaffParams.none())
+    fun listStaff(): CompletableFuture<TeamMemberListStaffPageAsync> = listStaff(TeamMemberListStaffParams.none())
 
     /** @see listStaff */
-    fun listStaff(
-        params: TeamMemberListStaffParams = TeamMemberListStaffParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<TeamMemberListStaffPageAsync>
+    fun listStaff(params: TeamMemberListStaffParams = TeamMemberListStaffParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<TeamMemberListStaffPageAsync>
 
     /** @see listStaff */
-    fun listStaff(
-        params: TeamMemberListStaffParams = TeamMemberListStaffParams.none()
-    ): CompletableFuture<TeamMemberListStaffPageAsync> = listStaff(params, RequestOptions.none())
+    fun listStaff(params: TeamMemberListStaffParams = TeamMemberListStaffParams.none()): CompletableFuture<TeamMemberListStaffPageAsync> =
+        listStaff(
+          params, RequestOptions.none()
+        )
 
     /** @see listStaff */
     fun listStaff(requestOptions: RequestOptions): CompletableFuture<TeamMemberListStaffPageAsync> =
-        listStaff(TeamMemberListStaffParams.none(), requestOptions)
+        listStaff(
+          TeamMemberListStaffParams.none(), requestOptions
+        )
 
-    /**
-     * A view of [TeamMemberServiceAsync] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [TeamMemberServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -340,302 +336,252 @@ interface TeamMemberServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): TeamMemberServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): TeamMemberServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /team-members`, but is otherwise the same as
-         * [TeamMemberServiceAsync.create].
-         */
-        fun create(
-            params: TeamMemberCreateParams
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(params, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            params: TeamMemberCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>>
-
-        /** @see create */
-        fun create(
-            member: TeamMemberCreateParams.Member,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(TeamMemberCreateParams.builder().member(member).build(), requestOptions)
-
-        /** @see create */
-        fun create(
-            member: TeamMemberCreateParams.Member
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(member, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            player: TeamMemberCreateParams.Member.Player,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(TeamMemberCreateParams.Member.ofPlayer(player), requestOptions)
-
-        /** @see create */
-        fun create(
-            player: TeamMemberCreateParams.Member.Player
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(player, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            coach: TeamMemberCreateParams.Member.Coach,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(TeamMemberCreateParams.Member.ofCoach(coach), requestOptions)
-
-        /** @see create */
-        fun create(
-            coach: TeamMemberCreateParams.Member.Coach
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(coach, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions)
-
-        /** @see create */
-        fun create(
-            medicalStaff: TeamMemberCreateParams.Member.MedicalStaff
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(medicalStaff, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+        /** Returns a raw HTTP response for `post /team-members`, but is otherwise the             same as [TeamMemberServiceAsync.create]. */
+        fun create(params: TeamMemberCreateParams): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
             create(
-                TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager),
-                requestOptions,
+              params, RequestOptions.none()
             )
 
         /** @see create */
-        fun create(
-            equipmentManager: TeamMemberCreateParams.Member.EquipmentManager
-        ): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
-            create(equipmentManager, RequestOptions.none())
+        fun create(params: TeamMemberCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>>
 
-        /**
-         * Returns a raw HTTP response for `get /team-members/{member_id}`, but is otherwise the
-         * same as [TeamMemberServiceAsync.retrieve].
-         */
-        fun retrieve(
-            memberId: String
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
-            retrieve(memberId, TeamMemberRetrieveParams.none())
+        /** @see create */
+        fun create(member: TeamMemberCreateParams.Member, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              TeamMemberCreateParams.builder()
+                  .member(member)
+                  .build(), requestOptions
+            )
+
+        /** @see create */
+        fun create(member: TeamMemberCreateParams.Member): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              member, RequestOptions.none()
+            )
+
+        /** @see create */
+        fun create(player: TeamMemberCreateParams.Member.Player, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              TeamMemberCreateParams.Member.ofPlayer(player), requestOptions
+            )
+
+        /** @see create */
+        fun create(player: TeamMemberCreateParams.Member.Player): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              player, RequestOptions.none()
+            )
+
+        /** @see create */
+        fun create(coach: TeamMemberCreateParams.Member.Coach, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              TeamMemberCreateParams.Member.ofCoach(coach), requestOptions
+            )
+
+        /** @see create */
+        fun create(coach: TeamMemberCreateParams.Member.Coach): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              coach, RequestOptions.none()
+            )
+
+        /** @see create */
+        fun create(medicalStaff: TeamMemberCreateParams.Member.MedicalStaff, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              TeamMemberCreateParams.Member.ofMedicalStaff(medicalStaff), requestOptions
+            )
+
+        /** @see create */
+        fun create(medicalStaff: TeamMemberCreateParams.Member.MedicalStaff): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              medicalStaff, RequestOptions.none()
+            )
+
+        /** @see create */
+        fun create(equipmentManager: TeamMemberCreateParams.Member.EquipmentManager, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              TeamMemberCreateParams.Member.ofEquipmentManager(equipmentManager), requestOptions
+            )
+
+        /** @see create */
+        fun create(equipmentManager: TeamMemberCreateParams.Member.EquipmentManager): CompletableFuture<HttpResponseFor<TeamMemberCreateResponse>> =
+            create(
+              equipmentManager, RequestOptions.none()
+            )
+
+        /** Returns a raw HTTP response for `get /team-members/{member_id}`, but is otherwise the             same as [TeamMemberServiceAsync.retrieve]. */
+        fun retrieve(memberId: String): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
+            retrieve(
+              memberId, TeamMemberRetrieveParams.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            memberId: String,
-            params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
-            retrieve(params.toBuilder().memberId(memberId).build(), requestOptions)
+        fun retrieve(memberId: String, params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
+            retrieve(
+              params.toBuilder()
+                  .memberId(memberId)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            memberId: String,
-            params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
-            retrieve(memberId, params, RequestOptions.none())
+        fun retrieve(memberId: String, params: TeamMemberRetrieveParams = TeamMemberRetrieveParams.none()): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
+            retrieve(
+              memberId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: TeamMemberRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>>
+        fun retrieve(params: TeamMemberRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>>
 
         /** @see retrieve */
-        fun retrieve(
-            params: TeamMemberRetrieveParams
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(params: TeamMemberRetrieveParams): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            memberId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
-            retrieve(memberId, TeamMemberRetrieveParams.none(), requestOptions)
+        fun retrieve(memberId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<TeamMemberRetrieveResponse>> =
+            retrieve(
+              memberId,
+              TeamMemberRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `patch /team-members/{member_id}`, but is otherwise the
-         * same as [TeamMemberServiceAsync.update].
-         */
-        fun update(
-            memberId: String,
-            params: TeamMemberUpdateParams,
-        ): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
-            update(memberId, params, RequestOptions.none())
+        /** Returns a raw HTTP response for `patch /team-members/{member_id}`, but is otherwise the             same as [TeamMemberServiceAsync.update]. */
+        fun update(memberId: String, params: TeamMemberUpdateParams): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
+            update(
+              memberId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
-        fun update(
-            memberId: String,
-            params: TeamMemberUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
-            update(params.toBuilder().memberId(memberId).build(), requestOptions)
+        fun update(memberId: String, params: TeamMemberUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
+            update(
+              params.toBuilder()
+                  .memberId(memberId)
+                  .build(), requestOptions
+            )
 
         /** @see update */
-        fun update(
-            params: TeamMemberUpdateParams
-        ): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
-            update(params, RequestOptions.none())
+        fun update(params: TeamMemberUpdateParams): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>> =
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
-        fun update(
-            params: TeamMemberUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>>
+        fun update(params: TeamMemberUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberUpdateResponse>>
 
-        /**
-         * Returns a raw HTTP response for `get /team-members`, but is otherwise the same as
-         * [TeamMemberServiceAsync.list].
-         */
-        fun list(): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> =
-            list(TeamMemberListParams.none())
+        /** Returns a raw HTTP response for `get /team-members`, but is otherwise the             same as [TeamMemberServiceAsync.list]. */
+        fun list(): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> = list(TeamMemberListParams.none())
 
         /** @see list */
-        fun list(
-            params: TeamMemberListParams = TeamMemberListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>>
+        fun list(params: TeamMemberListParams = TeamMemberListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>>
 
         /** @see list */
-        fun list(
-            params: TeamMemberListParams = TeamMemberListParams.none()
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> =
-            list(params, RequestOptions.none())
+        fun list(params: TeamMemberListParams = TeamMemberListParams.none()): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
-        fun list(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> =
-            list(TeamMemberListParams.none(), requestOptions)
+        fun list(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<TeamMemberListPageAsync>> =
+            list(
+              TeamMemberListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `delete /team-members/{member_id}`, but is otherwise the
-         * same as [TeamMemberServiceAsync.delete].
-         */
+        /** Returns a raw HTTP response for `delete /team-members/{member_id}`, but is otherwise the             same as [TeamMemberServiceAsync.delete]. */
         fun delete(memberId: String): CompletableFuture<HttpResponse> =
-            delete(memberId, TeamMemberDeleteParams.none())
+            delete(
+              memberId, TeamMemberDeleteParams.none()
+            )
 
         /** @see delete */
-        fun delete(
-            memberId: String,
-            params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse> =
-            delete(params.toBuilder().memberId(memberId).build(), requestOptions)
+        fun delete(memberId: String, params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse> =
+            delete(
+              params.toBuilder()
+                  .memberId(memberId)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
-        fun delete(
-            memberId: String,
-            params: TeamMemberDeleteParams = TeamMemberDeleteParams.none(),
-        ): CompletableFuture<HttpResponse> = delete(memberId, params, RequestOptions.none())
+        fun delete(memberId: String, params: TeamMemberDeleteParams = TeamMemberDeleteParams.none()): CompletableFuture<HttpResponse> =
+            delete(
+              memberId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
-        fun delete(
-            params: TeamMemberDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse>
+        fun delete(params: TeamMemberDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse>
 
         /** @see delete */
         fun delete(params: TeamMemberDeleteParams): CompletableFuture<HttpResponse> =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
-        fun delete(
-            memberId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponse> =
-            delete(memberId, TeamMemberDeleteParams.none(), requestOptions)
+        fun delete(memberId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
+            delete(
+              memberId,
+              TeamMemberDeleteParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /team-members/coaches/`, but is otherwise the same
-         * as [TeamMemberServiceAsync.listCoaches].
-         */
-        fun listCoaches(): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> =
-            listCoaches(TeamMemberListCoachesParams.none())
+        /** Returns a raw HTTP response for `get /team-members/coaches/`, but is otherwise the             same as [TeamMemberServiceAsync.listCoaches]. */
+        fun listCoaches(): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> = listCoaches(TeamMemberListCoachesParams.none())
 
         /** @see listCoaches */
-        fun listCoaches(
-            params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>>
+        fun listCoaches(params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>>
 
         /** @see listCoaches */
-        fun listCoaches(
-            params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none()
-        ): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> =
-            listCoaches(params, RequestOptions.none())
+        fun listCoaches(params: TeamMemberListCoachesParams = TeamMemberListCoachesParams.none()): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> =
+            listCoaches(
+              params, RequestOptions.none()
+            )
 
         /** @see listCoaches */
-        fun listCoaches(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> =
-            listCoaches(TeamMemberListCoachesParams.none(), requestOptions)
+        fun listCoaches(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<TeamMemberListCoachesPageAsync>> =
+            listCoaches(
+              TeamMemberListCoachesParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /team-members/players/`, but is otherwise the same
-         * as [TeamMemberServiceAsync.listPlayers].
-         */
-        fun listPlayers(): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> =
-            listPlayers(TeamMemberListPlayersParams.none())
+        /** Returns a raw HTTP response for `get /team-members/players/`, but is otherwise the             same as [TeamMemberServiceAsync.listPlayers]. */
+        fun listPlayers(): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> = listPlayers(TeamMemberListPlayersParams.none())
 
         /** @see listPlayers */
-        fun listPlayers(
-            params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>>
+        fun listPlayers(params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>>
 
         /** @see listPlayers */
-        fun listPlayers(
-            params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none()
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> =
-            listPlayers(params, RequestOptions.none())
+        fun listPlayers(params: TeamMemberListPlayersParams = TeamMemberListPlayersParams.none()): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> =
+            listPlayers(
+              params, RequestOptions.none()
+            )
 
         /** @see listPlayers */
-        fun listPlayers(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> =
-            listPlayers(TeamMemberListPlayersParams.none(), requestOptions)
+        fun listPlayers(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<TeamMemberListPlayersPageAsync>> =
+            listPlayers(
+              TeamMemberListPlayersParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /team-members/staff/`, but is otherwise the same as
-         * [TeamMemberServiceAsync.listStaff].
-         */
-        fun listStaff(): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> =
-            listStaff(TeamMemberListStaffParams.none())
+        /** Returns a raw HTTP response for `get /team-members/staff/`, but is otherwise the             same as [TeamMemberServiceAsync.listStaff]. */
+        fun listStaff(): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> = listStaff(TeamMemberListStaffParams.none())
 
         /** @see listStaff */
-        fun listStaff(
-            params: TeamMemberListStaffParams = TeamMemberListStaffParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>>
+        fun listStaff(params: TeamMemberListStaffParams = TeamMemberListStaffParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>>
 
         /** @see listStaff */
-        fun listStaff(
-            params: TeamMemberListStaffParams = TeamMemberListStaffParams.none()
-        ): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> =
-            listStaff(params, RequestOptions.none())
+        fun listStaff(params: TeamMemberListStaffParams = TeamMemberListStaffParams.none()): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> =
+            listStaff(
+              params, RequestOptions.none()
+            )
 
         /** @see listStaff */
-        fun listStaff(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> =
-            listStaff(TeamMemberListStaffParams.none(), requestOptions)
+        fun listStaff(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<TeamMemberListStaffPageAsync>> =
+            listStaff(
+              TeamMemberListStaffParams.none(), requestOptions
+            )
     }
 }

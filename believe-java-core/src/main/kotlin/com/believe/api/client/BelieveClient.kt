@@ -2,6 +2,8 @@
 
 package com.believe.api.client
 
+import com.believe.api.client.BelieveClient
+import com.believe.api.client.BelieveClientAsync
 import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
@@ -30,32 +32,30 @@ import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /**
- * A client for interacting with the Believe REST API synchronously. You can also switch to
- * asynchronous execution via the [async] method.
+ * A client for interacting with the Believe REST API synchronously.
+ * You can also switch to asynchronous execution via the
+ * [async] method.
  *
- * This client performs best when you create a single instance and reuse it for all interactions
- * with the REST API. This is because each client holds its own connection pool and thread pools.
- * Reusing connections and threads reduces latency and saves memory. The client also handles rate
- * limiting per client. This means that creating and using multiple instances at the same time will
- * not respect rate limits.
+ * This client performs best when you create a single instance and reuse it for all interactions with the
+ * REST API. This is because each client holds its own connection pool and thread pools. Reusing
+ * connections and threads reduces latency and saves memory. The client also handles rate limiting per
+ * client. This means that creating and using multiple instances at the same time will not respect rate
+ * limits.
  *
- * The threads and connections that are held will be released automatically if they remain idle. But
- * if you are writing an application that needs to aggressively release unused resources, then you
- * may call [close].
+ * The threads and connections that are held will be released automatically if they remain idle. But if you
+ * are writing an application that needs to aggressively release unused resources, then you may call
+ * [close].
  */
 interface BelieveClient {
 
     /**
      * Returns a version of this client that uses asynchronous execution.
      *
-     * The returned client shares its resources, like its connection pool and thread pools, with
-     * this client.
+     * The returned client shares its resources, like its connection pool and thread pools, with this client.
      */
     fun async(): BelieveClientAsync
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -102,9 +102,7 @@ interface BelieveClient {
     /** Server-Sent Events (SSE) streaming endpoints */
     fun stream(): StreamService
 
-    /**
-     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
-     */
+    /** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
     fun teamMembers(): TeamMemberService
 
     /** Register webhook endpoints and trigger events for testing */
@@ -123,30 +121,29 @@ interface BelieveClient {
     fun getWelcome(): ClientGetWelcomeResponse = getWelcome(ClientGetWelcomeParams.none())
 
     /** @see getWelcome */
-    fun getWelcome(
-        params: ClientGetWelcomeParams = ClientGetWelcomeParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): ClientGetWelcomeResponse
+    fun getWelcome(params: ClientGetWelcomeParams = ClientGetWelcomeParams.none(), requestOptions: RequestOptions = RequestOptions.none()): ClientGetWelcomeResponse
 
     /** @see getWelcome */
-    fun getWelcome(
-        params: ClientGetWelcomeParams = ClientGetWelcomeParams.none()
-    ): ClientGetWelcomeResponse = getWelcome(params, RequestOptions.none())
+    fun getWelcome(params: ClientGetWelcomeParams = ClientGetWelcomeParams.none()): ClientGetWelcomeResponse =
+        getWelcome(
+          params, RequestOptions.none()
+        )
 
     /** @see getWelcome */
     fun getWelcome(requestOptions: RequestOptions): ClientGetWelcomeResponse =
-        getWelcome(ClientGetWelcomeParams.none(), requestOptions)
+        getWelcome(
+          ClientGetWelcomeParams.none(), requestOptions
+        )
 
     /**
      * Closes this client, relinquishing any underlying resources.
      *
-     * This is purposefully not inherited from [AutoCloseable] because the client is long-lived and
-     * usually should not be synchronously closed via try-with-resources.
+     * This is purposefully not inherited from [AutoCloseable] because the client is long-lived and usually
+     * should not be synchronously closed via try-with-resources.
      *
-     * It's also usually not necessary to call this method at all. the default HTTP client
-     * automatically releases threads and connections if they remain idle, but if you are writing an
-     * application that needs to aggressively release unused resources, then you may call this
-     * method.
+     * It's also usually not necessary to call this method at all. the default HTTP client automatically
+     * releases threads and connections if they remain idle, but if you are writing an application that
+     * needs to aggressively release unused resources, then you may call this method.
      */
     fun close()
 
@@ -197,18 +194,13 @@ interface BelieveClient {
         /** Server-Sent Events (SSE) streaming endpoints */
         fun stream(): StreamService.WithRawResponse
 
-        /**
-         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
-         * Managers
-         */
+        /** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
         fun teamMembers(): TeamMemberService.WithRawResponse
 
         /** Register webhook endpoints and trigger events for testing */
         fun webhooks(): WebhookService.WithRawResponse
 
-        /**
-         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
-         */
+        /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
         fun ticketSales(): TicketSaleService.WithRawResponse
 
         fun health(): HealthService.WithRawResponse
@@ -217,30 +209,26 @@ interface BelieveClient {
 
         fun client(): ClientService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /`, but is otherwise the same as
-         * [BelieveClient.getWelcome].
-         */
+        /** Returns a raw HTTP response for `get /`, but is otherwise the             same as [BelieveClient.getWelcome]. */
         @MustBeClosed
-        fun getWelcome(): HttpResponseFor<ClientGetWelcomeResponse> =
-            getWelcome(ClientGetWelcomeParams.none())
+        fun getWelcome(): HttpResponseFor<ClientGetWelcomeResponse> = getWelcome(ClientGetWelcomeParams.none())
 
         /** @see getWelcome */
         @MustBeClosed
-        fun getWelcome(
-            params: ClientGetWelcomeParams = ClientGetWelcomeParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ClientGetWelcomeResponse>
+        fun getWelcome(params: ClientGetWelcomeParams = ClientGetWelcomeParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<ClientGetWelcomeResponse>
 
         /** @see getWelcome */
         @MustBeClosed
-        fun getWelcome(
-            params: ClientGetWelcomeParams = ClientGetWelcomeParams.none()
-        ): HttpResponseFor<ClientGetWelcomeResponse> = getWelcome(params, RequestOptions.none())
+        fun getWelcome(params: ClientGetWelcomeParams = ClientGetWelcomeParams.none()): HttpResponseFor<ClientGetWelcomeResponse> =
+            getWelcome(
+              params, RequestOptions.none()
+            )
 
         /** @see getWelcome */
         @MustBeClosed
         fun getWelcome(requestOptions: RequestOptions): HttpResponseFor<ClientGetWelcomeResponse> =
-            getWelcome(ClientGetWelcomeParams.none(), requestOptions)
+            getWelcome(
+              ClientGetWelcomeParams.none(), requestOptions
+            )
     }
 }

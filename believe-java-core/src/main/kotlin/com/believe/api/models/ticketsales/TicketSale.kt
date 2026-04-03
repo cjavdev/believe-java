@@ -8,6 +8,7 @@ import com.believe.api.core.JsonMissing
 import com.believe.api.core.JsonValue
 import com.believe.api.core.checkRequired
 import com.believe.api.errors.BelieveInvalidDataException
+import com.believe.api.models.ticketsales.PurchaseMethod
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -18,9 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** Full ticket sale model with ID. */
-class TicketSale
-@JsonCreator(mode = JsonCreator.Mode.DISABLED)
-private constructor(
+class TicketSale @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
     private val id: JsonField<String>,
     private val buyerName: JsonField<String>,
     private val currency: JsonField<String>,
@@ -35,6 +34,7 @@ private constructor(
     private val buyerEmail: JsonField<String>,
     private val couponCode: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
+
 ) {
 
     @JsonCreator
@@ -44,138 +44,119 @@ private constructor(
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("discount") @ExcludeMissing discount: JsonField<String> = JsonMissing.of(),
         @JsonProperty("match_id") @ExcludeMissing matchId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("purchase_method")
-        @ExcludeMissing
-        purchaseMethod: JsonField<PurchaseMethod> = JsonMissing.of(),
+        @JsonProperty("purchase_method") @ExcludeMissing purchaseMethod: JsonField<PurchaseMethod> = JsonMissing.of(),
         @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("subtotal") @ExcludeMissing subtotal: JsonField<String> = JsonMissing.of(),
         @JsonProperty("tax") @ExcludeMissing tax: JsonField<String> = JsonMissing.of(),
         @JsonProperty("total") @ExcludeMissing total: JsonField<String> = JsonMissing.of(),
         @JsonProperty("unit_price") @ExcludeMissing unitPrice: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("buyer_email")
-        @ExcludeMissing
-        buyerEmail: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("coupon_code")
-        @ExcludeMissing
-        couponCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("buyer_email") @ExcludeMissing buyerEmail: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("coupon_code") @ExcludeMissing couponCode: JsonField<String> = JsonMissing.of()
     ) : this(
-        id,
-        buyerName,
-        currency,
-        discount,
-        matchId,
-        purchaseMethod,
-        quantity,
-        subtotal,
-        tax,
-        total,
-        unitPrice,
-        buyerEmail,
-        couponCode,
-        mutableMapOf(),
+      id,
+      buyerName,
+      currency,
+      discount,
+      matchId,
+      purchaseMethod,
+      quantity,
+      subtotal,
+      tax,
+      total,
+      unitPrice,
+      buyerEmail,
+      couponCode,
+      mutableMapOf(),
     )
 
     /**
      * Unique identifier
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
 
     /**
      * Name of the ticket buyer
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun buyerName(): String = buyerName.getRequired("buyer_name")
 
     /**
      * Currency code (GBP, USD, or EUR)
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun currency(): String = currency.getRequired("currency")
 
     /**
      * Discount amount applied from coupon
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun discount(): String = discount.getRequired("discount")
 
     /**
      * ID of the match
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun matchId(): String = matchId.getRequired("match_id")
 
     /**
      * How the ticket was purchased
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun purchaseMethod(): PurchaseMethod = purchaseMethod.getRequired("purchase_method")
 
     /**
      * Number of tickets purchased
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun quantity(): Long = quantity.getRequired("quantity")
 
     /**
      * Subtotal before discount and tax (unit_price * quantity)
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun subtotal(): String = subtotal.getRequired("subtotal")
 
     /**
      * Tax amount (20% UK VAT on discounted subtotal)
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun tax(): String = tax.getRequired("tax")
 
     /**
      * Final total (subtotal - discount + tax)
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun total(): String = total.getRequired("total")
 
     /**
      * Price per ticket (decimal string)
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun unitPrice(): String = unitPrice.getRequired("unit_price")
 
     /**
      * Email of the ticket buyer
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value).
      */
     fun buyerEmail(): Optional<String> = buyerEmail.getOptional("buyer_email")
 
     /**
      * Coupon code applied, if any
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value).
      */
     fun couponCode(): Optional<String> = couponCode.getOptional("coupon_code")
 
@@ -184,35 +165,45 @@ private constructor(
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("id")
+    @ExcludeMissing
+    fun _id(): JsonField<String> = id
 
     /**
      * Returns the raw JSON value of [buyerName].
      *
      * Unlike [buyerName], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("buyer_name") @ExcludeMissing fun _buyerName(): JsonField<String> = buyerName
+    @JsonProperty("buyer_name")
+    @ExcludeMissing
+    fun _buyerName(): JsonField<String> = buyerName
 
     /**
      * Returns the raw JSON value of [currency].
      *
      * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+    @JsonProperty("currency")
+    @ExcludeMissing
+    fun _currency(): JsonField<String> = currency
 
     /**
      * Returns the raw JSON value of [discount].
      *
      * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<String> = discount
+    @JsonProperty("discount")
+    @ExcludeMissing
+    fun _discount(): JsonField<String> = discount
 
     /**
      * Returns the raw JSON value of [matchId].
      *
      * Unlike [matchId], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("match_id") @ExcludeMissing fun _matchId(): JsonField<String> = matchId
+    @JsonProperty("match_id")
+    @ExcludeMissing
+    fun _matchId(): JsonField<String> = matchId
 
     /**
      * Returns the raw JSON value of [purchaseMethod].
@@ -228,59 +219,72 @@ private constructor(
      *
      * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
+    @JsonProperty("quantity")
+    @ExcludeMissing
+    fun _quantity(): JsonField<Long> = quantity
 
     /**
      * Returns the raw JSON value of [subtotal].
      *
      * Unlike [subtotal], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
+    @JsonProperty("subtotal")
+    @ExcludeMissing
+    fun _subtotal(): JsonField<String> = subtotal
 
     /**
      * Returns the raw JSON value of [tax].
      *
      * Unlike [tax], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("tax") @ExcludeMissing fun _tax(): JsonField<String> = tax
+    @JsonProperty("tax")
+    @ExcludeMissing
+    fun _tax(): JsonField<String> = tax
 
     /**
      * Returns the raw JSON value of [total].
      *
      * Unlike [total], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
+    @JsonProperty("total")
+    @ExcludeMissing
+    fun _total(): JsonField<String> = total
 
     /**
      * Returns the raw JSON value of [unitPrice].
      *
      * Unlike [unitPrice], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("unit_price") @ExcludeMissing fun _unitPrice(): JsonField<String> = unitPrice
+    @JsonProperty("unit_price")
+    @ExcludeMissing
+    fun _unitPrice(): JsonField<String> = unitPrice
 
     /**
      * Returns the raw JSON value of [buyerEmail].
      *
      * Unlike [buyerEmail], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("buyer_email") @ExcludeMissing fun _buyerEmail(): JsonField<String> = buyerEmail
+    @JsonProperty("buyer_email")
+    @ExcludeMissing
+    fun _buyerEmail(): JsonField<String> = buyerEmail
 
     /**
      * Returns the raw JSON value of [couponCode].
      *
      * Unlike [couponCode], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("coupon_code") @ExcludeMissing fun _couponCode(): JsonField<String> = couponCode
+    @JsonProperty("coupon_code")
+    @ExcludeMissing
+    fun _couponCode(): JsonField<String> = couponCode
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
-        additionalProperties.put(key, value)
+      additionalProperties.put(key, value)
     }
 
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalProperties)
+    fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -290,6 +294,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [TicketSale].
          *
          * The following fields are required:
+         *
          * ```java
          * .id()
          * .buyerName()
@@ -304,7 +309,8 @@ private constructor(
          * .unitPrice()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TicketSale]. */
@@ -326,22 +332,23 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(ticketSale: TicketSale) = apply {
-            id = ticketSale.id
-            buyerName = ticketSale.buyerName
-            currency = ticketSale.currency
-            discount = ticketSale.discount
-            matchId = ticketSale.matchId
-            purchaseMethod = ticketSale.purchaseMethod
-            quantity = ticketSale.quantity
-            subtotal = ticketSale.subtotal
-            tax = ticketSale.tax
-            total = ticketSale.total
-            unitPrice = ticketSale.unitPrice
-            buyerEmail = ticketSale.buyerEmail
-            couponCode = ticketSale.couponCode
-            additionalProperties = ticketSale.additionalProperties.toMutableMap()
-        }
+        internal fun from(ticketSale: TicketSale) =
+            apply {
+                id = ticketSale.id
+                buyerName = ticketSale.buyerName
+                currency = ticketSale.currency
+                discount = ticketSale.discount
+                matchId = ticketSale.matchId
+                purchaseMethod = ticketSale.purchaseMethod
+                quantity = ticketSale.quantity
+                subtotal = ticketSale.subtotal
+                tax = ticketSale.tax
+                total = ticketSale.total
+                unitPrice = ticketSale.unitPrice
+                buyerEmail = ticketSale.buyerEmail
+                couponCode = ticketSale.couponCode
+                additionalProperties = ticketSale.additionalProperties.toMutableMap()
+            }
 
         /** Unique identifier */
         fun id(id: String) = id(JsonField.of(id))
@@ -349,10 +356,13 @@ private constructor(
         /**
          * Sets [Builder.id] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.id] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) =
+            apply {
+                this.id = id
+            }
 
         /** Name of the ticket buyer */
         fun buyerName(buyerName: String) = buyerName(JsonField.of(buyerName))
@@ -360,11 +370,13 @@ private constructor(
         /**
          * Sets [Builder.buyerName] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.buyerName] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.buyerName] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun buyerName(buyerName: JsonField<String>) = apply { this.buyerName = buyerName }
+        fun buyerName(buyerName: JsonField<String>) =
+            apply {
+                this.buyerName = buyerName
+            }
 
         /** Currency code (GBP, USD, or EUR) */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -372,10 +384,13 @@ private constructor(
         /**
          * Sets [Builder.currency] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        fun currency(currency: JsonField<String>) =
+            apply {
+                this.currency = currency
+            }
 
         /** Discount amount applied from coupon */
         fun discount(discount: String) = discount(JsonField.of(discount))
@@ -383,10 +398,13 @@ private constructor(
         /**
          * Sets [Builder.discount] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.discount] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.discount] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun discount(discount: JsonField<String>) = apply { this.discount = discount }
+        fun discount(discount: JsonField<String>) =
+            apply {
+                this.discount = discount
+            }
 
         /** ID of the match */
         fun matchId(matchId: String) = matchId(JsonField.of(matchId))
@@ -394,25 +412,27 @@ private constructor(
         /**
          * Sets [Builder.matchId] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.matchId] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.matchId] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun matchId(matchId: JsonField<String>) = apply { this.matchId = matchId }
+        fun matchId(matchId: JsonField<String>) =
+            apply {
+                this.matchId = matchId
+            }
 
         /** How the ticket was purchased */
-        fun purchaseMethod(purchaseMethod: PurchaseMethod) =
-            purchaseMethod(JsonField.of(purchaseMethod))
+        fun purchaseMethod(purchaseMethod: PurchaseMethod) = purchaseMethod(JsonField.of(purchaseMethod))
 
         /**
          * Sets [Builder.purchaseMethod] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.purchaseMethod] with a well-typed [PurchaseMethod] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.purchaseMethod] with a well-typed [PurchaseMethod] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun purchaseMethod(purchaseMethod: JsonField<PurchaseMethod>) = apply {
-            this.purchaseMethod = purchaseMethod
-        }
+        fun purchaseMethod(purchaseMethod: JsonField<PurchaseMethod>) =
+            apply {
+                this.purchaseMethod = purchaseMethod
+            }
 
         /** Number of tickets purchased */
         fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
@@ -420,10 +440,13 @@ private constructor(
         /**
          * Sets [Builder.quantity] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.quantity] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.quantity] with a well-typed [Long] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun quantity(quantity: JsonField<Long>) = apply { this.quantity = quantity }
+        fun quantity(quantity: JsonField<Long>) =
+            apply {
+                this.quantity = quantity
+            }
 
         /** Subtotal before discount and tax (unit_price * quantity) */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
@@ -431,10 +454,13 @@ private constructor(
         /**
          * Sets [Builder.subtotal] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.subtotal] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.subtotal] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
+        fun subtotal(subtotal: JsonField<String>) =
+            apply {
+                this.subtotal = subtotal
+            }
 
         /** Tax amount (20% UK VAT on discounted subtotal) */
         fun tax(tax: String) = tax(JsonField.of(tax))
@@ -442,10 +468,13 @@ private constructor(
         /**
          * Sets [Builder.tax] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.tax] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.tax] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun tax(tax: JsonField<String>) = apply { this.tax = tax }
+        fun tax(tax: JsonField<String>) =
+            apply {
+                this.tax = tax
+            }
 
         /** Final total (subtotal - discount + tax) */
         fun total(total: String) = total(JsonField.of(total))
@@ -453,10 +482,13 @@ private constructor(
         /**
          * Sets [Builder.total] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.total] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.total] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun total(total: JsonField<String>) = apply { this.total = total }
+        fun total(total: JsonField<String>) =
+            apply {
+                this.total = total
+            }
 
         /** Price per ticket (decimal string) */
         fun unitPrice(unitPrice: String) = unitPrice(JsonField.of(unitPrice))
@@ -464,11 +496,13 @@ private constructor(
         /**
          * Sets [Builder.unitPrice] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.unitPrice] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.unitPrice] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun unitPrice(unitPrice: JsonField<String>) = apply { this.unitPrice = unitPrice }
+        fun unitPrice(unitPrice: JsonField<String>) =
+            apply {
+                this.unitPrice = unitPrice
+            }
 
         /** Email of the ticket buyer */
         fun buyerEmail(buyerEmail: String?) = buyerEmail(JsonField.ofNullable(buyerEmail))
@@ -479,11 +513,13 @@ private constructor(
         /**
          * Sets [Builder.buyerEmail] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.buyerEmail] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.buyerEmail] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun buyerEmail(buyerEmail: JsonField<String>) = apply { this.buyerEmail = buyerEmail }
+        fun buyerEmail(buyerEmail: JsonField<String>) =
+            apply {
+                this.buyerEmail = buyerEmail
+            }
 
         /** Coupon code applied, if any */
         fun couponCode(couponCode: String?) = couponCode(JsonField.ofNullable(couponCode))
@@ -494,30 +530,39 @@ private constructor(
         /**
          * Sets [Builder.couponCode] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.couponCode] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.couponCode] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun couponCode(couponCode: JsonField<String>) = apply { this.couponCode = couponCode }
+        fun couponCode(couponCode: JsonField<String>) =
+            apply {
+                this.couponCode = couponCode
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [TicketSale].
@@ -525,6 +570,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .id()
          * .buyerName()
@@ -543,45 +589,68 @@ private constructor(
          */
         fun build(): TicketSale =
             TicketSale(
-                checkRequired("id", id),
-                checkRequired("buyerName", buyerName),
-                checkRequired("currency", currency),
-                checkRequired("discount", discount),
-                checkRequired("matchId", matchId),
-                checkRequired("purchaseMethod", purchaseMethod),
-                checkRequired("quantity", quantity),
-                checkRequired("subtotal", subtotal),
-                checkRequired("tax", tax),
-                checkRequired("total", total),
-                checkRequired("unitPrice", unitPrice),
-                buyerEmail,
-                couponCode,
-                additionalProperties.toMutableMap(),
+              checkRequired(
+                "id", id
+              ),
+              checkRequired(
+                "buyerName", buyerName
+              ),
+              checkRequired(
+                "currency", currency
+              ),
+              checkRequired(
+                "discount", discount
+              ),
+              checkRequired(
+                "matchId", matchId
+              ),
+              checkRequired(
+                "purchaseMethod", purchaseMethod
+              ),
+              checkRequired(
+                "quantity", quantity
+              ),
+              checkRequired(
+                "subtotal", subtotal
+              ),
+              checkRequired(
+                "tax", tax
+              ),
+              checkRequired(
+                "total", total
+              ),
+              checkRequired(
+                "unitPrice", unitPrice
+              ),
+              buyerEmail,
+              couponCode,
+              additionalProperties.toMutableMap(),
             )
     }
 
     private var validated: Boolean = false
 
-    fun validate(): TicketSale = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): TicketSale =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        id()
-        buyerName()
-        currency()
-        discount()
-        matchId()
-        purchaseMethod().validate()
-        quantity()
-        subtotal()
-        tax()
-        total()
-        unitPrice()
-        buyerEmail()
-        couponCode()
-        validated = true
-    }
+            id()
+            buyerName()
+            currency()
+            discount()
+            matchId()
+            purchaseMethod().validate()
+            quantity()
+            subtotal()
+            tax()
+            total()
+            unitPrice()
+            buyerEmail()
+            couponCode()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -597,64 +666,19 @@ private constructor(
      * Used for best match union deserialization.
      */
     @JvmSynthetic
-    internal fun validity(): Int =
-        (if (id.asKnown().isPresent) 1 else 0) +
-            (if (buyerName.asKnown().isPresent) 1 else 0) +
-            (if (currency.asKnown().isPresent) 1 else 0) +
-            (if (discount.asKnown().isPresent) 1 else 0) +
-            (if (matchId.asKnown().isPresent) 1 else 0) +
-            (purchaseMethod.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (quantity.asKnown().isPresent) 1 else 0) +
-            (if (subtotal.asKnown().isPresent) 1 else 0) +
-            (if (tax.asKnown().isPresent) 1 else 0) +
-            (if (total.asKnown().isPresent) 1 else 0) +
-            (if (unitPrice.asKnown().isPresent) 1 else 0) +
-            (if (buyerEmail.asKnown().isPresent) 1 else 0) +
-            (if (couponCode.asKnown().isPresent) 1 else 0)
+    internal fun validity(): Int = (if (id.asKnown().isPresent) 1 else 0) + (if (buyerName.asKnown().isPresent) 1 else 0) + (if (currency.asKnown().isPresent) 1 else 0) + (if (discount.asKnown().isPresent) 1 else 0) + (if (matchId.asKnown().isPresent) 1 else 0) + (purchaseMethod.asKnown().getOrNull()?.validity() ?: 0) + (if (quantity.asKnown().isPresent) 1 else 0) + (if (subtotal.asKnown().isPresent) 1 else 0) + (if (tax.asKnown().isPresent) 1 else 0) + (if (total.asKnown().isPresent) 1 else 0) + (if (unitPrice.asKnown().isPresent) 1 else 0) + (if (buyerEmail.asKnown().isPresent) 1 else 0) + (if (couponCode.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TicketSale &&
-            id == other.id &&
-            buyerName == other.buyerName &&
-            currency == other.currency &&
-            discount == other.discount &&
-            matchId == other.matchId &&
-            purchaseMethod == other.purchaseMethod &&
-            quantity == other.quantity &&
-            subtotal == other.subtotal &&
-            tax == other.tax &&
-            total == other.total &&
-            unitPrice == other.unitPrice &&
-            buyerEmail == other.buyerEmail &&
-            couponCode == other.couponCode &&
-            additionalProperties == other.additionalProperties
+      return other is TicketSale && id == other.id && buyerName == other.buyerName && currency == other.currency && discount == other.discount && matchId == other.matchId && purchaseMethod == other.purchaseMethod && quantity == other.quantity && subtotal == other.subtotal && tax == other.tax && total == other.total && unitPrice == other.unitPrice && buyerEmail == other.buyerEmail && couponCode == other.couponCode && additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy {
-        Objects.hash(
-            id,
-            buyerName,
-            currency,
-            discount,
-            matchId,
-            purchaseMethod,
-            quantity,
-            subtotal,
-            tax,
-            total,
-            unitPrice,
-            buyerEmail,
-            couponCode,
-            additionalProperties,
-        )
-    }
+    private val hashCode: Int by lazy { Objects.hash(id, buyerName, currency, discount, matchId, purchaseMethod, quantity, subtotal, tax, total, unitPrice, buyerEmail, couponCode, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "TicketSale{id=$id, buyerName=$buyerName, currency=$currency, discount=$discount, matchId=$matchId, purchaseMethod=$purchaseMethod, quantity=$quantity, subtotal=$subtotal, tax=$tax, total=$total, unitPrice=$unitPrice, buyerEmail=$buyerEmail, couponCode=$couponCode, additionalProperties=$additionalProperties}"
+    override fun toString() = "TicketSale{id=$id, buyerName=$buyerName, currency=$currency, discount=$discount, matchId=$matchId, purchaseMethod=$purchaseMethod, quantity=$quantity, subtotal=$subtotal, tax=$tax, total=$total, unitPrice=$unitPrice, buyerEmail=$buyerEmail, couponCode=$couponCode, additionalProperties=$additionalProperties}"
 }

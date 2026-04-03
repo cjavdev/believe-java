@@ -3,6 +3,7 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.version.VersionRetrieveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,11 +12,13 @@ internal class VersionServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val versionService = client.version()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val versionService = client.version()
 
-        val version = versionService.retrieve()
+      val version = versionService.retrieve()
 
-        version.validate()
+      version.validate()
     }
 }

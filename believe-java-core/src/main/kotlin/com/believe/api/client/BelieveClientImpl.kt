@@ -2,6 +2,10 @@
 
 package com.believe.api.client
 
+import com.believe.api.client.BelieveClient
+import com.believe.api.client.BelieveClientAsync
+import com.believe.api.client.BelieveClientAsyncImpl
+import com.believe.api.client.BelieveClientImpl
 import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.getPackageVersion
@@ -57,26 +61,23 @@ import com.believe.api.services.blocking.WebhookService
 import com.believe.api.services.blocking.WebhookServiceImpl
 import java.util.function.Consumer
 
-class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClient {
+class BelieveClientImpl(
+    private val clientOptions: ClientOptions,
+
+) : BelieveClient {
 
     private val clientOptionsWithUserAgent =
-        if (clientOptions.headers.names().contains("User-Agent")) clientOptions
-        else
-            clientOptions
-                .toBuilder()
-                .putHeader("User-Agent", "${javaClass.simpleName}/Java ${getPackageVersion()}")
-                .build()
+
+      if (clientOptions.headers.names().contains("User-Agent")) clientOptions
+
+      else clientOptions.toBuilder().putHeader("User-Agent", "${javaClass.simpleName}/Java ${getPackageVersion()}").build()
 
     // Pass the original clientOptions so that this client sets its own User-Agent.
     private val async: BelieveClientAsync by lazy { BelieveClientAsyncImpl(clientOptions) }
 
-    private val withRawResponse: BelieveClient.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+    private val withRawResponse: BelieveClient.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
-    private val characters: CharacterService by lazy {
-        CharacterServiceImpl(clientOptionsWithUserAgent)
-    }
+    private val characters: CharacterService by lazy { CharacterServiceImpl(clientOptionsWithUserAgent) }
 
     private val teams: TeamService by lazy { TeamServiceImpl(clientOptionsWithUserAgent) }
 
@@ -88,17 +89,13 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     private val believe: BelieveService by lazy { BelieveServiceImpl(clientOptionsWithUserAgent) }
 
-    private val conflicts: ConflictService by lazy {
-        ConflictServiceImpl(clientOptionsWithUserAgent)
-    }
+    private val conflicts: ConflictService by lazy { ConflictServiceImpl(clientOptionsWithUserAgent) }
 
     private val reframe: ReframeService by lazy { ReframeServiceImpl(clientOptionsWithUserAgent) }
 
     private val press: PressService by lazy { PressServiceImpl(clientOptionsWithUserAgent) }
 
-    private val coaching: CoachingService by lazy {
-        CoachingServiceImpl(clientOptionsWithUserAgent)
-    }
+    private val coaching: CoachingService by lazy { CoachingServiceImpl(clientOptionsWithUserAgent) }
 
     private val biscuits: BiscuitService by lazy { BiscuitServiceImpl(clientOptionsWithUserAgent) }
 
@@ -106,15 +103,11 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     private val stream: StreamService by lazy { StreamServiceImpl(clientOptionsWithUserAgent) }
 
-    private val teamMembers: TeamMemberService by lazy {
-        TeamMemberServiceImpl(clientOptionsWithUserAgent)
-    }
+    private val teamMembers: TeamMemberService by lazy { TeamMemberServiceImpl(clientOptionsWithUserAgent) }
 
     private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptionsWithUserAgent) }
 
-    private val ticketSales: TicketSaleService by lazy {
-        TicketSaleServiceImpl(clientOptionsWithUserAgent)
-    }
+    private val ticketSales: TicketSaleService by lazy { TicketSaleServiceImpl(clientOptionsWithUserAgent) }
 
     private val health: HealthService by lazy { HealthServiceImpl(clientOptionsWithUserAgent) }
 
@@ -126,8 +119,7 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     override fun withRawResponse(): BelieveClient.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient =
-        BelieveClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient = BelieveClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     /** Operations related to Ted Lasso characters */
     override fun characters(): CharacterService = characters
@@ -166,9 +158,7 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
     /** Server-Sent Events (SSE) streaming endpoints */
     override fun stream(): StreamService = stream
 
-    /**
-     * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers
-     */
+    /** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
     override fun teamMembers(): TeamMemberService = teamMembers
 
     /** Register webhook endpoints and trigger events for testing */
@@ -183,103 +173,58 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
     override fun client(): ClientService = client
 
-    override fun getWelcome(
-        params: ClientGetWelcomeParams,
-        requestOptions: RequestOptions,
-    ): ClientGetWelcomeResponse =
+    override fun getWelcome(params: ClientGetWelcomeParams, requestOptions: RequestOptions): ClientGetWelcomeResponse =
         // get /
         withRawResponse().getWelcome(params, requestOptions).parse()
 
     override fun close() = clientOptions.close()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        BelieveClient.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : BelieveClient.WithRawResponse {
 
-        private val characters: CharacterService.WithRawResponse by lazy {
-            CharacterServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
-        private val teams: TeamService.WithRawResponse by lazy {
-            TeamServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val characters: CharacterService.WithRawResponse by lazy { CharacterServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val matches: MatchService.WithRawResponse by lazy {
-            MatchServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val teams: TeamService.WithRawResponse by lazy { TeamServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val episodes: EpisodeService.WithRawResponse by lazy {
-            EpisodeServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val matches: MatchService.WithRawResponse by lazy { MatchServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val quotes: QuoteService.WithRawResponse by lazy {
-            QuoteServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val episodes: EpisodeService.WithRawResponse by lazy { EpisodeServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val believe: BelieveService.WithRawResponse by lazy {
-            BelieveServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val quotes: QuoteService.WithRawResponse by lazy { QuoteServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val conflicts: ConflictService.WithRawResponse by lazy {
-            ConflictServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val believe: BelieveService.WithRawResponse by lazy { BelieveServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val reframe: ReframeService.WithRawResponse by lazy {
-            ReframeServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val conflicts: ConflictService.WithRawResponse by lazy { ConflictServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val press: PressService.WithRawResponse by lazy {
-            PressServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val reframe: ReframeService.WithRawResponse by lazy { ReframeServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val coaching: CoachingService.WithRawResponse by lazy {
-            CoachingServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val press: PressService.WithRawResponse by lazy { PressServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val biscuits: BiscuitService.WithRawResponse by lazy {
-            BiscuitServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val coaching: CoachingService.WithRawResponse by lazy { CoachingServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val pepTalk: PepTalkService.WithRawResponse by lazy {
-            PepTalkServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val biscuits: BiscuitService.WithRawResponse by lazy { BiscuitServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val stream: StreamService.WithRawResponse by lazy {
-            StreamServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val pepTalk: PepTalkService.WithRawResponse by lazy { PepTalkServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val teamMembers: TeamMemberService.WithRawResponse by lazy {
-            TeamMemberServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val stream: StreamService.WithRawResponse by lazy { StreamServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val webhooks: WebhookService.WithRawResponse by lazy {
-            WebhookServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val teamMembers: TeamMemberService.WithRawResponse by lazy { TeamMemberServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val ticketSales: TicketSaleService.WithRawResponse by lazy {
-            TicketSaleServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val webhooks: WebhookService.WithRawResponse by lazy { WebhookServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val health: HealthService.WithRawResponse by lazy {
-            HealthServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val ticketSales: TicketSaleService.WithRawResponse by lazy { TicketSaleServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val version: VersionService.WithRawResponse by lazy {
-            VersionServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val health: HealthService.WithRawResponse by lazy { HealthServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        private val client: ClientService.WithRawResponse by lazy {
-            ClientServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val version: VersionService.WithRawResponse by lazy { VersionServiceImpl.WithRawResponseImpl(clientOptions) }
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): BelieveClient.WithRawResponse =
-            BelieveClientImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
-            )
+        private val client: ClientService.WithRawResponse by lazy { ClientServiceImpl.WithRawResponseImpl(clientOptions) }
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveClient.WithRawResponse = BelieveClientImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
         /** Operations related to Ted Lasso characters */
         override fun characters(): CharacterService.WithRawResponse = characters
@@ -318,18 +263,13 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
         /** Server-Sent Events (SSE) streaming endpoints */
         override fun stream(): StreamService.WithRawResponse = stream
 
-        /**
-         * Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment
-         * Managers
-         */
+        /** Team members with union types (oneOf) - Players, Coaches, Medical Staff, Equipment Managers */
         override fun teamMembers(): TeamMemberService.WithRawResponse = teamMembers
 
         /** Register webhook endpoints and trigger events for testing */
         override fun webhooks(): WebhookService.WithRawResponse = webhooks
 
-        /**
-         * Ticket sales with 300 records for practicing pagination, filtering, and financial data
-         */
+        /** Ticket sales with 300 records for practicing pagination, filtering, and financial data */
         override fun ticketSales(): TicketSaleService.WithRawResponse = ticketSales
 
         override fun health(): HealthService.WithRawResponse = health
@@ -338,31 +278,32 @@ class BelieveClientImpl(private val clientOptions: ClientOptions) : BelieveClien
 
         override fun client(): ClientService.WithRawResponse = client
 
-        private val getWelcomeHandler: Handler<ClientGetWelcomeResponse> =
-            jsonHandler<ClientGetWelcomeResponse>(clientOptions.jsonMapper)
+        private val getWelcomeHandler: Handler<ClientGetWelcomeResponse> = jsonHandler<ClientGetWelcomeResponse>(clientOptions.jsonMapper)
 
-        override fun getWelcome(
-            params: ClientGetWelcomeParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<ClientGetWelcomeResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { getWelcomeHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun getWelcome(params: ClientGetWelcomeParams, requestOptions: RequestOptions): HttpResponseFor<ClientGetWelcomeResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("")
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  getWelcomeHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

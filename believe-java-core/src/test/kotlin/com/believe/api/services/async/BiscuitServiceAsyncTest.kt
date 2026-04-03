@@ -3,6 +3,9 @@
 package com.believe.api.services.async
 
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
+import com.believe.api.models.biscuits.BiscuitGetFreshParams
+import com.believe.api.models.biscuits.BiscuitListParams
+import com.believe.api.models.biscuits.BiscuitRetrieveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,36 +14,42 @@ internal class BiscuitServiceAsyncTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val biscuitServiceAsync = client.biscuits()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitServiceAsync = client.biscuits()
 
-        val biscuitFuture = biscuitServiceAsync.retrieve("biscuit_id")
+      val biscuitFuture = biscuitServiceAsync.retrieve("biscuit_id")
 
-        val biscuit = biscuitFuture.get()
-        biscuit.validate()
+      val biscuit = biscuitFuture.get()
+      biscuit.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val biscuitServiceAsync = client.biscuits()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitServiceAsync = client.biscuits()
 
-        val pageFuture = biscuitServiceAsync.list()
+      val pageFuture = biscuitServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.response().validate()
+      val page = pageFuture.get()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun getFresh() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val biscuitServiceAsync = client.biscuits()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val biscuitServiceAsync = client.biscuits()
 
-        val biscuitFuture = biscuitServiceAsync.getFresh()
+      val biscuitFuture = biscuitServiceAsync.getFresh()
 
-        val biscuit = biscuitFuture.get()
-        biscuit.validate()
+      val biscuit = biscuitFuture.get()
+      biscuit.validate()
     }
 }

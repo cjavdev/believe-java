@@ -6,6 +6,7 @@ import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.models.teams.logo.LogoDeleteParams
 import com.believe.api.models.teams.logo.LogoDownloadParams
 import com.believe.api.models.teams.logo.LogoUploadParams
+import java.io.ByteArrayInputStream
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -14,48 +15,46 @@ internal class LogoServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val logoService = client.teams().logo()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoService = client.teams().logo()
 
-        logoService.delete(
-            LogoDeleteParams.builder()
-                .teamId("team_id")
-                .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .build()
-        )
+      logoService.delete(LogoDeleteParams.builder()
+          .teamId("team_id")
+          .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun download() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val logoService = client.teams().logo()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoService = client.teams().logo()
 
-        val response =
-            logoService.download(
-                LogoDownloadParams.builder()
-                    .teamId("team_id")
-                    .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+      val response = logoService.download(LogoDownloadParams.builder()
+          .teamId("team_id")
+          .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun upload() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val logoService = client.teams().logo()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val logoService = client.teams().logo()
 
-        val fileUpload =
-            logoService.upload(
-                LogoUploadParams.builder()
-                    .teamId("team_id")
-                    .file("Example data".byteInputStream())
-                    .build()
-            )
+      val fileUpload = logoService.upload(LogoUploadParams.builder()
+          .teamId("team_id")
+          .file("Example data".byteInputStream())
+          .build())
 
-        fileUpload.validate()
+      fileUpload.validate()
     }
 }

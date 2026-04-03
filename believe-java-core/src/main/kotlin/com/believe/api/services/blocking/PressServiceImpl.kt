@@ -17,67 +17,62 @@ import com.believe.api.core.http.parseable
 import com.believe.api.core.prepare
 import com.believe.api.models.press.PressSimulateParams
 import com.believe.api.models.press.PressSimulateResponse
+import com.believe.api.services.blocking.PressService
+import com.believe.api.services.blocking.PressServiceImpl
 import java.util.function.Consumer
 
 /** Interactive endpoints for motivation and guidance */
-class PressServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    PressService {
+class PressServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: PressService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : PressService {
+
+    private val withRawResponse: PressService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): PressService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PressService =
-        PressServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PressService = PressServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun simulate(
-        params: PressSimulateParams,
-        requestOptions: RequestOptions,
-    ): PressSimulateResponse =
+    override fun simulate(params: PressSimulateParams, requestOptions: RequestOptions): PressSimulateResponse =
         // post /press
         withRawResponse().simulate(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        PressService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : PressService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): PressService.WithRawResponse =
-            PressServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PressService.WithRawResponse = PressServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val simulateHandler: Handler<PressSimulateResponse> = jsonHandler<PressSimulateResponse>(clientOptions.jsonMapper)
+
+        override fun simulate(params: PressSimulateParams, requestOptions: RequestOptions): HttpResponseFor<PressSimulateResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("press")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(
+              clientOptions, params
             )
-
-        private val simulateHandler: Handler<PressSimulateResponse> =
-            jsonHandler<PressSimulateResponse>(clientOptions.jsonMapper)
-
-        override fun simulate(
-            params: PressSimulateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<PressSimulateResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("press")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { simulateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  simulateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

@@ -16,15 +16,14 @@ import com.believe.api.models.webhooks.WebhookListParams
 import com.believe.api.models.webhooks.WebhookRetrieveParams
 import com.believe.api.models.webhooks.WebhookTriggerEventParams
 import com.believe.api.models.webhooks.WebhookTriggerEventResponse
+import com.believe.api.services.blocking.WebhookService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** Register webhook endpoints and trigger events for testing */
 interface WebhookService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -55,93 +54,108 @@ interface WebhookService {
      * Store the returned `secret` securely - you'll need it to verify webhook signatures.
      */
     fun create(params: WebhookCreateParams): WebhookCreateResponse =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: WebhookCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): WebhookCreateResponse
+    fun create(params: WebhookCreateParams, requestOptions: RequestOptions = RequestOptions.none()): WebhookCreateResponse
 
     /** Get details of a specific webhook endpoint. */
     fun retrieve(webhookId: String): RegisteredWebhook =
-        retrieve(webhookId, WebhookRetrieveParams.none())
+        retrieve(
+          webhookId, WebhookRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        webhookId: String,
-        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): RegisteredWebhook = retrieve(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+    fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): RegisteredWebhook =
+        retrieve(
+          params.toBuilder()
+              .webhookId(webhookId)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        webhookId: String,
-        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-    ): RegisteredWebhook = retrieve(webhookId, params, RequestOptions.none())
+    fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none()): RegisteredWebhook =
+        retrieve(
+          webhookId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: WebhookRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): RegisteredWebhook
+    fun retrieve(params: WebhookRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): RegisteredWebhook
 
     /** @see retrieve */
     fun retrieve(params: WebhookRetrieveParams): RegisteredWebhook =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(webhookId: String, requestOptions: RequestOptions): RegisteredWebhook =
-        retrieve(webhookId, WebhookRetrieveParams.none(), requestOptions)
+        retrieve(
+          webhookId,
+          WebhookRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Get a list of all registered webhook endpoints. */
     fun list(): List<RegisteredWebhook> = list(WebhookListParams.none())
 
     /** @see list */
-    fun list(
-        params: WebhookListParams = WebhookListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): List<RegisteredWebhook>
+    fun list(params: WebhookListParams = WebhookListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): List<RegisteredWebhook>
 
     /** @see list */
     fun list(params: WebhookListParams = WebhookListParams.none()): List<RegisteredWebhook> =
-        list(params, RequestOptions.none())
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): List<RegisteredWebhook> =
-        list(WebhookListParams.none(), requestOptions)
+        list(
+          WebhookListParams.none(), requestOptions
+        )
 
     /** Unregister a webhook endpoint. It will no longer receive events. */
     fun delete(webhookId: String): WebhookDeleteResponse =
-        delete(webhookId, WebhookDeleteParams.none())
+        delete(
+          webhookId, WebhookDeleteParams.none()
+        )
 
     /** @see delete */
-    fun delete(
-        webhookId: String,
-        params: WebhookDeleteParams = WebhookDeleteParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): WebhookDeleteResponse =
-        delete(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+    fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): WebhookDeleteResponse =
+        delete(
+          params.toBuilder()
+              .webhookId(webhookId)
+              .build(), requestOptions
+        )
 
     /** @see delete */
-    fun delete(
-        webhookId: String,
-        params: WebhookDeleteParams = WebhookDeleteParams.none(),
-    ): WebhookDeleteResponse = delete(webhookId, params, RequestOptions.none())
+    fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none()): WebhookDeleteResponse =
+        delete(
+          webhookId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        params: WebhookDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): WebhookDeleteResponse
+    fun delete(params: WebhookDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): WebhookDeleteResponse
 
     /** @see delete */
     fun delete(params: WebhookDeleteParams): WebhookDeleteResponse =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
     fun delete(webhookId: String, requestOptions: RequestOptions): WebhookDeleteResponse =
-        delete(webhookId, WebhookDeleteParams.none(), requestOptions)
+        delete(
+          webhookId,
+          WebhookDeleteParams.none(),
+          requestOptions,
+        )
 
     /**
      * Trigger a webhook event and deliver it to all subscribed endpoints.
@@ -172,13 +186,12 @@ interface WebhookService {
      * ```
      */
     fun triggerEvent(params: WebhookTriggerEventParams): WebhookTriggerEventResponse =
-        triggerEvent(params, RequestOptions.none())
+        triggerEvent(
+          params, RequestOptions.none()
+        )
 
     /** @see triggerEvent */
-    fun triggerEvent(
-        params: WebhookTriggerEventParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): WebhookTriggerEventResponse
+    fun triggerEvent(params: WebhookTriggerEventParams, requestOptions: RequestOptions = RequestOptions.none()): WebhookTriggerEventResponse
 
     /**
      * Unwraps a webhook event from its JSON representation.
@@ -197,149 +210,138 @@ interface WebhookService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /webhooks`, but is otherwise the same as
-         * [WebhookService.create].
-         */
+        /** Returns a raw HTTP response for `post /webhooks`, but is otherwise the             same as [WebhookService.create]. */
         @MustBeClosed
         fun create(params: WebhookCreateParams): HttpResponseFor<WebhookCreateResponse> =
-            create(params, RequestOptions.none())
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
         @MustBeClosed
-        fun create(
-            params: WebhookCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<WebhookCreateResponse>
+        fun create(params: WebhookCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<WebhookCreateResponse>
 
-        /**
-         * Returns a raw HTTP response for `get /webhooks/{webhook_id}`, but is otherwise the same
-         * as [WebhookService.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /webhooks/{webhook_id}`, but is otherwise the             same as [WebhookService.retrieve]. */
         @MustBeClosed
         fun retrieve(webhookId: String): HttpResponseFor<RegisteredWebhook> =
-            retrieve(webhookId, WebhookRetrieveParams.none())
+            retrieve(
+              webhookId, WebhookRetrieveParams.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            webhookId: String,
-            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<RegisteredWebhook> =
-            retrieve(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+        fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<RegisteredWebhook> =
+            retrieve(
+              params.toBuilder()
+                  .webhookId(webhookId)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            webhookId: String,
-            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
-        ): HttpResponseFor<RegisteredWebhook> = retrieve(webhookId, params, RequestOptions.none())
+        fun retrieve(webhookId: String, params: WebhookRetrieveParams = WebhookRetrieveParams.none()): HttpResponseFor<RegisteredWebhook> =
+            retrieve(
+              webhookId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            params: WebhookRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<RegisteredWebhook>
+        fun retrieve(params: WebhookRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<RegisteredWebhook>
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: WebhookRetrieveParams): HttpResponseFor<RegisteredWebhook> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            webhookId: String,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<RegisteredWebhook> =
-            retrieve(webhookId, WebhookRetrieveParams.none(), requestOptions)
+        fun retrieve(webhookId: String, requestOptions: RequestOptions): HttpResponseFor<RegisteredWebhook> =
+            retrieve(
+              webhookId,
+              WebhookRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /webhooks`, but is otherwise the same as
-         * [WebhookService.list].
-         */
+        /** Returns a raw HTTP response for `get /webhooks`, but is otherwise the             same as [WebhookService.list]. */
         @MustBeClosed
         fun list(): HttpResponseFor<List<RegisteredWebhook>> = list(WebhookListParams.none())
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: WebhookListParams = WebhookListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<List<RegisteredWebhook>>
+        fun list(params: WebhookListParams = WebhookListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<List<RegisteredWebhook>>
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: WebhookListParams = WebhookListParams.none()
-        ): HttpResponseFor<List<RegisteredWebhook>> = list(params, RequestOptions.none())
+        fun list(params: WebhookListParams = WebhookListParams.none()): HttpResponseFor<List<RegisteredWebhook>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<List<RegisteredWebhook>> =
-            list(WebhookListParams.none(), requestOptions)
+            list(
+              WebhookListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `delete /webhooks/{webhook_id}`, but is otherwise the
-         * same as [WebhookService.delete].
-         */
+        /** Returns a raw HTTP response for `delete /webhooks/{webhook_id}`, but is otherwise the             same as [WebhookService.delete]. */
         @MustBeClosed
         fun delete(webhookId: String): HttpResponseFor<WebhookDeleteResponse> =
-            delete(webhookId, WebhookDeleteParams.none())
+            delete(
+              webhookId, WebhookDeleteParams.none()
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            webhookId: String,
-            params: WebhookDeleteParams = WebhookDeleteParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<WebhookDeleteResponse> =
-            delete(params.toBuilder().webhookId(webhookId).build(), requestOptions)
+        fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<WebhookDeleteResponse> =
+            delete(
+              params.toBuilder()
+                  .webhookId(webhookId)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            webhookId: String,
-            params: WebhookDeleteParams = WebhookDeleteParams.none(),
-        ): HttpResponseFor<WebhookDeleteResponse> = delete(webhookId, params, RequestOptions.none())
+        fun delete(webhookId: String, params: WebhookDeleteParams = WebhookDeleteParams.none()): HttpResponseFor<WebhookDeleteResponse> =
+            delete(
+              webhookId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            params: WebhookDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<WebhookDeleteResponse>
+        fun delete(params: WebhookDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<WebhookDeleteResponse>
 
         /** @see delete */
         @MustBeClosed
         fun delete(params: WebhookDeleteParams): HttpResponseFor<WebhookDeleteResponse> =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            webhookId: String,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<WebhookDeleteResponse> =
-            delete(webhookId, WebhookDeleteParams.none(), requestOptions)
+        fun delete(webhookId: String, requestOptions: RequestOptions): HttpResponseFor<WebhookDeleteResponse> =
+            delete(
+              webhookId,
+              WebhookDeleteParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `post /webhooks/trigger`, but is otherwise the same as
-         * [WebhookService.triggerEvent].
-         */
+        /** Returns a raw HTTP response for `post /webhooks/trigger`, but is otherwise the             same as [WebhookService.triggerEvent]. */
         @MustBeClosed
-        fun triggerEvent(
-            params: WebhookTriggerEventParams
-        ): HttpResponseFor<WebhookTriggerEventResponse> =
-            triggerEvent(params, RequestOptions.none())
+        fun triggerEvent(params: WebhookTriggerEventParams): HttpResponseFor<WebhookTriggerEventResponse> =
+            triggerEvent(
+              params, RequestOptions.none()
+            )
 
         /** @see triggerEvent */
         @MustBeClosed
-        fun triggerEvent(
-            params: WebhookTriggerEventParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<WebhookTriggerEventResponse>
+        fun triggerEvent(params: WebhookTriggerEventParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<WebhookTriggerEventResponse>
     }
 }

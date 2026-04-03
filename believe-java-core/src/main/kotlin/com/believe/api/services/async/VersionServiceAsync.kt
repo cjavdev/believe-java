@@ -7,14 +7,13 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.version.VersionRetrieveParams
 import com.believe.api.models.version.VersionRetrieveResponse
+import com.believe.api.services.async.VersionServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 interface VersionServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -25,27 +24,24 @@ interface VersionServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionServiceAsync
 
     /** Get detailed information about API versioning. */
-    fun retrieve(): CompletableFuture<VersionRetrieveResponse> =
-        retrieve(VersionRetrieveParams.none())
+    fun retrieve(): CompletableFuture<VersionRetrieveResponse> = retrieve(VersionRetrieveParams.none())
 
     /** @see retrieve */
-    fun retrieve(
-        params: VersionRetrieveParams = VersionRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<VersionRetrieveResponse>
+    fun retrieve(params: VersionRetrieveParams = VersionRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<VersionRetrieveResponse>
 
     /** @see retrieve */
-    fun retrieve(
-        params: VersionRetrieveParams = VersionRetrieveParams.none()
-    ): CompletableFuture<VersionRetrieveResponse> = retrieve(params, RequestOptions.none())
+    fun retrieve(params: VersionRetrieveParams = VersionRetrieveParams.none()): CompletableFuture<VersionRetrieveResponse> =
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<VersionRetrieveResponse> =
-        retrieve(VersionRetrieveParams.none(), requestOptions)
+        retrieve(
+          VersionRetrieveParams.none(), requestOptions
+        )
 
-    /**
-     * A view of [VersionServiceAsync] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [VersionServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -53,33 +49,24 @@ interface VersionServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): VersionServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /version`, but is otherwise the same as
-         * [VersionServiceAsync.retrieve].
-         */
-        fun retrieve(): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> =
-            retrieve(VersionRetrieveParams.none())
+        /** Returns a raw HTTP response for `get /version`, but is otherwise the             same as [VersionServiceAsync.retrieve]. */
+        fun retrieve(): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> = retrieve(VersionRetrieveParams.none())
 
         /** @see retrieve */
-        fun retrieve(
-            params: VersionRetrieveParams = VersionRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>>
+        fun retrieve(params: VersionRetrieveParams = VersionRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>>
 
         /** @see retrieve */
-        fun retrieve(
-            params: VersionRetrieveParams = VersionRetrieveParams.none()
-        ): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(params: VersionRetrieveParams = VersionRetrieveParams.none()): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> =
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> =
-            retrieve(VersionRetrieveParams.none(), requestOptions)
+        fun retrieve(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<VersionRetrieveResponse>> =
+            retrieve(
+              VersionRetrieveParams.none(), requestOptions
+            )
     }
 }

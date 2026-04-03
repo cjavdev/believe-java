@@ -3,14 +3,13 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
+import com.believe.api.services.blocking.ClientService
 import com.believe.api.services.blocking.client.WService
 import java.util.function.Consumer
 
 interface ClientService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**

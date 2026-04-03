@@ -3,14 +3,13 @@
 package com.believe.api.services.async
 
 import com.believe.api.core.ClientOptions
+import com.believe.api.services.async.ClientServiceAsync
 import com.believe.api.services.async.client.WServiceAsync
 import java.util.function.Consumer
 
 interface ClientServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -23,9 +22,7 @@ interface ClientServiceAsync {
     /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
     fun ws(): WServiceAsync
 
-    /**
-     * A view of [ClientServiceAsync] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [ClientServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -33,9 +30,7 @@ interface ClientServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): ClientServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientServiceAsync.WithRawResponse
 
         /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
         fun ws(): WServiceAsync.WithRawResponse

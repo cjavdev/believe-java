@@ -3,6 +3,7 @@
 package com.believe.api.models.peptalk
 
 import com.believe.api.core.http.QueryParams
+import com.believe.api.models.peptalk.PepTalkRetrieveParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,24 +11,30 @@ internal class PepTalkRetrieveParamsTest {
 
     @Test
     fun create() {
-        PepTalkRetrieveParams.builder().stream(true).build()
+      PepTalkRetrieveParams.builder()
+          .stream(true)
+          .build()
     }
 
     @Test
     fun queryParams() {
-        val params = PepTalkRetrieveParams.builder().stream(true).build()
+      val params = PepTalkRetrieveParams.builder()
+          .stream(true)
+          .build()
 
-        val queryParams = params._queryParams()
+      val queryParams = params._queryParams()
 
-        assertThat(queryParams).isEqualTo(QueryParams.builder().put("stream", "true").build())
+      assertThat(queryParams).isEqualTo(QueryParams.builder()
+          .put("stream", "true")
+          .build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = PepTalkRetrieveParams.builder().build()
+      val params = PepTalkRetrieveParams.builder().build()
 
-        val queryParams = params._queryParams()
+      val queryParams = params._queryParams()
 
-        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
+      assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

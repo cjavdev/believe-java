@@ -15,15 +15,14 @@ import com.believe.api.models.episodes.EpisodeListPageAsync
 import com.believe.api.models.episodes.EpisodeListParams
 import com.believe.api.models.episodes.EpisodeRetrieveParams
 import com.believe.api.models.episodes.EpisodeUpdateParams
+import com.believe.api.services.async.EpisodeServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 /** Operations related to TV episodes */
 interface EpisodeServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -35,167 +34,188 @@ interface EpisodeServiceAsync {
 
     /** Add a new episode to the series. */
     fun create(params: EpisodeCreateParams): CompletableFuture<Episode> =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: EpisodeCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Episode>
+    fun create(params: EpisodeCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Episode>
 
     /** Retrieve detailed information about a specific episode. */
     fun retrieve(episodeId: String): CompletableFuture<Episode> =
-        retrieve(episodeId, EpisodeRetrieveParams.none())
+        retrieve(
+          episodeId, EpisodeRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        episodeId: String,
-        params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Episode> =
-        retrieve(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+    fun retrieve(episodeId: String, params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Episode> =
+        retrieve(
+          params.toBuilder()
+              .episodeId(episodeId)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        episodeId: String,
-        params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(),
-    ): CompletableFuture<Episode> = retrieve(episodeId, params, RequestOptions.none())
+    fun retrieve(episodeId: String, params: EpisodeRetrieveParams = EpisodeRetrieveParams.none()): CompletableFuture<Episode> =
+        retrieve(
+          episodeId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: EpisodeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Episode>
+    fun retrieve(params: EpisodeRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Episode>
 
     /** @see retrieve */
     fun retrieve(params: EpisodeRetrieveParams): CompletableFuture<Episode> =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(episodeId: String, requestOptions: RequestOptions): CompletableFuture<Episode> =
-        retrieve(episodeId, EpisodeRetrieveParams.none(), requestOptions)
+        retrieve(
+          episodeId,
+          EpisodeRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Update specific fields of an existing episode. */
     fun update(episodeId: String): CompletableFuture<Episode> =
-        update(episodeId, EpisodeUpdateParams.none())
+        update(
+          episodeId, EpisodeUpdateParams.none()
+        )
 
     /** @see update */
-    fun update(
-        episodeId: String,
-        params: EpisodeUpdateParams = EpisodeUpdateParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Episode> =
-        update(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+    fun update(episodeId: String, params: EpisodeUpdateParams = EpisodeUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Episode> =
+        update(
+          params.toBuilder()
+              .episodeId(episodeId)
+              .build(), requestOptions
+        )
 
     /** @see update */
-    fun update(
-        episodeId: String,
-        params: EpisodeUpdateParams = EpisodeUpdateParams.none(),
-    ): CompletableFuture<Episode> = update(episodeId, params, RequestOptions.none())
+    fun update(episodeId: String, params: EpisodeUpdateParams = EpisodeUpdateParams.none()): CompletableFuture<Episode> =
+        update(
+          episodeId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        params: EpisodeUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Episode>
+    fun update(params: EpisodeUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Episode>
 
     /** @see update */
     fun update(params: EpisodeUpdateParams): CompletableFuture<Episode> =
-        update(params, RequestOptions.none())
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
     fun update(episodeId: String, requestOptions: RequestOptions): CompletableFuture<Episode> =
-        update(episodeId, EpisodeUpdateParams.none(), requestOptions)
+        update(
+          episodeId,
+          EpisodeUpdateParams.none(),
+          requestOptions,
+        )
 
     /** Get a paginated list of all Ted Lasso episodes with optional filtering by season. */
     fun list(): CompletableFuture<EpisodeListPageAsync> = list(EpisodeListParams.none())
 
     /** @see list */
-    fun list(
-        params: EpisodeListParams = EpisodeListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<EpisodeListPageAsync>
+    fun list(params: EpisodeListParams = EpisodeListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<EpisodeListPageAsync>
 
     /** @see list */
-    fun list(
-        params: EpisodeListParams = EpisodeListParams.none()
-    ): CompletableFuture<EpisodeListPageAsync> = list(params, RequestOptions.none())
+    fun list(params: EpisodeListParams = EpisodeListParams.none()): CompletableFuture<EpisodeListPageAsync> =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<EpisodeListPageAsync> =
-        list(EpisodeListParams.none(), requestOptions)
+        list(
+          EpisodeListParams.none(), requestOptions
+        )
 
     /** Remove an episode from the database. */
     fun delete(episodeId: String): CompletableFuture<Void?> =
-        delete(episodeId, EpisodeDeleteParams.none())
+        delete(
+          episodeId, EpisodeDeleteParams.none()
+        )
 
     /** @see delete */
-    fun delete(
-        episodeId: String,
-        params: EpisodeDeleteParams = EpisodeDeleteParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?> =
-        delete(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+    fun delete(episodeId: String, params: EpisodeDeleteParams = EpisodeDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?> =
+        delete(
+          params.toBuilder()
+              .episodeId(episodeId)
+              .build(), requestOptions
+        )
 
     /** @see delete */
-    fun delete(
-        episodeId: String,
-        params: EpisodeDeleteParams = EpisodeDeleteParams.none(),
-    ): CompletableFuture<Void?> = delete(episodeId, params, RequestOptions.none())
+    fun delete(episodeId: String, params: EpisodeDeleteParams = EpisodeDeleteParams.none()): CompletableFuture<Void?> =
+        delete(
+          episodeId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        params: EpisodeDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?>
+    fun delete(params: EpisodeDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?>
 
     /** @see delete */
     fun delete(params: EpisodeDeleteParams): CompletableFuture<Void?> =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
     fun delete(episodeId: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
-        delete(episodeId, EpisodeDeleteParams.none(), requestOptions)
+        delete(
+          episodeId,
+          EpisodeDeleteParams.none(),
+          requestOptions,
+        )
 
     /** Get Ted's wisdom and memorable moments from a specific episode. */
     fun getWisdom(episodeId: String): CompletableFuture<EpisodeGetWisdomResponse> =
-        getWisdom(episodeId, EpisodeGetWisdomParams.none())
+        getWisdom(
+          episodeId, EpisodeGetWisdomParams.none()
+        )
 
     /** @see getWisdom */
-    fun getWisdom(
-        episodeId: String,
-        params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<EpisodeGetWisdomResponse> =
-        getWisdom(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+    fun getWisdom(episodeId: String, params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<EpisodeGetWisdomResponse> =
+        getWisdom(
+          params.toBuilder()
+              .episodeId(episodeId)
+              .build(), requestOptions
+        )
 
     /** @see getWisdom */
-    fun getWisdom(
-        episodeId: String,
-        params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(),
-    ): CompletableFuture<EpisodeGetWisdomResponse> =
-        getWisdom(episodeId, params, RequestOptions.none())
+    fun getWisdom(episodeId: String, params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none()): CompletableFuture<EpisodeGetWisdomResponse> =
+        getWisdom(
+          episodeId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see getWisdom */
-    fun getWisdom(
-        params: EpisodeGetWisdomParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<EpisodeGetWisdomResponse>
+    fun getWisdom(params: EpisodeGetWisdomParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<EpisodeGetWisdomResponse>
 
     /** @see getWisdom */
     fun getWisdom(params: EpisodeGetWisdomParams): CompletableFuture<EpisodeGetWisdomResponse> =
-        getWisdom(params, RequestOptions.none())
+        getWisdom(
+          params, RequestOptions.none()
+        )
 
     /** @see getWisdom */
-    fun getWisdom(
-        episodeId: String,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<EpisodeGetWisdomResponse> =
-        getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
+    fun getWisdom(episodeId: String, requestOptions: RequestOptions): CompletableFuture<EpisodeGetWisdomResponse> =
+        getWisdom(
+          episodeId,
+          EpisodeGetWisdomParams.none(),
+          requestOptions,
+        )
 
-    /**
-     * A view of [EpisodeServiceAsync] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [EpisodeServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -203,205 +223,189 @@ interface EpisodeServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): EpisodeServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): EpisodeServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /episodes`, but is otherwise the same as
-         * [EpisodeServiceAsync.create].
-         */
+        /** Returns a raw HTTP response for `post /episodes`, but is otherwise the             same as [EpisodeServiceAsync.create]. */
         fun create(params: EpisodeCreateParams): CompletableFuture<HttpResponseFor<Episode>> =
-            create(params, RequestOptions.none())
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
-        fun create(
-            params: EpisodeCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>>
+        fun create(params: EpisodeCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Episode>>
 
-        /**
-         * Returns a raw HTTP response for `get /episodes/{episode_id}`, but is otherwise the same
-         * as [EpisodeServiceAsync.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /episodes/{episode_id}`, but is otherwise the             same as [EpisodeServiceAsync.retrieve]. */
         fun retrieve(episodeId: String): CompletableFuture<HttpResponseFor<Episode>> =
-            retrieve(episodeId, EpisodeRetrieveParams.none())
+            retrieve(
+              episodeId, EpisodeRetrieveParams.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            episodeId: String,
-            params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            retrieve(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+        fun retrieve(episodeId: String, params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Episode>> =
+            retrieve(
+              params.toBuilder()
+                  .episodeId(episodeId)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            episodeId: String,
-            params: EpisodeRetrieveParams = EpisodeRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            retrieve(episodeId, params, RequestOptions.none())
+        fun retrieve(episodeId: String, params: EpisodeRetrieveParams = EpisodeRetrieveParams.none()): CompletableFuture<HttpResponseFor<Episode>> =
+            retrieve(
+              episodeId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: EpisodeRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>>
+        fun retrieve(params: EpisodeRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Episode>>
 
         /** @see retrieve */
         fun retrieve(params: EpisodeRetrieveParams): CompletableFuture<HttpResponseFor<Episode>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            episodeId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            retrieve(episodeId, EpisodeRetrieveParams.none(), requestOptions)
+        fun retrieve(episodeId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Episode>> =
+            retrieve(
+              episodeId,
+              EpisodeRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `patch /episodes/{episode_id}`, but is otherwise the same
-         * as [EpisodeServiceAsync.update].
-         */
+        /** Returns a raw HTTP response for `patch /episodes/{episode_id}`, but is otherwise the             same as [EpisodeServiceAsync.update]. */
         fun update(episodeId: String): CompletableFuture<HttpResponseFor<Episode>> =
-            update(episodeId, EpisodeUpdateParams.none())
+            update(
+              episodeId, EpisodeUpdateParams.none()
+            )
 
         /** @see update */
-        fun update(
-            episodeId: String,
-            params: EpisodeUpdateParams = EpisodeUpdateParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            update(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+        fun update(episodeId: String, params: EpisodeUpdateParams = EpisodeUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Episode>> =
+            update(
+              params.toBuilder()
+                  .episodeId(episodeId)
+                  .build(), requestOptions
+            )
 
         /** @see update */
-        fun update(
-            episodeId: String,
-            params: EpisodeUpdateParams = EpisodeUpdateParams.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            update(episodeId, params, RequestOptions.none())
+        fun update(episodeId: String, params: EpisodeUpdateParams = EpisodeUpdateParams.none()): CompletableFuture<HttpResponseFor<Episode>> =
+            update(
+              episodeId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
-        fun update(
-            params: EpisodeUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Episode>>
+        fun update(params: EpisodeUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Episode>>
 
         /** @see update */
         fun update(params: EpisodeUpdateParams): CompletableFuture<HttpResponseFor<Episode>> =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
-        fun update(
-            episodeId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Episode>> =
-            update(episodeId, EpisodeUpdateParams.none(), requestOptions)
+        fun update(episodeId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Episode>> =
+            update(
+              episodeId,
+              EpisodeUpdateParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /episodes`, but is otherwise the same as
-         * [EpisodeServiceAsync.list].
-         */
-        fun list(): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> =
-            list(EpisodeListParams.none())
+        /** Returns a raw HTTP response for `get /episodes`, but is otherwise the             same as [EpisodeServiceAsync.list]. */
+        fun list(): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> = list(EpisodeListParams.none())
 
         /** @see list */
-        fun list(
-            params: EpisodeListParams = EpisodeListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>>
+        fun list(params: EpisodeListParams = EpisodeListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>>
 
         /** @see list */
-        fun list(
-            params: EpisodeListParams = EpisodeListParams.none()
-        ): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> =
-            list(params, RequestOptions.none())
+        fun list(params: EpisodeListParams = EpisodeListParams.none()): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
-        fun list(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> =
-            list(EpisodeListParams.none(), requestOptions)
+        fun list(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<EpisodeListPageAsync>> =
+            list(
+              EpisodeListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `delete /episodes/{episode_id}`, but is otherwise the
-         * same as [EpisodeServiceAsync.delete].
-         */
+        /** Returns a raw HTTP response for `delete /episodes/{episode_id}`, but is otherwise the             same as [EpisodeServiceAsync.delete]. */
         fun delete(episodeId: String): CompletableFuture<HttpResponse> =
-            delete(episodeId, EpisodeDeleteParams.none())
+            delete(
+              episodeId, EpisodeDeleteParams.none()
+            )
 
         /** @see delete */
-        fun delete(
-            episodeId: String,
-            params: EpisodeDeleteParams = EpisodeDeleteParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse> =
-            delete(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+        fun delete(episodeId: String, params: EpisodeDeleteParams = EpisodeDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse> =
+            delete(
+              params.toBuilder()
+                  .episodeId(episodeId)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
-        fun delete(
-            episodeId: String,
-            params: EpisodeDeleteParams = EpisodeDeleteParams.none(),
-        ): CompletableFuture<HttpResponse> = delete(episodeId, params, RequestOptions.none())
+        fun delete(episodeId: String, params: EpisodeDeleteParams = EpisodeDeleteParams.none()): CompletableFuture<HttpResponse> =
+            delete(
+              episodeId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
-        fun delete(
-            params: EpisodeDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse>
+        fun delete(params: EpisodeDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse>
 
         /** @see delete */
         fun delete(params: EpisodeDeleteParams): CompletableFuture<HttpResponse> =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
-        fun delete(
-            episodeId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponse> =
-            delete(episodeId, EpisodeDeleteParams.none(), requestOptions)
+        fun delete(episodeId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
+            delete(
+              episodeId,
+              EpisodeDeleteParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /episodes/{episode_id}/wisdom`, but is otherwise the
-         * same as [EpisodeServiceAsync.getWisdom].
-         */
-        fun getWisdom(
-            episodeId: String
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
-            getWisdom(episodeId, EpisodeGetWisdomParams.none())
+        /** Returns a raw HTTP response for `get /episodes/{episode_id}/wisdom`, but is otherwise the             same as [EpisodeServiceAsync.getWisdom]. */
+        fun getWisdom(episodeId: String): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
+            getWisdom(
+              episodeId, EpisodeGetWisdomParams.none()
+            )
 
         /** @see getWisdom */
-        fun getWisdom(
-            episodeId: String,
-            params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
-            getWisdom(params.toBuilder().episodeId(episodeId).build(), requestOptions)
+        fun getWisdom(episodeId: String, params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
+            getWisdom(
+              params.toBuilder()
+                  .episodeId(episodeId)
+                  .build(), requestOptions
+            )
 
         /** @see getWisdom */
-        fun getWisdom(
-            episodeId: String,
-            params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
-            getWisdom(episodeId, params, RequestOptions.none())
+        fun getWisdom(episodeId: String, params: EpisodeGetWisdomParams = EpisodeGetWisdomParams.none()): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
+            getWisdom(
+              episodeId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see getWisdom */
-        fun getWisdom(
-            params: EpisodeGetWisdomParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>>
+        fun getWisdom(params: EpisodeGetWisdomParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>>
 
         /** @see getWisdom */
-        fun getWisdom(
-            params: EpisodeGetWisdomParams
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
-            getWisdom(params, RequestOptions.none())
+        fun getWisdom(params: EpisodeGetWisdomParams): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
+            getWisdom(
+              params, RequestOptions.none()
+            )
 
         /** @see getWisdom */
-        fun getWisdom(
-            episodeId: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
-            getWisdom(episodeId, EpisodeGetWisdomParams.none(), requestOptions)
+        fun getWisdom(episodeId: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<EpisodeGetWisdomResponse>> =
+            getWisdom(
+              episodeId,
+              EpisodeGetWisdomParams.none(),
+              requestOptions,
+            )
     }
 }

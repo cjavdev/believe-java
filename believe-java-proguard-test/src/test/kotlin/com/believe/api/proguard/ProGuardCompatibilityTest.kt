@@ -28,8 +28,7 @@ internal class ProGuardCompatibilityTest {
             val jarPath = this::class.java.getProtectionDomain().codeSource.location
             println("JAR being used: $jarPath")
 
-            // We have to manually run the test methods instead of using the JUnit runner because it
-            // seems impossible to get working with R8.
+            // We have to manually run the test methods instead of using the JUnit runner because it seems impossible to get working with R8.
             val test = ProGuardCompatibilityTest()
             test::class
                 .memberFunctions
@@ -51,7 +50,9 @@ internal class ProGuardCompatibilityTest {
 
     @Test
     fun client() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
+        val client = BelieveOkHttpClient.builder()
+            .apiKey("My API Key")
+            .build()
 
         assertThat(client).isNotNull()
         assertThat(client.characters()).isNotNull()
@@ -77,92 +78,75 @@ internal class ProGuardCompatibilityTest {
 
     @Test
     fun characterRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val character =
-            Character.builder()
-                .id("ted-lasso")
-                .background(
-                    "Former American football coach from Kansas who moved to London to coach AFC Richmond"
-                )
-                .emotionalStats(
-                    EmotionalStats.builder()
-                        .curiosity(99L)
-                        .empathy(100L)
-                        .optimism(95L)
-                        .resilience(90L)
-                        .vulnerability(80L)
-                        .build()
-                )
-                .name("Ted Lasso")
-                .personalityTraits(listOf("optimistic", "kind", "folksy", "persistent"))
-                .role(CharacterRole.COACH)
-                .dateOfBirth(LocalDate.parse("1970-09-22"))
-                .email("ted.lasso@afcrichmond.com")
-                .addGrowthArc(
-                    GrowthArc.builder()
-                        .breakthrough("Showing vulnerability about his marriage")
-                        .challenge("Earning respect despite inexperience")
-                        .endingPoint("Accepted by the team despite relegation")
-                        .season(1L)
-                        .startingPoint("Fish out of water, hiding pain with humor")
-                        .build()
-                )
-                .heightMeters(1.83)
-                .profileImageUrl("https://afcrichmond.com/images/ted-lasso.jpg")
-                .salaryGbp("150000.00")
-                .addSignatureQuote("I believe in believe.")
-                .addSignatureQuote("Be curious, not judgmental.")
-                .teamId("afc-richmond")
-                .build()
+      val jsonMapper = jsonMapper()
+      val character = Character.builder()
+          .id("ted-lasso")
+          .background("Former American football coach from Kansas who moved to London to coach AFC Richmond")
+          .emotionalStats(EmotionalStats.builder()
+              .curiosity(99L)
+              .empathy(100L)
+              .optimism(95L)
+              .resilience(90L)
+              .vulnerability(80L)
+              .build())
+          .name("Ted Lasso")
+          .personalityTraits(listOf(
+            "optimistic",
+            "kind",
+            "folksy",
+            "persistent",
+          ))
+          .role(CharacterRole.COACH)
+          .dateOfBirth(LocalDate.parse("1970-09-22"))
+          .email("ted.lasso@afcrichmond.com")
+          .addGrowthArc(GrowthArc.builder()
+              .breakthrough("Showing vulnerability about his marriage")
+              .challenge("Earning respect despite inexperience")
+              .endingPoint("Accepted by the team despite relegation")
+              .season(1L)
+              .startingPoint("Fish out of water, hiding pain with humor")
+              .build())
+          .heightMeters(1.83)
+          .profileImageUrl("https://afcrichmond.com/images/ted-lasso.jpg")
+          .salaryGbp("150000.00")
+          .addSignatureQuote("I believe in believe.")
+          .addSignatureQuote("Be curious, not judgmental.")
+          .teamId("afc-richmond")
+          .build()
 
-        val roundtrippedCharacter =
-            jsonMapper.readValue(
-                jsonMapper.writeValueAsString(character),
-                jacksonTypeRef<Character>(),
-            )
+      val roundtrippedCharacter = jsonMapper.readValue(jsonMapper.writeValueAsString(character), jacksonTypeRef<Character>())
 
-        assertThat(roundtrippedCharacter).isEqualTo(character)
+      assertThat(roundtrippedCharacter).isEqualTo(character)
     }
 
     @Test
     fun teamMemberCreateResponseRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val teamMemberCreateResponse =
-            TeamMemberCreateResponse.ofPlayer(
-                Player.builder()
-                    .id("jamie-tartt-richmond")
-                    .characterId("jamie-tartt")
-                    .jerseyNumber(9L)
-                    .position(Position.FORWARD)
-                    .teamId("afc-richmond")
-                    .yearsWithTeam(3L)
-                    .assists(23L)
-                    .goalsScored(47L)
-                    .isCaptain(false)
-                    .memberType(Player.MemberType.PLAYER)
-                    .build()
-            )
+      val jsonMapper = jsonMapper()
+      val teamMemberCreateResponse = TeamMemberCreateResponse.ofPlayer(Player.builder()
+          .id("jamie-tartt-richmond")
+          .characterId("jamie-tartt")
+          .jerseyNumber(9L)
+          .position(Position.FORWARD)
+          .teamId("afc-richmond")
+          .yearsWithTeam(3L)
+          .assists(23L)
+          .goalsScored(47L)
+          .isCaptain(false)
+          .memberType(Player.MemberType.PLAYER)
+          .build())
 
-        val roundtrippedTeamMemberCreateResponse =
-            jsonMapper.readValue(
-                jsonMapper.writeValueAsString(teamMemberCreateResponse),
-                jacksonTypeRef<TeamMemberCreateResponse>(),
-            )
+      val roundtrippedTeamMemberCreateResponse = jsonMapper.readValue(jsonMapper.writeValueAsString(teamMemberCreateResponse), jacksonTypeRef<TeamMemberCreateResponse>())
 
-        assertThat(roundtrippedTeamMemberCreateResponse).isEqualTo(teamMemberCreateResponse)
+      assertThat(roundtrippedTeamMemberCreateResponse).isEqualTo(teamMemberCreateResponse)
     }
 
     @Test
     fun characterRoleRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val characterRole = CharacterRole.COACH
+      val jsonMapper = jsonMapper()
+      val characterRole = CharacterRole.COACH
 
-        val roundtrippedCharacterRole =
-            jsonMapper.readValue(
-                jsonMapper.writeValueAsString(characterRole),
-                jacksonTypeRef<CharacterRole>(),
-            )
+      val roundtrippedCharacterRole = jsonMapper.readValue(jsonMapper.writeValueAsString(characterRole), jacksonTypeRef<CharacterRole>())
 
-        assertThat(roundtrippedCharacterRole).isEqualTo(characterRole)
+      assertThat(roundtrippedCharacterRole).isEqualTo(characterRole)
     }
 }

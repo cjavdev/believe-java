@@ -12,22 +12,19 @@ internal class BelieveServiceAsyncTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun submit() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val believeServiceAsync = client.believe()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val believeServiceAsync = client.believe()
 
-        val responseFuture =
-            believeServiceAsync.submit(
-                BelieveSubmitParams.builder()
-                    .situation(
-                        "I just got passed over for a promotion I've been working toward for two years."
-                    )
-                    .situationType(BelieveSubmitParams.SituationType.WORK_CHALLENGE)
-                    .context("I've always tried to be a team player and support my colleagues.")
-                    .intensity(7L)
-                    .build()
-            )
+      val responseFuture = believeServiceAsync.submit(BelieveSubmitParams.builder()
+          .situation("I just got passed over for a promotion I've been working toward for two years.")
+          .situationType(BelieveSubmitParams.SituationType.WORK_CHALLENGE)
+          .context("I've always tried to be a team player and support my colleagues.")
+          .intensity(7L)
+          .build())
 
-        val response = responseFuture.get()
-        response.validate()
+      val response = responseFuture.get()
+      response.validate()
     }
 }

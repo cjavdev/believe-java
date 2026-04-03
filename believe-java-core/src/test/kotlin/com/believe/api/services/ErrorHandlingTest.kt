@@ -16,6 +16,7 @@ import com.believe.api.errors.RateLimitException
 import com.believe.api.errors.UnauthorizedException
 import com.believe.api.errors.UnexpectedStatusCodeException
 import com.believe.api.errors.UnprocessableEntityException
+import com.believe.api.models.characters.CharacterListParams
 import com.github.tomakehurst.wiremock.client.WireMock.anyUrl
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.status
@@ -50,296 +51,380 @@ internal class ErrorHandlingTest {
 
     @BeforeEach
     fun beforeEach(wmRuntimeInfo: WireMockRuntimeInfo) {
-        client =
-            BelieveOkHttpClient.builder()
-                .baseUrl(wmRuntimeInfo.httpBaseUrl)
-                .apiKey("My API Key")
-                .build()
+      client = BelieveOkHttpClient.builder()
+          .baseUrl(wmRuntimeInfo.httpBaseUrl)
+          .apiKey("My API Key")
+          .build()
     }
 
     @Test
     fun charactersList400() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(400).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(400)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<BadRequestException> { characterService.list() }
+      val e = assertThrows<BadRequestException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(400)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(400)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList400WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(400).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(400)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<BadRequestException> { characterService.list() }
+      val e = assertThrows<BadRequestException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(400)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(400)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList401() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(401).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(401)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnauthorizedException> { characterService.list() }
+      val e = assertThrows<UnauthorizedException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(401)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(401)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList401WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(401).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(401)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnauthorizedException> { characterService.list() }
+      val e = assertThrows<UnauthorizedException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(401)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(401)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList403() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(403).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(403)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<PermissionDeniedException> { characterService.list() }
+      val e = assertThrows<PermissionDeniedException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(403)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(403)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList403WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(403).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(403)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<PermissionDeniedException> { characterService.list() }
+      val e = assertThrows<PermissionDeniedException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(403)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(403)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList404() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(404).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(404)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<NotFoundException> { characterService.list() }
+      val e = assertThrows<NotFoundException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(404)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(404)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList404WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(404).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(404)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<NotFoundException> { characterService.list() }
+      val e = assertThrows<NotFoundException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(404)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(404)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList422() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(422).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(422)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnprocessableEntityException> { characterService.list() }
+      val e = assertThrows<UnprocessableEntityException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(422)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(422)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList422WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(422).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(422)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnprocessableEntityException> { characterService.list() }
+      val e = assertThrows<UnprocessableEntityException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(422)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(422)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList429() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(429).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(429)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<RateLimitException> { characterService.list() }
+      val e = assertThrows<RateLimitException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(429)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(429)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList429WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(429).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(429)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<RateLimitException> { characterService.list() }
+      val e = assertThrows<RateLimitException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(429)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(429)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList500() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(500).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(500)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<InternalServerException> { characterService.list() }
+      val e = assertThrows<InternalServerException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(500)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(500)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList500WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(500).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(500)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<InternalServerException> { characterService.list() }
+      val e = assertThrows<InternalServerException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(500)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(500)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList999() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(999).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(999)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnexpectedStatusCodeException> { characterService.list() }
+      val e = assertThrows<UnexpectedStatusCodeException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(999)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(999)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersList999WithRawResponse() {
-        val characterService = client.characters().withRawResponse()
-        stubFor(
-            get(anyUrl())
-                .willReturn(
-                    status(999).withHeader(HEADER_NAME, HEADER_VALUE).withBody(ERROR_JSON_BYTES)
-                )
-        )
+      val characterService = client.characters().withRawResponse()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(999)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(ERROR_JSON_BYTES)
+          )
+      )
 
-        val e = assertThrows<UnexpectedStatusCodeException> { characterService.list() }
+      val e = assertThrows<UnexpectedStatusCodeException> {
+          characterService.list()
+      }
 
-        assertThat(e.statusCode()).isEqualTo(999)
-        assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
-        assertThat(e.body()).isEqualTo(ERROR_JSON)
+      assertThat(e.statusCode()).isEqualTo(999)
+      assertThat(e.headers().toMap()).contains(
+          entry(HEADER_NAME, listOf(HEADER_VALUE))
+      )
+      assertThat(e.body()).isEqualTo(ERROR_JSON)
     }
 
     @Test
     fun charactersListInvalidJsonBody() {
-        val characterService = client.characters()
-        stubFor(
-            get(anyUrl())
-                .willReturn(status(200).withHeader(HEADER_NAME, HEADER_VALUE).withBody(NOT_JSON))
-        )
+      val characterService = client.characters()
+      stubFor(
+          get(anyUrl()).willReturn(
+              status(200)
+                  .withHeader(HEADER_NAME, HEADER_VALUE)
+                  .withBody(NOT_JSON)
+          )
+      )
 
-        val e = assertThrows<BelieveException> { characterService.list() }
+      val e = assertThrows<BelieveException> {
+          characterService.list()
+      }
 
-        assertThat(e).hasMessage("Error reading response")
+      assertThat(e).hasMessage("Error reading response")
     }
 
     private fun Headers.toMap(): Map<String, List<String>> =

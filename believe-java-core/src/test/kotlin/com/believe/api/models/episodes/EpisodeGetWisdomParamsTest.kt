@@ -2,6 +2,7 @@
 
 package com.believe.api.models.episodes
 
+import com.believe.api.models.episodes.EpisodeGetWisdomParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,15 +10,19 @@ internal class EpisodeGetWisdomParamsTest {
 
     @Test
     fun create() {
-        EpisodeGetWisdomParams.builder().episodeId("episode_id").build()
+      EpisodeGetWisdomParams.builder()
+          .episodeId("episode_id")
+          .build()
     }
 
     @Test
     fun pathParams() {
-        val params = EpisodeGetWisdomParams.builder().episodeId("episode_id").build()
+      val params = EpisodeGetWisdomParams.builder()
+          .episodeId("episode_id")
+          .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("episode_id")
-        // out-of-bound path param
-        assertThat(params._pathParam(1)).isEqualTo("")
+      assertThat(params._pathParam(0)).isEqualTo("episode_id")
+      // out-of-bound path param
+      assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

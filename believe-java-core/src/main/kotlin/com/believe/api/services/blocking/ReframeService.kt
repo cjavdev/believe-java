@@ -7,15 +7,14 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.reframe.ReframeTransformNegativeThoughtsParams
 import com.believe.api.models.reframe.ReframeTransformNegativeThoughtsResponse
+import com.believe.api.services.blocking.ReframeService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** Interactive endpoints for motivation and guidance */
 interface ReframeService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -26,16 +25,13 @@ interface ReframeService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReframeService
 
     /** Transform negative thoughts into positive perspectives with Ted's help. */
-    fun transformNegativeThoughts(
-        params: ReframeTransformNegativeThoughtsParams
-    ): ReframeTransformNegativeThoughtsResponse =
-        transformNegativeThoughts(params, RequestOptions.none())
+    fun transformNegativeThoughts(params: ReframeTransformNegativeThoughtsParams): ReframeTransformNegativeThoughtsResponse =
+        transformNegativeThoughts(
+          params, RequestOptions.none()
+        )
 
     /** @see transformNegativeThoughts */
-    fun transformNegativeThoughts(
-        params: ReframeTransformNegativeThoughtsParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): ReframeTransformNegativeThoughtsResponse
+    fun transformNegativeThoughts(params: ReframeTransformNegativeThoughtsParams, requestOptions: RequestOptions = RequestOptions.none()): ReframeTransformNegativeThoughtsResponse
 
     /** A view of [ReframeService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -47,21 +43,15 @@ interface ReframeService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReframeService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /reframe`, but is otherwise the same as
-         * [ReframeService.transformNegativeThoughts].
-         */
+        /** Returns a raw HTTP response for `post /reframe`, but is otherwise the             same as [ReframeService.transformNegativeThoughts]. */
         @MustBeClosed
-        fun transformNegativeThoughts(
-            params: ReframeTransformNegativeThoughtsParams
-        ): HttpResponseFor<ReframeTransformNegativeThoughtsResponse> =
-            transformNegativeThoughts(params, RequestOptions.none())
+        fun transformNegativeThoughts(params: ReframeTransformNegativeThoughtsParams): HttpResponseFor<ReframeTransformNegativeThoughtsResponse> =
+            transformNegativeThoughts(
+              params, RequestOptions.none()
+            )
 
         /** @see transformNegativeThoughts */
         @MustBeClosed
-        fun transformNegativeThoughts(
-            params: ReframeTransformNegativeThoughtsParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ReframeTransformNegativeThoughtsResponse>
+        fun transformNegativeThoughts(params: ReframeTransformNegativeThoughtsParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<ReframeTransformNegativeThoughtsResponse>
     }
 }

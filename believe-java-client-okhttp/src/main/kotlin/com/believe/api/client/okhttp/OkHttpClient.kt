@@ -2,12 +2,13 @@ package com.believe.api.client.okhttp
 
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.Timeout
+import com.believe.api.core.checkRequired
 import com.believe.api.core.http.Headers
 import com.believe.api.core.http.HttpClient
-import com.believe.api.core.http.HttpMethod
 import com.believe.api.core.http.HttpRequest
 import com.believe.api.core.http.HttpRequestBody
 import com.believe.api.core.http.HttpResponse
+import com.believe.api.core.http.HttpMethod
 import com.believe.api.errors.BelieveIoException
 import java.io.IOException
 import java.io.InputStream
@@ -24,20 +25,27 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.ConnectionPool
 import okhttp3.Dispatcher
-import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.HttpUrl
+import okhttp3.Response
 import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.MediaType
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.BufferedSink
 
 class OkHttpClient
-internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClient) : HttpClient {
+internal constructor(
+    @JvmSynthetic
+    internal val okHttpClient: okhttp3.OkHttpClient
+) : HttpClient {
 
-    override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
+    override fun execute(
+        request: HttpRequest,
+        requestOptions: RequestOptions,
+    ): HttpResponse {
         val call = newCall(request, requestOptions)
 
         return try {
@@ -95,7 +103,11 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
             }
         if (logLevel != null) {
             clientBuilder.addNetworkInterceptor(
-                HttpLoggingInterceptor().setLevel(logLevel).apply { redactHeader("Authorization") }
+                HttpLoggingInterceptor()
+                    .setLevel(logLevel)
+                    .apply {
+                        redactHeader("Authorization")
+                    }
             )
         }
 
@@ -122,18 +134,16 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
             headers.values(name).forEach { builder.addHeader(name, it) }
         }
 
-        if (
-            !headers.names().contains("X-Stainless-Read-Timeout") && client.readTimeoutMillis != 0
-        ) {
+        if (!headers.names().contains("X-Stainless-Read-Timeout") && client.readTimeoutMillis != 0) {
             builder.addHeader(
                 "X-Stainless-Read-Timeout",
-                Duration.ofMillis(client.readTimeoutMillis.toLong()).seconds.toString(),
+                Duration.ofMillis(client.readTimeoutMillis.toLong()).seconds.toString()
             )
         }
         if (!headers.names().contains("X-Stainless-Timeout") && client.callTimeoutMillis != 0) {
             builder.addHeader(
                 "X-Stainless-Timeout",
-                Duration.ofMillis(client.callTimeoutMillis.toLong()).seconds.toString(),
+                Duration.ofMillis(client.callTimeoutMillis.toLong()).seconds.toString()
             )
         }
 
@@ -189,9 +199,9 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
     }
 
     private fun okhttp3.Headers.toHeaders(): Headers {
-        val headersBuilder = Headers.builder()
-        forEach { (name, value) -> headersBuilder.put(name, value) }
-        return headersBuilder.build()
+      val headersBuilder = Headers.builder()
+      forEach { (name, value) -> headersBuilder.put(name, value) }
+      return headersBuilder.build()
     }
 
     companion object {
@@ -269,13 +279,7 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
                         val maxIdleConnections = maxIdleConnections
                         val keepAliveDuration = keepAliveDuration
                         if (maxIdleConnections != null && keepAliveDuration != null) {
-                            connectionPool(
-                                ConnectionPool(
-                                    maxIdleConnections,
-                                    keepAliveDuration.toNanos(),
-                                    TimeUnit.NANOSECONDS,
-                                )
-                            )
+                            connectionPool(ConnectionPool(maxIdleConnections, keepAliveDuration.toNanos(), TimeUnit.NANOSECONDS))
                         } else {
                             check((maxIdleConnections != null) == (keepAliveDuration != null)) {
                                 "Both or none of `maxIdleConnections` and `keepAliveDuration` must be set, but only one was set"
@@ -299,7 +303,7 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
                         // We usually make all our requests to the same host so it makes sense to
                         // raise the per-host limit to the overall limit.
                         dispatcher.maxRequestsPerHost = dispatcher.maxRequests
-                    }
+                    },
             )
     }
 }

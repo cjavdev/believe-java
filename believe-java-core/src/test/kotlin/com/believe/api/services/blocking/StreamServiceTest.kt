@@ -3,6 +3,7 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.stream.StreamTestConnectionParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,11 +12,13 @@ internal class StreamServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun testConnection() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val streamService = client.stream()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val streamService = client.stream()
 
-        val response = streamService.testConnection()
+      val response = streamService.testConnection()
 
-        response.validate()
+      response.validate()
     }
 }

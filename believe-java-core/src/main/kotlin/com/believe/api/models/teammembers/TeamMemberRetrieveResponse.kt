@@ -7,6 +7,10 @@ import com.believe.api.core.BaseSerializer
 import com.believe.api.core.JsonValue
 import com.believe.api.core.getOrThrow
 import com.believe.api.errors.BelieveInvalidDataException
+import com.believe.api.models.teammembers.Coach
+import com.believe.api.models.teammembers.EquipmentManager
+import com.believe.api.models.teammembers.MedicalStaff
+import com.believe.api.models.teammembers.Player
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.JsonNode
@@ -21,13 +25,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Full player model with ID. */
 @JsonDeserialize(using = TeamMemberRetrieveResponse.Deserializer::class)
 @JsonSerialize(using = TeamMemberRetrieveResponse.Serializer::class)
-class TeamMemberRetrieveResponse
-private constructor(
+class TeamMemberRetrieveResponse private constructor(
     private val player: Player? = null,
     private val coach: Coach? = null,
     private val medicalStaff: MedicalStaff? = null,
     private val equipmentManager: EquipmentManager? = null,
     private val _json: JsonValue? = null,
+
 ) {
 
     /** Full player model with ID. */
@@ -75,32 +79,31 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): TeamMemberRetrieveResponse = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): TeamMemberRetrieveResponse =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        accept(
-            object : Visitor<Unit> {
+            accept(object : Visitor<Unit> {
                 override fun visitPlayer(player: Player) {
-                    player.validate()
+                  player.validate()
                 }
 
                 override fun visitCoach(coach: Coach) {
-                    coach.validate()
+                  coach.validate()
                 }
 
                 override fun visitMedicalStaff(medicalStaff: MedicalStaff) {
-                    medicalStaff.validate()
+                  medicalStaff.validate()
                 }
 
                 override fun visitEquipmentManager(equipmentManager: EquipmentManager) {
-                    equipmentManager.validate()
+                  equipmentManager.validate()
                 }
-            }
-        )
-        validated = true
-    }
+            })
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -117,31 +120,24 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        accept(
-            object : Visitor<Int> {
-                override fun visitPlayer(player: Player) = player.validity()
+        accept(object : Visitor<Int> {
+            override fun visitPlayer(player: Player) = player.validity()
 
-                override fun visitCoach(coach: Coach) = coach.validity()
+            override fun visitCoach(coach: Coach) = coach.validity()
 
-                override fun visitMedicalStaff(medicalStaff: MedicalStaff) = medicalStaff.validity()
+            override fun visitMedicalStaff(medicalStaff: MedicalStaff) = medicalStaff.validity()
 
-                override fun visitEquipmentManager(equipmentManager: EquipmentManager) =
-                    equipmentManager.validity()
+            override fun visitEquipmentManager(equipmentManager: EquipmentManager) = equipmentManager.validity()
 
-                override fun unknown(json: JsonValue?) = 0
-            }
-        )
+            override fun unknown(json: JsonValue?) = 0
+        })
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberRetrieveResponse &&
-            player == other.player &&
-            coach == other.coach &&
-            medicalStaff == other.medicalStaff &&
-            equipmentManager == other.equipmentManager
+      return other is TeamMemberRetrieveResponse && player == other.player && coach == other.coach && medicalStaff == other.medicalStaff && equipmentManager == other.equipmentManager
     }
 
     override fun hashCode(): Int = Objects.hash(player, coach, medicalStaff, equipmentManager)
@@ -151,8 +147,7 @@ private constructor(
             player != null -> "TeamMemberRetrieveResponse{player=$player}"
             coach != null -> "TeamMemberRetrieveResponse{coach=$coach}"
             medicalStaff != null -> "TeamMemberRetrieveResponse{medicalStaff=$medicalStaff}"
-            equipmentManager != null ->
-                "TeamMemberRetrieveResponse{equipmentManager=$equipmentManager}"
+            equipmentManager != null -> "TeamMemberRetrieveResponse{equipmentManager=$equipmentManager}"
             _json != null -> "TeamMemberRetrieveResponse{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid TeamMemberRetrieveResponse")
         }
@@ -160,26 +155,23 @@ private constructor(
     companion object {
 
         /** Full player model with ID. */
-        @JvmStatic fun ofPlayer(player: Player) = TeamMemberRetrieveResponse(player = player)
+        @JvmStatic
+        fun ofPlayer(player: Player) = TeamMemberRetrieveResponse(player = player)
 
         /** Full coach model with ID. */
-        @JvmStatic fun ofCoach(coach: Coach) = TeamMemberRetrieveResponse(coach = coach)
+        @JvmStatic
+        fun ofCoach(coach: Coach) = TeamMemberRetrieveResponse(coach = coach)
 
         /** Full medical staff model with ID. */
         @JvmStatic
-        fun ofMedicalStaff(medicalStaff: MedicalStaff) =
-            TeamMemberRetrieveResponse(medicalStaff = medicalStaff)
+        fun ofMedicalStaff(medicalStaff: MedicalStaff) = TeamMemberRetrieveResponse(medicalStaff = medicalStaff)
 
         /** Full equipment manager model with ID. */
         @JvmStatic
-        fun ofEquipmentManager(equipmentManager: EquipmentManager) =
-            TeamMemberRetrieveResponse(equipmentManager = equipmentManager)
+        fun ofEquipmentManager(equipmentManager: EquipmentManager) = TeamMemberRetrieveResponse(equipmentManager = equipmentManager)
     }
 
-    /**
-     * An interface that defines how to map each variant of [TeamMemberRetrieveResponse] to a value
-     * of type [T].
-     */
+    /** An interface that defines how to map each variant of [TeamMemberRetrieveResponse] to a value of type [T]. */
     interface Visitor<out T> {
 
         /** Full player model with ID. */
@@ -197,69 +189,65 @@ private constructor(
         /**
          * Maps an unknown variant of [TeamMemberRetrieveResponse] to a value of type [T].
          *
-         * An instance of [TeamMemberRetrieveResponse] can contain an unknown variant if it was
-         * deserialized from data that doesn't match any known variant. For example, if the SDK is
-         * on an older version than the API, then the API may respond with new variants that the SDK
-         * is unaware of.
+         * An instance of [TeamMemberRetrieveResponse] can contain an unknown variant if it was deserialized from data
+         * that doesn't match any known variant. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new variants that the SDK is unaware of.
          *
          * @throws BelieveInvalidDataException in the default implementation.
          */
         fun unknown(json: JsonValue?): T {
-            throw BelieveInvalidDataException("Unknown TeamMemberRetrieveResponse: $json")
+          throw BelieveInvalidDataException("Unknown TeamMemberRetrieveResponse: $json")
         }
     }
 
-    internal class Deserializer :
-        BaseDeserializer<TeamMemberRetrieveResponse>(TeamMemberRetrieveResponse::class) {
+    internal class Deserializer : BaseDeserializer<TeamMemberRetrieveResponse>(TeamMemberRetrieveResponse::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): TeamMemberRetrieveResponse {
-            val json = JsonValue.fromJsonNode(node)
-            val memberType =
-                json.asObject().getOrNull()?.get("member_type")?.asString()?.getOrNull()
+          val json = JsonValue.fromJsonNode(node)
+          val memberType = json.asObject().getOrNull()?.get("member_type")?.asString()?.getOrNull()
 
-            when (memberType) {
-                "player" -> {
-                    return tryDeserialize(node, jacksonTypeRef<Player>())?.let {
-                        TeamMemberRetrieveResponse(player = it, _json = json)
-                    } ?: TeamMemberRetrieveResponse(_json = json)
-                }
-                "coach" -> {
-                    return tryDeserialize(node, jacksonTypeRef<Coach>())?.let {
-                        TeamMemberRetrieveResponse(coach = it, _json = json)
-                    } ?: TeamMemberRetrieveResponse(_json = json)
-                }
-                "medical_staff" -> {
-                    return tryDeserialize(node, jacksonTypeRef<MedicalStaff>())?.let {
-                        TeamMemberRetrieveResponse(medicalStaff = it, _json = json)
-                    } ?: TeamMemberRetrieveResponse(_json = json)
-                }
-                "equipment_manager" -> {
-                    return tryDeserialize(node, jacksonTypeRef<EquipmentManager>())?.let {
-                        TeamMemberRetrieveResponse(equipmentManager = it, _json = json)
-                    } ?: TeamMemberRetrieveResponse(_json = json)
-                }
-            }
+          when (memberType) {
+              "player" -> {
+                  return tryDeserialize(node, jacksonTypeRef<Player>())
+                      ?.let {
+                          TeamMemberRetrieveResponse(player = it, _json = json)
+                      } ?: TeamMemberRetrieveResponse(_json = json)
+              }
+              "coach" -> {
+                  return tryDeserialize(node, jacksonTypeRef<Coach>())
+                      ?.let {
+                          TeamMemberRetrieveResponse(coach = it, _json = json)
+                      } ?: TeamMemberRetrieveResponse(_json = json)
+              }
+              "medical_staff" -> {
+                  return tryDeserialize(node, jacksonTypeRef<MedicalStaff>())
+                      ?.let {
+                          TeamMemberRetrieveResponse(medicalStaff = it, _json = json)
+                      } ?: TeamMemberRetrieveResponse(_json = json)
+              }
+              "equipment_manager" -> {
+                  return tryDeserialize(node, jacksonTypeRef<EquipmentManager>())
+                      ?.let {
+                          TeamMemberRetrieveResponse(equipmentManager = it, _json = json)
+                      } ?: TeamMemberRetrieveResponse(_json = json)
+              }
+          }
 
-            return TeamMemberRetrieveResponse(_json = json)
+          return TeamMemberRetrieveResponse(_json = json)
         }
     }
 
-    internal class Serializer :
-        BaseSerializer<TeamMemberRetrieveResponse>(TeamMemberRetrieveResponse::class) {
+    internal class Serializer : BaseSerializer<TeamMemberRetrieveResponse>(TeamMemberRetrieveResponse::class) {
 
-        override fun serialize(
-            value: TeamMemberRetrieveResponse,
-            generator: JsonGenerator,
-            provider: SerializerProvider,
-        ) {
-            when {
-                value.player != null -> generator.writeObject(value.player)
-                value.coach != null -> generator.writeObject(value.coach)
-                value.medicalStaff != null -> generator.writeObject(value.medicalStaff)
-                value.equipmentManager != null -> generator.writeObject(value.equipmentManager)
-                value._json != null -> generator.writeObject(value._json)
-                else -> throw IllegalStateException("Invalid TeamMemberRetrieveResponse")
-            }
+        override fun serialize(value: TeamMemberRetrieveResponse, generator: JsonGenerator, provider: SerializerProvider) {
+          when {
+              value.player != null -> generator.writeObject(value.player)
+              value.coach != null -> generator.writeObject(value.coach)
+              value.medicalStaff != null -> generator.writeObject(value.medicalStaff)
+              value.equipmentManager != null -> generator.writeObject(value.equipmentManager)
+              value._json != null -> generator.writeObject(value._json)
+              else -> throw IllegalStateException("Invalid TeamMemberRetrieveResponse")
+          }
         }
     }
 }

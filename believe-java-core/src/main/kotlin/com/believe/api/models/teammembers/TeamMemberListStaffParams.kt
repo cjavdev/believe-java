@@ -12,16 +12,15 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Get all staff members (medical staff and equipment managers).
  *
- * This demonstrates a **narrower union type** - the response is oneOf MedicalStaff or
- * EquipmentManager.
+ * This demonstrates a **narrower union type** - the response is oneOf MedicalStaff or EquipmentManager.
  */
-class TeamMemberListStaffParams
-private constructor(
+class TeamMemberListStaffParams private constructor(
     private val limit: Long?,
     private val skip: Long?,
     private val teamId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     /** Maximum number of items to return (max: 100) */
@@ -43,12 +42,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): TeamMemberListStaffParams = builder().build()
+        @JvmStatic
+        fun none(): TeamMemberListStaffParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of [TeamMemberListStaffParams].
-         */
-        @JvmStatic fun builder() = Builder()
+        /** Returns a mutable builder for constructing an instance of [TeamMemberListStaffParams]. */
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TeamMemberListStaffParams]. */
@@ -61,16 +60,20 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(teamMemberListStaffParams: TeamMemberListStaffParams) = apply {
-            limit = teamMemberListStaffParams.limit
-            skip = teamMemberListStaffParams.skip
-            teamId = teamMemberListStaffParams.teamId
-            additionalHeaders = teamMemberListStaffParams.additionalHeaders.toBuilder()
-            additionalQueryParams = teamMemberListStaffParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(teamMemberListStaffParams: TeamMemberListStaffParams) =
+            apply {
+                limit = teamMemberListStaffParams.limit
+                skip = teamMemberListStaffParams.skip
+                teamId = teamMemberListStaffParams.teamId
+                additionalHeaders = teamMemberListStaffParams.additionalHeaders.toBuilder()
+                additionalQueryParams = teamMemberListStaffParams.additionalQueryParams.toBuilder()
+            }
 
         /** Maximum number of items to return (max: 100) */
-        fun limit(limit: Long?) = apply { this.limit = limit }
+        fun limit(limit: Long?) =
+            apply {
+                this.limit = limit
+            }
 
         /**
          * Alias for [Builder.limit].
@@ -83,7 +86,10 @@ private constructor(
         fun limit(limit: Optional<Long>) = limit(limit.getOrNull())
 
         /** Number of items to skip (offset) */
-        fun skip(skip: Long?) = apply { this.skip = skip }
+        fun skip(skip: Long?) =
+            apply {
+                this.skip = skip
+            }
 
         /**
          * Alias for [Builder.skip].
@@ -96,108 +102,137 @@ private constructor(
         fun skip(skip: Optional<Long>) = skip(skip.getOrNull())
 
         /** Filter by team ID */
-        fun teamId(teamId: String?) = apply { this.teamId = teamId }
+        fun teamId(teamId: String?) =
+            apply {
+                this.teamId = teamId
+            }
 
         /** Alias for calling [Builder.teamId] with `teamId.orElse(null)`. */
         fun teamId(teamId: Optional<String>) = teamId(teamId.getOrNull())
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [TeamMemberListStaffParams].
@@ -206,11 +241,11 @@ private constructor(
          */
         fun build(): TeamMemberListStaffParams =
             TeamMemberListStaffParams(
-                limit,
-                skip,
-                teamId,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              limit,
+              skip,
+              teamId,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -227,21 +262,14 @@ private constructor(
             .build()
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberListStaffParams &&
-            limit == other.limit &&
-            skip == other.skip &&
-            teamId == other.teamId &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is TeamMemberListStaffParams && limit == other.limit && skip == other.skip && teamId == other.teamId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(limit, skip, teamId, additionalHeaders, additionalQueryParams)
+    override fun hashCode(): Int = Objects.hash(limit, skip, teamId, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "TeamMemberListStaffParams{limit=$limit, skip=$skip, teamId=$teamId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "TeamMemberListStaffParams{limit=$limit, skip=$skip, teamId=$teamId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

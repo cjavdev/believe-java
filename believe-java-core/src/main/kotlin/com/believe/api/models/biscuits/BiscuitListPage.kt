@@ -5,6 +5,9 @@ package com.believe.api.models.biscuits
 import com.believe.api.core.AutoPager
 import com.believe.api.core.Page
 import com.believe.api.core.checkRequired
+import com.believe.api.models.biscuits.Biscuit
+import com.believe.api.models.biscuits.BiscuitListPageResponse
+import com.believe.api.models.biscuits.BiscuitListParams
 import com.believe.api.services.blocking.BiscuitService
 import java.util.Objects
 import java.util.Optional
@@ -12,11 +15,11 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see BiscuitService.list */
-class BiscuitListPage
-private constructor(
+class BiscuitListPage private constructor(
     private val service: BiscuitService,
     private val params: BiscuitListParams,
     private val response: BiscuitListPageResponse,
+
 ) : Page<Biscuit> {
 
     /**
@@ -43,18 +46,20 @@ private constructor(
     override fun items(): List<Biscuit> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): BiscuitListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): BiscuitListPage = service.list(nextPageParams())
@@ -75,13 +80,15 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [BiscuitListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [BiscuitListPage]. */
@@ -92,19 +99,29 @@ private constructor(
         private var response: BiscuitListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(biscuitListPage: BiscuitListPage) = apply {
-            service = biscuitListPage.service
-            params = biscuitListPage.params
-            response = biscuitListPage.response
-        }
+        internal fun from(biscuitListPage: BiscuitListPage) =
+            apply {
+                service = biscuitListPage.service
+                params = biscuitListPage.params
+                response = biscuitListPage.response
+            }
 
-        fun service(service: BiscuitService) = apply { this.service = service }
+        fun service(service: BiscuitService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: BiscuitListParams) = apply { this.params = params }
+        fun params(params: BiscuitListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: BiscuitListPageResponse) = apply { this.response = response }
+        fun response(response: BiscuitListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [BiscuitListPage].
@@ -112,6 +129,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -122,25 +140,27 @@ private constructor(
          */
         fun build(): BiscuitListPage =
             BiscuitListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is BiscuitListPage &&
-            service == other.service &&
-            params == other.params &&
-            response == other.response
+      return other is BiscuitListPage && service == other.service && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, response)
 
-    override fun toString() =
-        "BiscuitListPage{service=$service, params=$params, response=$response}"
+    override fun toString() = "BiscuitListPage{service=$service, params=$params, response=$response}"
 }

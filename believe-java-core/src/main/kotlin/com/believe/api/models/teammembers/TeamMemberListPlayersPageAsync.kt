@@ -5,6 +5,9 @@ package com.believe.api.models.teammembers
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
+import com.believe.api.models.teammembers.Player
+import com.believe.api.models.teammembers.TeamMemberListPlayersPageResponse
+import com.believe.api.models.teammembers.TeamMemberListPlayersParams
 import com.believe.api.services.async.TeamMemberServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,12 +17,12 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see TeamMemberServiceAsync.listPlayers */
-class TeamMemberListPlayersPageAsync
-private constructor(
+class TeamMemberListPlayersPageAsync private constructor(
     private val service: TeamMemberServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: TeamMemberListPlayersParams,
     private val response: TeamMemberListPlayersPageResponse,
+
 ) : PageAsync<Player> {
 
     /**
@@ -46,24 +49,28 @@ private constructor(
     override fun items(): List<Player> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): TeamMemberListPlayersParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<TeamMemberListPlayersPageAsync> =
-        service.listPlayers(nextPageParams())
+    override fun nextPage(): CompletableFuture<TeamMemberListPlayersPageAsync> = service.listPlayers(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Player> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<Player> =
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): TeamMemberListPlayersParams = params
@@ -76,10 +83,10 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [TeamMemberListPlayersPageAsync].
+         * Returns a mutable builder for constructing an instance of [TeamMemberListPlayersPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -87,7 +94,8 @@ private constructor(
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TeamMemberListPlayersPageAsync]. */
@@ -99,26 +107,35 @@ private constructor(
         private var response: TeamMemberListPlayersPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(teamMemberListPlayersPageAsync: TeamMemberListPlayersPageAsync) = apply {
-            service = teamMemberListPlayersPageAsync.service
-            streamHandlerExecutor = teamMemberListPlayersPageAsync.streamHandlerExecutor
-            params = teamMemberListPlayersPageAsync.params
-            response = teamMemberListPlayersPageAsync.response
-        }
+        internal fun from(teamMemberListPlayersPageAsync: TeamMemberListPlayersPageAsync) =
+            apply {
+                service = teamMemberListPlayersPageAsync.service
+                streamHandlerExecutor = teamMemberListPlayersPageAsync.streamHandlerExecutor
+                params = teamMemberListPlayersPageAsync.params
+                response = teamMemberListPlayersPageAsync.response
+            }
 
-        fun service(service: TeamMemberServiceAsync) = apply { this.service = service }
+        fun service(service: TeamMemberServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TeamMemberListPlayersParams) = apply { this.params = params }
+        fun params(params: TeamMemberListPlayersParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: TeamMemberListPlayersPageResponse) = apply {
-            this.response = response
-        }
+        fun response(response: TeamMemberListPlayersPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [TeamMemberListPlayersPageAsync].
@@ -126,6 +143,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -137,27 +155,30 @@ private constructor(
          */
         fun build(): TeamMemberListPlayersPageAsync =
             TeamMemberListPlayersPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberListPlayersPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            response == other.response
+      return other is TeamMemberListPlayersPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, response)
 
-    override fun toString() =
-        "TeamMemberListPlayersPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
+    override fun toString() = "TeamMemberListPlayersPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

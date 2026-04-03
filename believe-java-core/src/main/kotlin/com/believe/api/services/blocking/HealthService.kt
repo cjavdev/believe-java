@@ -7,14 +7,13 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.health.HealthCheckParams
 import com.believe.api.models.health.HealthCheckResponse
+import com.believe.api.services.blocking.HealthService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 interface HealthService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -28,18 +27,19 @@ interface HealthService {
     fun check(): HealthCheckResponse = check(HealthCheckParams.none())
 
     /** @see check */
-    fun check(
-        params: HealthCheckParams = HealthCheckParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): HealthCheckResponse
+    fun check(params: HealthCheckParams = HealthCheckParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HealthCheckResponse
 
     /** @see check */
     fun check(params: HealthCheckParams = HealthCheckParams.none()): HealthCheckResponse =
-        check(params, RequestOptions.none())
+        check(
+          params, RequestOptions.none()
+        )
 
     /** @see check */
     fun check(requestOptions: RequestOptions): HealthCheckResponse =
-        check(HealthCheckParams.none(), requestOptions)
+        check(
+          HealthCheckParams.none(), requestOptions
+        )
 
     /** A view of [HealthService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -51,29 +51,26 @@ interface HealthService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): HealthService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /health`, but is otherwise the same as
-         * [HealthService.check].
-         */
+        /** Returns a raw HTTP response for `get /health`, but is otherwise the             same as [HealthService.check]. */
         @MustBeClosed
         fun check(): HttpResponseFor<HealthCheckResponse> = check(HealthCheckParams.none())
 
         /** @see check */
         @MustBeClosed
-        fun check(
-            params: HealthCheckParams = HealthCheckParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HealthCheckResponse>
+        fun check(params: HealthCheckParams = HealthCheckParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<HealthCheckResponse>
 
         /** @see check */
         @MustBeClosed
-        fun check(
-            params: HealthCheckParams = HealthCheckParams.none()
-        ): HttpResponseFor<HealthCheckResponse> = check(params, RequestOptions.none())
+        fun check(params: HealthCheckParams = HealthCheckParams.none()): HttpResponseFor<HealthCheckResponse> =
+            check(
+              params, RequestOptions.none()
+            )
 
         /** @see check */
         @MustBeClosed
         fun check(requestOptions: RequestOptions): HttpResponseFor<HealthCheckResponse> =
-            check(HealthCheckParams.none(), requestOptions)
+            check(
+              HealthCheckParams.none(), requestOptions
+            )
     }
 }

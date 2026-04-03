@@ -7,15 +7,14 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.conflicts.ConflictResolveParams
 import com.believe.api.models.conflicts.ConflictResolveResponse
+import com.believe.api.services.blocking.ConflictService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** Interactive endpoints for motivation and guidance */
 interface ConflictService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -27,13 +26,12 @@ interface ConflictService {
 
     /** Get Ted Lasso-style advice for resolving conflicts. */
     fun resolve(params: ConflictResolveParams): ConflictResolveResponse =
-        resolve(params, RequestOptions.none())
+        resolve(
+          params, RequestOptions.none()
+        )
 
     /** @see resolve */
-    fun resolve(
-        params: ConflictResolveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): ConflictResolveResponse
+    fun resolve(params: ConflictResolveParams, requestOptions: RequestOptions = RequestOptions.none()): ConflictResolveResponse
 
     /** A view of [ConflictService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -45,19 +43,15 @@ interface ConflictService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): ConflictService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /conflicts/resolve`, but is otherwise the same as
-         * [ConflictService.resolve].
-         */
+        /** Returns a raw HTTP response for `post /conflicts/resolve`, but is otherwise the             same as [ConflictService.resolve]. */
         @MustBeClosed
         fun resolve(params: ConflictResolveParams): HttpResponseFor<ConflictResolveResponse> =
-            resolve(params, RequestOptions.none())
+            resolve(
+              params, RequestOptions.none()
+            )
 
         /** @see resolve */
         @MustBeClosed
-        fun resolve(
-            params: ConflictResolveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ConflictResolveResponse>
+        fun resolve(params: ConflictResolveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<ConflictResolveResponse>
     }
 }

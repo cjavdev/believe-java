@@ -2,6 +2,7 @@
 
 package com.believe.api.models.teams
 
+import com.believe.api.models.teams.TeamRetrieveParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,15 +10,19 @@ internal class TeamRetrieveParamsTest {
 
     @Test
     fun create() {
-        TeamRetrieveParams.builder().teamId("team_id").build()
+      TeamRetrieveParams.builder()
+          .teamId("team_id")
+          .build()
     }
 
     @Test
     fun pathParams() {
-        val params = TeamRetrieveParams.builder().teamId("team_id").build()
+      val params = TeamRetrieveParams.builder()
+          .teamId("team_id")
+          .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("team_id")
-        // out-of-bound path param
-        assertThat(params._pathParam(1)).isEqualTo("")
+      assertThat(params._pathParam(0)).isEqualTo("team_id")
+      // out-of-bound path param
+      assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

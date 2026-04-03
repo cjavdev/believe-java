@@ -4,12 +4,17 @@ package com.believe.api.client.okhttp
 
 import com.believe.api.client.BelieveClient
 import com.believe.api.client.BelieveClientImpl
+import com.believe.api.client.okhttp.OkHttpClient
 import com.believe.api.core.ClientOptions
+import com.believe.api.core.DefaultSleeper
+import com.believe.api.core.PhantomReachableExecutorService
+import com.believe.api.core.PhantomReachableSleeper
 import com.believe.api.core.Sleeper
 import com.believe.api.core.Timeout
 import com.believe.api.core.http.AsyncStreamResponse
 import com.believe.api.core.http.Headers
 import com.believe.api.core.http.HttpClient
+import com.believe.api.core.http.PhantomReachableClosingHttpClient
 import com.believe.api.core.http.QueryParams
 import com.believe.api.core.jsonMapper
 import com.fasterxml.jackson.databind.json.JsonMapper
@@ -19,28 +24,33 @@ import java.time.Duration
 import java.util.Optional
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadFactory
+import java.util.concurrent.atomic.AtomicLong
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
 import kotlin.jvm.optionals.getOrNull
 
 /**
- * A class that allows building an instance of [BelieveClient] with [OkHttpClient] as the underlying
- * [HttpClient].
+ * A class that allows building an instance of [BelieveClient] with [OkHttpClient] as
+ * the underlying [HttpClient].
  */
 class BelieveOkHttpClient private constructor() {
 
     companion object {
 
         /** Returns a mutable builder for constructing an instance of [BelieveClient]. */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
 
         /**
          * Returns a client configured using system properties and environment variables.
          *
          * @see ClientOptions.Builder.fromEnv
          */
-        @JvmStatic fun fromEnv(): BelieveClient = builder().fromEnv().build()
+        @JvmStatic
+        fun fromEnv(): BelieveClient = builder().fromEnv().build()
     }
 
     /** A builder for [BelieveOkHttpClient]. */
@@ -58,23 +68,22 @@ class BelieveOkHttpClient private constructor() {
         /**
          * The executor service to use for running HTTP requests.
          *
-         * Defaults to OkHttp's
-         * [default executor service](https://github.com/square/okhttp/blob/ace792f443b2ffb17974f5c0d1cecdf589309f26/okhttp/src/commonJvmAndroid/kotlin/okhttp3/Dispatcher.kt#L98-L104).
+         * Defaults to OkHttp's [default executor service](https://github.com/square/okhttp/blob/ace792f443b2ffb17974f5c0d1cecdf589309f26/okhttp/src/commonJvmAndroid/kotlin/okhttp3/Dispatcher.kt#L98-L104).
          *
          * This class takes ownership of the executor service and shuts it down when closed.
          */
-        fun dispatcherExecutorService(dispatcherExecutorService: ExecutorService?) = apply {
-            this.dispatcherExecutorService = dispatcherExecutorService
-        }
+        fun dispatcherExecutorService(dispatcherExecutorService: ExecutorService?) =
+            apply {
+                this.dispatcherExecutorService = dispatcherExecutorService
+            }
 
-        /**
-         * Alias for calling [Builder.dispatcherExecutorService] with
-         * `dispatcherExecutorService.orElse(null)`.
-         */
-        fun dispatcherExecutorService(dispatcherExecutorService: Optional<ExecutorService>) =
-            dispatcherExecutorService(dispatcherExecutorService.getOrNull())
+        /** Alias for calling [Builder.dispatcherExecutorService] with `dispatcherExecutorService.orElse(null)`. */
+        fun dispatcherExecutorService(dispatcherExecutorService: Optional<ExecutorService>) = dispatcherExecutorService(dispatcherExecutorService.getOrNull())
 
-        fun proxy(proxy: Proxy?) = apply { this.proxy = proxy }
+        fun proxy(proxy: Proxy?) =
+            apply {
+                this.proxy = proxy
+            }
 
         /** Alias for calling [Builder.proxy] with `proxy.orElse(null)`. */
         fun proxy(proxy: Optional<Proxy>) = proxy(proxy.getOrNull())
@@ -86,23 +95,20 @@ class BelieveOkHttpClient private constructor() {
          *
          * If unset, then OkHttp's default is used.
          */
-        fun maxIdleConnections(maxIdleConnections: Int?) = apply {
-            this.maxIdleConnections = maxIdleConnections
-        }
+        fun maxIdleConnections(maxIdleConnections: Int?) =
+            apply {
+                this.maxIdleConnections = maxIdleConnections
+            }
 
         /**
          * Alias for [Builder.maxIdleConnections].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun maxIdleConnections(maxIdleConnections: Int) =
-            maxIdleConnections(maxIdleConnections as Int?)
+        fun maxIdleConnections(maxIdleConnections: Int) = maxIdleConnections(maxIdleConnections as Int?)
 
-        /**
-         * Alias for calling [Builder.maxIdleConnections] with `maxIdleConnections.orElse(null)`.
-         */
-        fun maxIdleConnections(maxIdleConnections: Optional<Int>) =
-            maxIdleConnections(maxIdleConnections.getOrNull())
+        /** Alias for calling [Builder.maxIdleConnections] with `maxIdleConnections.orElse(null)`. */
+        fun maxIdleConnections(maxIdleConnections: Optional<Int>) = maxIdleConnections(maxIdleConnections.getOrNull())
 
         /**
          * The keep-alive duration for idle connections in the underlying OkHttp connection pool.
@@ -111,80 +117,84 @@ class BelieveOkHttpClient private constructor() {
          *
          * If unset, then OkHttp's default is used.
          */
-        fun keepAliveDuration(keepAliveDuration: Duration?) = apply {
-            this.keepAliveDuration = keepAliveDuration
-        }
+        fun keepAliveDuration(keepAliveDuration: Duration?) =
+            apply {
+                this.keepAliveDuration = keepAliveDuration
+            }
 
         /** Alias for calling [Builder.keepAliveDuration] with `keepAliveDuration.orElse(null)`. */
-        fun keepAliveDuration(keepAliveDuration: Optional<Duration>) =
-            keepAliveDuration(keepAliveDuration.getOrNull())
+        fun keepAliveDuration(keepAliveDuration: Optional<Duration>) = keepAliveDuration(keepAliveDuration.getOrNull())
 
         /**
          * The socket factory used to secure HTTPS connections.
          *
          * If this is set, then [trustManager] must also be set.
          *
-         * If unset, then the system default is used. Most applications should not call this method,
-         * and instead use the system default. The default include special optimizations that can be
-         * lost if the implementation is modified.
+         * If unset, then the system default is used. Most applications should not call this method, and
+         * instead use the system default. The default include special optimizations that can be lost if
+         * the implementation is modified.
          */
-        fun sslSocketFactory(sslSocketFactory: SSLSocketFactory?) = apply {
-            this.sslSocketFactory = sslSocketFactory
-        }
+        fun sslSocketFactory(sslSocketFactory: SSLSocketFactory?) =
+            apply {
+                this.sslSocketFactory = sslSocketFactory
+            }
 
         /** Alias for calling [Builder.sslSocketFactory] with `sslSocketFactory.orElse(null)`. */
-        fun sslSocketFactory(sslSocketFactory: Optional<SSLSocketFactory>) =
-            sslSocketFactory(sslSocketFactory.getOrNull())
+        fun sslSocketFactory(sslSocketFactory: Optional<SSLSocketFactory>) = sslSocketFactory(sslSocketFactory.getOrNull())
 
         /**
          * The trust manager used to secure HTTPS connections.
          *
          * If this is set, then [sslSocketFactory] must also be set.
          *
-         * If unset, then the system default is used. Most applications should not call this method,
-         * and instead use the system default. The default include special optimizations that can be
-         * lost if the implementation is modified.
+         * If unset, then the system default is used. Most applications should not call this method, and
+         * instead use the system default. The default include special optimizations that can be lost if
+         * the implementation is modified.
          */
-        fun trustManager(trustManager: X509TrustManager?) = apply {
-            this.trustManager = trustManager
-        }
+        fun trustManager(trustManager: X509TrustManager?) =
+            apply {
+                this.trustManager = trustManager
+            }
 
         /** Alias for calling [Builder.trustManager] with `trustManager.orElse(null)`. */
-        fun trustManager(trustManager: Optional<X509TrustManager>) =
-            trustManager(trustManager.getOrNull())
+        fun trustManager(trustManager: Optional<X509TrustManager>) = trustManager(trustManager.getOrNull())
 
         /**
-         * The verifier used to confirm that response certificates apply to requested hostnames for
-         * HTTPS connections.
+         * The verifier used to confirm that response certificates apply to requested hostnames for HTTPS
+         * connections.
          *
          * If unset, then a default hostname verifier is used.
          */
-        fun hostnameVerifier(hostnameVerifier: HostnameVerifier?) = apply {
-            this.hostnameVerifier = hostnameVerifier
-        }
+        fun hostnameVerifier(hostnameVerifier: HostnameVerifier?) =
+            apply {
+                this.hostnameVerifier = hostnameVerifier
+            }
 
         /** Alias for calling [Builder.hostnameVerifier] with `hostnameVerifier.orElse(null)`. */
-        fun hostnameVerifier(hostnameVerifier: Optional<HostnameVerifier>) =
-            hostnameVerifier(hostnameVerifier.getOrNull())
+        fun hostnameVerifier(hostnameVerifier: Optional<HostnameVerifier>) = hostnameVerifier(hostnameVerifier.getOrNull())
 
         /**
          * Whether to throw an exception if any of the Jackson versions detected at runtime are
          * incompatible with the SDK's minimum supported Jackson version (2.13.4).
          *
-         * Defaults to true. Use extreme caution when disabling this option. There is no guarantee
-         * that the SDK will work correctly when using an incompatible Jackson version.
+         * Defaults to true. Use extreme caution when disabling this option. There is no guarantee that the
+         * SDK will work correctly when using an incompatible Jackson version.
          */
-        fun checkJacksonVersionCompatibility(checkJacksonVersionCompatibility: Boolean) = apply {
-            clientOptions.checkJacksonVersionCompatibility(checkJacksonVersionCompatibility)
-        }
+        fun checkJacksonVersionCompatibility(checkJacksonVersionCompatibility: Boolean) =
+            apply {
+                clientOptions.checkJacksonVersionCompatibility(checkJacksonVersionCompatibility)
+            }
 
         /**
          * The Jackson JSON mapper to use for serializing and deserializing JSON.
          *
-         * Defaults to [com.believe.api.core.jsonMapper]. The default is usually sufficient and
-         * rarely needs to be overridden.
+         * Defaults to [com.believe.api.core.jsonMapper]. The default is usually sufficient
+         * and rarely needs to be overridden.
          */
-        fun jsonMapper(jsonMapper: JsonMapper) = apply { clientOptions.jsonMapper(jsonMapper) }
+        fun jsonMapper(jsonMapper: JsonMapper) =
+            apply {
+                clientOptions.jsonMapper(jsonMapper)
+            }
 
         /**
          * The executor to use for running [AsyncStreamResponse.Handler] callbacks.
@@ -193,9 +203,10 @@ class BelieveOkHttpClient private constructor() {
          *
          * This class takes ownership of the executor and shuts it down, if possible, when closed.
          */
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            clientOptions.streamHandlerExecutor(streamHandlerExecutor)
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                clientOptions.streamHandlerExecutor(streamHandlerExecutor)
+            }
 
         /**
          * The interface to use for delaying execution, like during retries.
@@ -206,7 +217,10 @@ class BelieveOkHttpClient private constructor() {
          *
          * This class takes ownership of the sleeper and closes it when closed.
          */
-        fun sleeper(sleeper: Sleeper) = apply { clientOptions.sleeper(sleeper) }
+        fun sleeper(sleeper: Sleeper) =
+            apply {
+                clientOptions.sleeper(sleeper)
+            }
 
         /**
          * The clock to use for operations that require timing, like retries.
@@ -215,14 +229,20 @@ class BelieveOkHttpClient private constructor() {
          *
          * Defaults to [Clock.systemUTC].
          */
-        fun clock(clock: Clock) = apply { clientOptions.clock(clock) }
+        fun clock(clock: Clock) =
+            apply {
+                clientOptions.clock(clock)
+            }
 
         /**
          * The base URL to use for every request.
          *
          * Defaults to the production environment: `https://believe.cjav.dev`.
          */
-        fun baseUrl(baseUrl: String?) = apply { clientOptions.baseUrl(baseUrl) }
+        fun baseUrl(baseUrl: String?) =
+            apply {
+                clientOptions.baseUrl(baseUrl)
+            }
 
         /** Alias for calling [Builder.baseUrl] with `baseUrl.orElse(null)`. */
         fun baseUrl(baseUrl: Optional<String>) = baseUrl(baseUrl.getOrNull())
@@ -230,20 +250,23 @@ class BelieveOkHttpClient private constructor() {
         /**
          * Whether to call `validate` on every response before returning it.
          *
-         * Defaults to false, which means the shape of the response will not be validated upfront.
-         * Instead, validation will only occur for the parts of the response that are accessed.
+         * Defaults to false, which means the shape of the response will not be validated upfront. Instead,
+         * validation will only occur for the parts of the response that are accessed.
          */
-        fun responseValidation(responseValidation: Boolean) = apply {
-            clientOptions.responseValidation(responseValidation)
-        }
+        fun responseValidation(responseValidation: Boolean) =
+            apply {
+                clientOptions.responseValidation(responseValidation)
+            }
 
         /**
-         * Sets the maximum time allowed for various parts of an HTTP call's lifecycle, excluding
-         * retries.
+         * Sets the maximum time allowed for various parts of an HTTP call's lifecycle, excluding retries.
          *
          * Defaults to [Timeout.default].
          */
-        fun timeout(timeout: Timeout) = apply { clientOptions.timeout(timeout) }
+        fun timeout(timeout: Timeout) =
+            apply {
+                clientOptions.timeout(timeout)
+            }
 
         /**
          * Sets the maximum time allowed for a complete HTTP call, not including retries.
@@ -255,8 +278,8 @@ class BelieveOkHttpClient private constructor() {
         fun timeout(timeout: Duration) = apply { clientOptions.timeout(timeout) }
 
         /**
-         * The maximum number of times to retry failed requests, with a short exponential backoff
-         * between requests.
+         * The maximum number of times to retry failed requests, with a short exponential backoff between
+         * requests.
          *
          * Only the following error types are retried:
          * - Connection errors (for example, due to a network connectivity problem)
@@ -269,96 +292,161 @@ class BelieveOkHttpClient private constructor() {
          *
          * Defaults to 2.
          */
-        fun maxRetries(maxRetries: Int) = apply { clientOptions.maxRetries(maxRetries) }
+        fun maxRetries(maxRetries: Int) =
+            apply {
+                clientOptions.maxRetries(maxRetries)
+            }
 
-        fun apiKey(apiKey: String) = apply { clientOptions.apiKey(apiKey) }
+        fun apiKey(apiKey: String) =
+            apply {
+                clientOptions.apiKey(apiKey)
+            }
 
-        fun headers(headers: Headers) = apply { clientOptions.headers(headers) }
+        fun headers(headers: Headers) =
+            apply {
+                clientOptions.headers(headers)
+            }
 
-        fun headers(headers: Map<String, Iterable<String>>) = apply {
-            clientOptions.headers(headers)
-        }
+        fun headers(headers: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.headers(headers)
+            }
 
-        fun putHeader(name: String, value: String) = apply { clientOptions.putHeader(name, value) }
+        fun putHeader(name: String, value: String) =
+            apply {
+                clientOptions.putHeader(
+                  name, value
+                )
+            }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply {
-            clientOptions.putHeaders(name, values)
-        }
+        fun putHeaders(name: String, values: Iterable<String>) =
+            apply {
+                clientOptions.putHeaders(
+                  name, values
+                )
+            }
 
-        fun putAllHeaders(headers: Headers) = apply { clientOptions.putAllHeaders(headers) }
+        fun putAllHeaders(headers: Headers) =
+            apply {
+                clientOptions.putAllHeaders(headers)
+            }
 
-        fun putAllHeaders(headers: Map<String, Iterable<String>>) = apply {
-            clientOptions.putAllHeaders(headers)
-        }
+        fun putAllHeaders(headers: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.putAllHeaders(headers)
+            }
 
-        fun replaceHeaders(name: String, value: String) = apply {
-            clientOptions.replaceHeaders(name, value)
-        }
+        fun replaceHeaders(name: String, value: String) =
+            apply {
+                clientOptions.replaceHeaders(
+                  name, value
+                )
+            }
 
-        fun replaceHeaders(name: String, values: Iterable<String>) = apply {
-            clientOptions.replaceHeaders(name, values)
-        }
+        fun replaceHeaders(name: String, values: Iterable<String>) =
+            apply {
+                clientOptions.replaceHeaders(
+                  name, values
+                )
+            }
 
-        fun replaceAllHeaders(headers: Headers) = apply { clientOptions.replaceAllHeaders(headers) }
+        fun replaceAllHeaders(headers: Headers) =
+            apply {
+                clientOptions.replaceAllHeaders(headers)
+            }
 
-        fun replaceAllHeaders(headers: Map<String, Iterable<String>>) = apply {
-            clientOptions.replaceAllHeaders(headers)
-        }
+        fun replaceAllHeaders(headers: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.replaceAllHeaders(headers)
+            }
 
-        fun removeHeaders(name: String) = apply { clientOptions.removeHeaders(name) }
+        fun removeHeaders(name: String) =
+            apply {
+                clientOptions.removeHeaders(name)
+            }
 
-        fun removeAllHeaders(names: Set<String>) = apply { clientOptions.removeAllHeaders(names) }
+        fun removeAllHeaders(names: Set<String>) =
+            apply {
+                clientOptions.removeAllHeaders(names)
+            }
 
-        fun queryParams(queryParams: QueryParams) = apply { clientOptions.queryParams(queryParams) }
+        fun queryParams(queryParams: QueryParams) =
+            apply {
+                clientOptions.queryParams(queryParams)
+            }
 
-        fun queryParams(queryParams: Map<String, Iterable<String>>) = apply {
-            clientOptions.queryParams(queryParams)
-        }
+        fun queryParams(queryParams: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.queryParams(queryParams)
+            }
 
-        fun putQueryParam(key: String, value: String) = apply {
-            clientOptions.putQueryParam(key, value)
-        }
+        fun putQueryParam(key: String, value: String) =
+            apply {
+                clientOptions.putQueryParam(
+                  key, value
+                )
+            }
 
-        fun putQueryParams(key: String, values: Iterable<String>) = apply {
-            clientOptions.putQueryParams(key, values)
-        }
+        fun putQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                clientOptions.putQueryParams(
+                  key, values
+                )
+            }
 
-        fun putAllQueryParams(queryParams: QueryParams) = apply {
-            clientOptions.putAllQueryParams(queryParams)
-        }
+        fun putAllQueryParams(queryParams: QueryParams) =
+            apply {
+                clientOptions.putAllQueryParams(queryParams)
+            }
 
-        fun putAllQueryParams(queryParams: Map<String, Iterable<String>>) = apply {
-            clientOptions.putAllQueryParams(queryParams)
-        }
+        fun putAllQueryParams(queryParams: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.putAllQueryParams(queryParams)
+            }
 
-        fun replaceQueryParams(key: String, value: String) = apply {
-            clientOptions.replaceQueryParams(key, value)
-        }
+        fun replaceQueryParams(key: String, value: String) =
+            apply {
+                clientOptions.replaceQueryParams(
+                  key, value
+                )
+            }
 
-        fun replaceQueryParams(key: String, values: Iterable<String>) = apply {
-            clientOptions.replaceQueryParams(key, values)
-        }
+        fun replaceQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                clientOptions.replaceQueryParams(
+                  key, values
+                )
+            }
 
-        fun replaceAllQueryParams(queryParams: QueryParams) = apply {
-            clientOptions.replaceAllQueryParams(queryParams)
-        }
+        fun replaceAllQueryParams(queryParams: QueryParams) =
+            apply {
+                clientOptions.replaceAllQueryParams(queryParams)
+            }
 
-        fun replaceAllQueryParams(queryParams: Map<String, Iterable<String>>) = apply {
-            clientOptions.replaceAllQueryParams(queryParams)
-        }
+        fun replaceAllQueryParams(queryParams: Map<String, Iterable<String>>) =
+            apply {
+                clientOptions.replaceAllQueryParams(queryParams)
+            }
 
-        fun removeQueryParams(key: String) = apply { clientOptions.removeQueryParams(key) }
+        fun removeQueryParams(key: String) =
+            apply {
+                clientOptions.removeQueryParams(key)
+            }
 
-        fun removeAllQueryParams(keys: Set<String>) = apply {
-            clientOptions.removeAllQueryParams(keys)
-        }
+        fun removeAllQueryParams(keys: Set<String>) =
+            apply {
+                clientOptions.removeAllQueryParams(keys)
+            }
 
         /**
          * Updates configuration using system properties and environment variables.
          *
          * @see ClientOptions.Builder.fromEnv
          */
-        fun fromEnv() = apply { clientOptions.fromEnv() }
+        fun fromEnv() =
+            apply {
+                clientOptions.fromEnv()
+            }
 
         /**
          * Returns an immutable instance of [BelieveClient].
@@ -366,21 +454,17 @@ class BelieveOkHttpClient private constructor() {
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): BelieveClient =
-            BelieveClientImpl(
-                clientOptions
-                    .httpClient(
-                        OkHttpClient.builder()
-                            .timeout(clientOptions.timeout())
-                            .proxy(proxy)
-                            .maxIdleConnections(maxIdleConnections)
-                            .keepAliveDuration(keepAliveDuration)
-                            .dispatcherExecutorService(dispatcherExecutorService)
-                            .sslSocketFactory(sslSocketFactory)
-                            .trustManager(trustManager)
-                            .hostnameVerifier(hostnameVerifier)
-                            .build()
-                    )
-                    .build()
-            )
+            BelieveClientImpl(clientOptions
+                .httpClient(OkHttpClient.builder()
+                    .timeout(clientOptions.timeout())
+                    .proxy(proxy)
+                    .maxIdleConnections(maxIdleConnections)
+                    .keepAliveDuration(keepAliveDuration)
+                    .dispatcherExecutorService(dispatcherExecutorService)
+                    .sslSocketFactory(sslSocketFactory)
+                    .trustManager(trustManager)
+                    .hostnameVerifier(hostnameVerifier)
+                    .build())
+                .build())
     }
 }

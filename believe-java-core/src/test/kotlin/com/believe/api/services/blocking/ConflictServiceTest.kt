@@ -12,23 +12,20 @@ internal class ConflictServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun resolve() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val conflictService = client.conflicts()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val conflictService = client.conflicts()
 
-        val response =
-            conflictService.resolve(
-                ConflictResolveParams.builder()
-                    .conflictType(ConflictResolveParams.ConflictType.INTERPERSONAL)
-                    .description(
-                        "Alex keeps taking credit for my ideas in meetings and I'm getting resentful."
-                    )
-                    .addPartiesInvolved("Me")
-                    .addPartiesInvolved("My teammate Alex")
-                    .addAttemptsMade("Mentioned it casually")
-                    .addAttemptsMade("Avoided them")
-                    .build()
-            )
+      val response = conflictService.resolve(ConflictResolveParams.builder()
+          .conflictType(ConflictResolveParams.ConflictType.INTERPERSONAL)
+          .description("Alex keeps taking credit for my ideas in meetings and I'm getting resentful.")
+          .addPartiesInvolved("Me")
+          .addPartiesInvolved("My teammate Alex")
+          .addAttemptsMade("Mentioned it casually")
+          .addAttemptsMade("Avoided them")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 }

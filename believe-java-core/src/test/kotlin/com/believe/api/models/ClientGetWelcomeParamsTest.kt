@@ -2,12 +2,13 @@
 
 package com.believe.api.models
 
+import com.believe.api.models.ClientGetWelcomeParams
 import org.junit.jupiter.api.Test
 
 internal class ClientGetWelcomeParamsTest {
 
     @Test
     fun create() {
-        ClientGetWelcomeParams.builder().build()
+      ClientGetWelcomeParams.builder().build()
     }
 }

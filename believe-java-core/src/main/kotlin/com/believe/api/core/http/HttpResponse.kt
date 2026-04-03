@@ -2,6 +2,7 @@
 
 package com.believe.api.core.http
 
+import com.believe.api.core.http.Headers
 import java.io.InputStream
 
 interface HttpResponse : AutoCloseable {

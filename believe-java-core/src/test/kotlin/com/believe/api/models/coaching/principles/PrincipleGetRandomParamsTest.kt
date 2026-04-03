@@ -2,12 +2,13 @@
 
 package com.believe.api.models.coaching.principles
 
+import com.believe.api.models.coaching.principles.PrincipleGetRandomParams
 import org.junit.jupiter.api.Test
 
 internal class PrincipleGetRandomParamsTest {
 
     @Test
     fun create() {
-        PrincipleGetRandomParams.builder().build()
+      PrincipleGetRandomParams.builder().build()
     }
 }

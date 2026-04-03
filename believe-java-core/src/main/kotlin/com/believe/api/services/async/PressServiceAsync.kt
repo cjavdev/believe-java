@@ -7,15 +7,14 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.press.PressSimulateParams
 import com.believe.api.models.press.PressSimulateResponse
+import com.believe.api.services.async.PressServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 /** Interactive endpoints for motivation and guidance */
 interface PressServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -27,13 +26,12 @@ interface PressServiceAsync {
 
     /** Get Ted's response to press conference questions. */
     fun simulate(params: PressSimulateParams): CompletableFuture<PressSimulateResponse> =
-        simulate(params, RequestOptions.none())
+        simulate(
+          params, RequestOptions.none()
+        )
 
     /** @see simulate */
-    fun simulate(
-        params: PressSimulateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PressSimulateResponse>
+    fun simulate(params: PressSimulateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<PressSimulateResponse>
 
     /** A view of [PressServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -43,23 +41,15 @@ interface PressServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): PressServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): PressServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /press`, but is otherwise the same as
-         * [PressServiceAsync.simulate].
-         */
-        fun simulate(
-            params: PressSimulateParams
-        ): CompletableFuture<HttpResponseFor<PressSimulateResponse>> =
-            simulate(params, RequestOptions.none())
+        /** Returns a raw HTTP response for `post /press`, but is otherwise the             same as [PressServiceAsync.simulate]. */
+        fun simulate(params: PressSimulateParams): CompletableFuture<HttpResponseFor<PressSimulateResponse>> =
+            simulate(
+              params, RequestOptions.none()
+            )
 
         /** @see simulate */
-        fun simulate(
-            params: PressSimulateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PressSimulateResponse>>
+        fun simulate(params: PressSimulateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<PressSimulateResponse>>
     }
 }

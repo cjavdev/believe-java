@@ -3,6 +3,7 @@
 package com.believe.api.models
 
 import com.believe.api.core.jsonMapper
+import com.believe.api.models.ClientGetWelcomeResponse
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -11,20 +12,16 @@ internal class ClientGetWelcomeResponseTest {
 
     @Test
     fun create() {
-        val clientGetWelcomeResponse = ClientGetWelcomeResponse.builder().build()
+      val clientGetWelcomeResponse = ClientGetWelcomeResponse.builder().build()
     }
 
     @Test
     fun roundtrip() {
-        val jsonMapper = jsonMapper()
-        val clientGetWelcomeResponse = ClientGetWelcomeResponse.builder().build()
+      val jsonMapper = jsonMapper()
+      val clientGetWelcomeResponse = ClientGetWelcomeResponse.builder().build()
 
-        val roundtrippedClientGetWelcomeResponse =
-            jsonMapper.readValue(
-                jsonMapper.writeValueAsString(clientGetWelcomeResponse),
-                jacksonTypeRef<ClientGetWelcomeResponse>(),
-            )
+      val roundtrippedClientGetWelcomeResponse = jsonMapper.readValue(jsonMapper.writeValueAsString(clientGetWelcomeResponse), jacksonTypeRef<ClientGetWelcomeResponse>())
 
-        assertThat(roundtrippedClientGetWelcomeResponse).isEqualTo(clientGetWelcomeResponse)
+      assertThat(roundtrippedClientGetWelcomeResponse).isEqualTo(clientGetWelcomeResponse)
     }
 }

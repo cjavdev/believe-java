@@ -21,21 +21,22 @@ import com.believe.api.models.biscuits.BiscuitListPage
 import com.believe.api.models.biscuits.BiscuitListPageResponse
 import com.believe.api.models.biscuits.BiscuitListParams
 import com.believe.api.models.biscuits.BiscuitRetrieveParams
+import com.believe.api.services.blocking.BiscuitService
+import com.believe.api.services.blocking.BiscuitServiceImpl
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 /** Interactive endpoints for motivation and guidance */
-class BiscuitServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    BiscuitService {
+class BiscuitServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: BiscuitService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : BiscuitService {
+
+    private val withRawResponse: BiscuitService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): BiscuitService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BiscuitService =
-        BiscuitServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BiscuitService = BiscuitServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(params: BiscuitRetrieveParams, requestOptions: RequestOptions): Biscuit =
         // get /biscuits/{biscuit_id}
@@ -49,108 +50,106 @@ class BiscuitServiceImpl internal constructor(private val clientOptions: ClientO
         // get /biscuits/fresh
         withRawResponse().getFresh(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        BiscuitService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : BiscuitService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): BiscuitService.WithRawResponse =
-            BiscuitServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BiscuitService.WithRawResponse = BiscuitServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val retrieveHandler: Handler<Biscuit> = jsonHandler<Biscuit>(clientOptions.jsonMapper)
+
+        override fun retrieve(params: BiscuitRetrieveParams, requestOptions: RequestOptions): HttpResponseFor<Biscuit> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("biscuitId", params.biscuitId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("biscuits", params._pathParam(0))
+            .build()
+            .prepare(
+              clientOptions, params
             )
-
-        private val retrieveHandler: Handler<Biscuit> =
-            jsonHandler<Biscuit>(clientOptions.jsonMapper)
-
-        override fun retrieve(
-            params: BiscuitRetrieveParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<Biscuit> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("biscuitId", params.biscuitId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("biscuits", params._pathParam(0))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val listHandler: Handler<BiscuitListPageResponse> =
-            jsonHandler<BiscuitListPageResponse>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BiscuitListPageResponse> = jsonHandler<BiscuitListPageResponse>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: BiscuitListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<BiscuitListPage> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("biscuits")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-                    .let {
-                        BiscuitListPage.builder()
-                            .service(BiscuitServiceImpl(clientOptions))
-                            .params(params)
-                            .response(it)
-                            .build()
-                    }
-            }
+        override fun list(params: BiscuitListParams, requestOptions: RequestOptions): HttpResponseFor<BiscuitListPage> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("biscuits")
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+              .let {
+                  BiscuitListPage.builder()
+                      .service(BiscuitServiceImpl(clientOptions))
+                      .params(params)
+                      .response(it)
+                      .build()
+              }
+          }
         }
 
-        private val getFreshHandler: Handler<Biscuit> =
-            jsonHandler<Biscuit>(clientOptions.jsonMapper)
+        private val getFreshHandler: Handler<Biscuit> = jsonHandler<Biscuit>(clientOptions.jsonMapper)
 
-        override fun getFresh(
-            params: BiscuitGetFreshParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<Biscuit> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("biscuits", "fresh")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { getFreshHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun getFresh(params: BiscuitGetFreshParams, requestOptions: RequestOptions): HttpResponseFor<Biscuit> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("biscuits", "fresh")
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  getFreshHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

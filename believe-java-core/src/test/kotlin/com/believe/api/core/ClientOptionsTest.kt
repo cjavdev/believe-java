@@ -2,6 +2,7 @@
 
 package com.believe.api.core
 
+import com.believe.api.core.ClientOptions
 import com.believe.api.core.http.HttpClient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,31 +19,35 @@ internal class ClientOptionsTest {
 
     @Test
     fun putHeader_canOverwriteDefaultHeader() {
-        val clientOptions =
-            ClientOptions.builder()
-                .httpClient(httpClient)
-                .putHeader("User-Agent", "My User Agent")
-                .apiKey("My API Key")
-                .build()
+        val clientOptions = ClientOptions.builder()
+        .httpClient(httpClient)
+        .putHeader("User-Agent", "My User Agent")
+        .apiKey("My API Key")
+        .build()
 
         assertThat(clientOptions.headers.values("User-Agent")).containsExactly("My User Agent")
     }
 
     @Test
     fun toBuilder_httpBearerCanBeUpdated() {
-        var clientOptions =
-            ClientOptions.builder().httpClient(httpClient).apiKey("My API Key").build()
+        var clientOptions = ClientOptions.builder()
+        .httpClient(httpClient)
+        .apiKey("My API Key")
+        .build()
 
-        clientOptions = clientOptions.toBuilder().apiKey("another My API Key").build()
+        clientOptions = clientOptions.toBuilder()
+        .apiKey("another My API Key")
+        .build()
 
-        assertThat(clientOptions.headers.values("Authorization"))
-            .containsExactly("Bearer another My API Key")
+        assertThat(clientOptions.headers.values("Authorization")).containsExactly("Bearer another My API Key")
     }
 
     @Test
     fun toBuilder_whenOriginalClientOptionsGarbageCollected_doesNotCloseOriginalClient() {
-        var clientOptions =
-            ClientOptions.builder().httpClient(httpClient).apiKey("My API Key").build()
+        var clientOptions = ClientOptions.builder()
+        .httpClient(httpClient)
+        .apiKey("My API Key")
+        .build()
         verify(httpClient, never()).close()
 
         // Overwrite the `clientOptions` variable so that the original `ClientOptions` is GC'd.

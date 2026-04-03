@@ -8,17 +8,20 @@ import com.believe.api.errors.BelieveInvalidDataException
 import com.fasterxml.jackson.annotation.JsonCreator
 
 /** Medical staff specialties. */
-class MedicalSpecialty @JsonCreator private constructor(private val value: JsonField<String>) :
-    Enum {
+class MedicalSpecialty @JsonCreator private constructor(
+    private val value: JsonField<String>,
+
+) : Enum {
 
     /**
      * Returns this class instance's raw value.
      *
-     * This is usually only useful if this instance was deserialized from data that doesn't match
-     * any known member, and you want to know that value. For example, if the SDK is on an older
-     * version than the API, then the API may respond with new members that the SDK is unaware of.
+     * This is usually only useful if this instance was deserialized from data that doesn't match any known
+     * member, and you want to know that value. For example, if the SDK is on an older version than the
+     * API, then the API may respond with new members that the SDK is unaware of.
      */
-    @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+    @com.fasterxml.jackson.annotation.JsonValue
+    fun _value(): JsonField<String> = value
 
     companion object {
 
@@ -48,9 +51,11 @@ class MedicalSpecialty @JsonCreator private constructor(private val value: JsonF
      * An enum containing [MedicalSpecialty]'s known values, as well as an [_UNKNOWN] member.
      *
      * An instance of [MedicalSpecialty] can contain an unknown value in a couple of cases:
-     * - It was deserialized from data that doesn't match any known member. For example, if the SDK
-     *   is on an older version than the API, then the API may respond with new members that the SDK
-     *   is unaware of.
+     *
+     * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+     *   an older version than the API, then the API may respond with new members that the SDK is unaware
+     *   of.
+     *
      * - It was constructed with an arbitrary value using the [of] method.
      */
     enum class Value {
@@ -59,18 +64,16 @@ class MedicalSpecialty @JsonCreator private constructor(private val value: JsonF
         SPORTS_PSYCHOLOGIST,
         NUTRITIONIST,
         MASSAGE_THERAPIST,
-        /**
-         * An enum member indicating that [MedicalSpecialty] was instantiated with an unknown value.
-         */
+        /** An enum member indicating that [MedicalSpecialty] was instantiated with an unknown value. */
         _UNKNOWN,
     }
 
     /**
-     * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if
-     * the class was instantiated with an unknown value.
+     * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+     * class was instantiated with an unknown value.
      *
-     * Use the [known] method instead if you're certain the value is always known or if you want to
-     * throw for the unknown case.
+     * Use the [known] method instead if you're certain the value is always known or if you want to throw
+     * for the unknown case.
      */
     fun value(): Value =
         when (this) {
@@ -85,8 +88,8 @@ class MedicalSpecialty @JsonCreator private constructor(private val value: JsonF
     /**
      * Returns an enum member corresponding to this class instance's value.
      *
-     * Use the [value] method instead if you're uncertain the value is always known and don't want
-     * to throw for the unknown case.
+     * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+     * for the unknown case.
      *
      * @throws BelieveInvalidDataException if this class instance's value is a not a known member.
      */
@@ -103,25 +106,25 @@ class MedicalSpecialty @JsonCreator private constructor(private val value: JsonF
     /**
      * Returns this class instance's primitive wire representation.
      *
-     * This differs from the [toString] method because that method is primarily for debugging and
-     * generally doesn't throw.
+     * This differs from the [toString] method because that method is primarily for debugging and generally
+     * doesn't throw.
      *
      * @throws BelieveInvalidDataException if this class instance's value does not have the expected
      *   primitive type.
      */
-    fun asString(): String =
-        _value().asString().orElseThrow { BelieveInvalidDataException("Value is not a String") }
+    fun asString(): String = _value().asString().orElseThrow { BelieveInvalidDataException("Value is not a String") }
 
     private var validated: Boolean = false
 
-    fun validate(): MedicalSpecialty = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): MedicalSpecialty =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        known()
-        validated = true
-    }
+            known()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -136,14 +139,15 @@ class MedicalSpecialty @JsonCreator private constructor(private val value: JsonF
      *
      * Used for best match union deserialization.
      */
-    @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+    @JvmSynthetic
+    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is MedicalSpecialty && value == other.value
+      return other is MedicalSpecialty && value == other.value
     }
 
     override fun hashCode() = value.hashCode()

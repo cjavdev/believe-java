@@ -5,6 +5,9 @@ package com.believe.api.models.coaching.principles
 import com.believe.api.core.AutoPager
 import com.believe.api.core.Page
 import com.believe.api.core.checkRequired
+import com.believe.api.models.coaching.principles.CoachingPrinciple
+import com.believe.api.models.coaching.principles.PrincipleListPageResponse
+import com.believe.api.models.coaching.principles.PrincipleListParams
 import com.believe.api.services.blocking.coaching.PrincipleService
 import java.util.Objects
 import java.util.Optional
@@ -12,11 +15,11 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see PrincipleService.list */
-class PrincipleListPage
-private constructor(
+class PrincipleListPage private constructor(
     private val service: PrincipleService,
     private val params: PrincipleListParams,
     private val response: PrincipleListPageResponse,
+
 ) : Page<CoachingPrinciple> {
 
     /**
@@ -24,8 +27,7 @@ private constructor(
      *
      * @see PrincipleListPageResponse.data
      */
-    fun data(): List<CoachingPrinciple> =
-        response._data().getOptional("data").getOrNull() ?: emptyList()
+    fun data(): List<CoachingPrinciple> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [PrincipleListPageResponse], but gracefully handles missing data.
@@ -44,18 +46,20 @@ private constructor(
     override fun items(): List<CoachingPrinciple> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): PrincipleListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): PrincipleListPage = service.list(nextPageParams())
@@ -76,13 +80,15 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [PrincipleListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [PrincipleListPage]. */
@@ -93,19 +99,29 @@ private constructor(
         private var response: PrincipleListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(principleListPage: PrincipleListPage) = apply {
-            service = principleListPage.service
-            params = principleListPage.params
-            response = principleListPage.response
-        }
+        internal fun from(principleListPage: PrincipleListPage) =
+            apply {
+                service = principleListPage.service
+                params = principleListPage.params
+                response = principleListPage.response
+            }
 
-        fun service(service: PrincipleService) = apply { this.service = service }
+        fun service(service: PrincipleService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: PrincipleListParams) = apply { this.params = params }
+        fun params(params: PrincipleListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: PrincipleListPageResponse) = apply { this.response = response }
+        fun response(response: PrincipleListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [PrincipleListPage].
@@ -113,6 +129,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -123,25 +140,27 @@ private constructor(
          */
         fun build(): PrincipleListPage =
             PrincipleListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is PrincipleListPage &&
-            service == other.service &&
-            params == other.params &&
-            response == other.response
+      return other is PrincipleListPage && service == other.service && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, response)
 
-    override fun toString() =
-        "PrincipleListPage{service=$service, params=$params, response=$response}"
+    override fun toString() = "PrincipleListPage{service=$service, params=$params, response=$response}"
 }

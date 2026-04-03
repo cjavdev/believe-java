@@ -12,17 +12,16 @@ internal class ReframeServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun transformNegativeThoughts() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val reframeService = client.reframe()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val reframeService = client.reframe()
 
-        val response =
-            reframeService.transformNegativeThoughts(
-                ReframeTransformNegativeThoughtsParams.builder()
-                    .negativeThought("I'm not good enough for this job.")
-                    .recurring(true)
-                    .build()
-            )
+      val response = reframeService.transformNegativeThoughts(ReframeTransformNegativeThoughtsParams.builder()
+          .negativeThought("I'm not good enough for this job.")
+          .recurring(true)
+          .build())
 
-        response.validate()
+      response.validate()
     }
 }

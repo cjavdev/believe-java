@@ -16,69 +16,64 @@ import java.util.Collections
 import java.util.Objects
 
 /** Character development arc. */
-class GrowthArc
-@JsonCreator(mode = JsonCreator.Mode.DISABLED)
-private constructor(
+class GrowthArc @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
     private val breakthrough: JsonField<String>,
     private val challenge: JsonField<String>,
     private val endingPoint: JsonField<String>,
     private val season: JsonField<Long>,
     private val startingPoint: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
+
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("breakthrough")
-        @ExcludeMissing
-        breakthrough: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("breakthrough") @ExcludeMissing breakthrough: JsonField<String> = JsonMissing.of(),
         @JsonProperty("challenge") @ExcludeMissing challenge: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ending_point")
-        @ExcludeMissing
-        endingPoint: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_point") @ExcludeMissing endingPoint: JsonField<String> = JsonMissing.of(),
         @JsonProperty("season") @ExcludeMissing season: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("starting_point")
-        @ExcludeMissing
-        startingPoint: JsonField<String> = JsonMissing.of(),
-    ) : this(breakthrough, challenge, endingPoint, season, startingPoint, mutableMapOf())
+        @JsonProperty("starting_point") @ExcludeMissing startingPoint: JsonField<String> = JsonMissing.of()
+    ) : this(
+      breakthrough,
+      challenge,
+      endingPoint,
+      season,
+      startingPoint,
+      mutableMapOf(),
+    )
 
     /**
      * Key breakthrough moment
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun breakthrough(): String = breakthrough.getRequired("breakthrough")
 
     /**
      * Main challenge faced
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun challenge(): String = challenge.getRequired("challenge")
 
     /**
      * Where the character ends up
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun endingPoint(): String = endingPoint.getRequired("ending_point")
 
     /**
      * Season number
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun season(): Long = season.getRequired("season")
 
     /**
      * Where the character starts emotionally
      *
-     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun startingPoint(): String = startingPoint.getRequired("starting_point")
 
@@ -96,7 +91,9 @@ private constructor(
      *
      * Unlike [challenge], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("challenge") @ExcludeMissing fun _challenge(): JsonField<String> = challenge
+    @JsonProperty("challenge")
+    @ExcludeMissing
+    fun _challenge(): JsonField<String> = challenge
 
     /**
      * Returns the raw JSON value of [endingPoint].
@@ -112,7 +109,9 @@ private constructor(
      *
      * Unlike [season], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("season") @ExcludeMissing fun _season(): JsonField<Long> = season
+    @JsonProperty("season")
+    @ExcludeMissing
+    fun _season(): JsonField<Long> = season
 
     /**
      * Returns the raw JSON value of [startingPoint].
@@ -125,13 +124,12 @@ private constructor(
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
-        additionalProperties.put(key, value)
+      additionalProperties.put(key, value)
     }
 
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalProperties)
+    fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -141,6 +139,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [GrowthArc].
          *
          * The following fields are required:
+         *
          * ```java
          * .breakthrough()
          * .challenge()
@@ -149,7 +148,8 @@ private constructor(
          * .startingPoint()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [GrowthArc]. */
@@ -163,14 +163,15 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(growthArc: GrowthArc) = apply {
-            breakthrough = growthArc.breakthrough
-            challenge = growthArc.challenge
-            endingPoint = growthArc.endingPoint
-            season = growthArc.season
-            startingPoint = growthArc.startingPoint
-            additionalProperties = growthArc.additionalProperties.toMutableMap()
-        }
+        internal fun from(growthArc: GrowthArc) =
+            apply {
+                breakthrough = growthArc.breakthrough
+                challenge = growthArc.challenge
+                endingPoint = growthArc.endingPoint
+                season = growthArc.season
+                startingPoint = growthArc.startingPoint
+                additionalProperties = growthArc.additionalProperties.toMutableMap()
+            }
 
         /** Key breakthrough moment */
         fun breakthrough(breakthrough: String) = breakthrough(JsonField.of(breakthrough))
@@ -178,13 +179,13 @@ private constructor(
         /**
          * Sets [Builder.breakthrough] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.breakthrough] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.breakthrough] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun breakthrough(breakthrough: JsonField<String>) = apply {
-            this.breakthrough = breakthrough
-        }
+        fun breakthrough(breakthrough: JsonField<String>) =
+            apply {
+                this.breakthrough = breakthrough
+            }
 
         /** Main challenge faced */
         fun challenge(challenge: String) = challenge(JsonField.of(challenge))
@@ -192,11 +193,13 @@ private constructor(
         /**
          * Sets [Builder.challenge] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.challenge] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.challenge] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun challenge(challenge: JsonField<String>) = apply { this.challenge = challenge }
+        fun challenge(challenge: JsonField<String>) =
+            apply {
+                this.challenge = challenge
+            }
 
         /** Where the character ends up */
         fun endingPoint(endingPoint: String) = endingPoint(JsonField.of(endingPoint))
@@ -204,11 +207,13 @@ private constructor(
         /**
          * Sets [Builder.endingPoint] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.endingPoint] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.endingPoint] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun endingPoint(endingPoint: JsonField<String>) = apply { this.endingPoint = endingPoint }
+        fun endingPoint(endingPoint: JsonField<String>) =
+            apply {
+                this.endingPoint = endingPoint
+            }
 
         /** Season number */
         fun season(season: Long) = season(JsonField.of(season))
@@ -216,10 +221,13 @@ private constructor(
         /**
          * Sets [Builder.season] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.season] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.season] with a well-typed [Long] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun season(season: JsonField<Long>) = apply { this.season = season }
+        fun season(season: JsonField<Long>) =
+            apply {
+                this.season = season
+            }
 
         /** Where the character starts emotionally */
         fun startingPoint(startingPoint: String) = startingPoint(JsonField.of(startingPoint))
@@ -227,32 +235,39 @@ private constructor(
         /**
          * Sets [Builder.startingPoint] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.startingPoint] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.startingPoint] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun startingPoint(startingPoint: JsonField<String>) = apply {
-            this.startingPoint = startingPoint
-        }
+        fun startingPoint(startingPoint: JsonField<String>) =
+            apply {
+                this.startingPoint = startingPoint
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [GrowthArc].
@@ -260,6 +275,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .breakthrough()
          * .challenge()
@@ -272,29 +288,40 @@ private constructor(
          */
         fun build(): GrowthArc =
             GrowthArc(
-                checkRequired("breakthrough", breakthrough),
-                checkRequired("challenge", challenge),
-                checkRequired("endingPoint", endingPoint),
-                checkRequired("season", season),
-                checkRequired("startingPoint", startingPoint),
-                additionalProperties.toMutableMap(),
+              checkRequired(
+                "breakthrough", breakthrough
+              ),
+              checkRequired(
+                "challenge", challenge
+              ),
+              checkRequired(
+                "endingPoint", endingPoint
+              ),
+              checkRequired(
+                "season", season
+              ),
+              checkRequired(
+                "startingPoint", startingPoint
+              ),
+              additionalProperties.toMutableMap(),
             )
     }
 
     private var validated: Boolean = false
 
-    fun validate(): GrowthArc = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): GrowthArc =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        breakthrough()
-        challenge()
-        endingPoint()
-        season()
-        startingPoint()
-        validated = true
-    }
+            breakthrough()
+            challenge()
+            endingPoint()
+            season()
+            startingPoint()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -310,40 +337,19 @@ private constructor(
      * Used for best match union deserialization.
      */
     @JvmSynthetic
-    internal fun validity(): Int =
-        (if (breakthrough.asKnown().isPresent) 1 else 0) +
-            (if (challenge.asKnown().isPresent) 1 else 0) +
-            (if (endingPoint.asKnown().isPresent) 1 else 0) +
-            (if (season.asKnown().isPresent) 1 else 0) +
-            (if (startingPoint.asKnown().isPresent) 1 else 0)
+    internal fun validity(): Int = (if (breakthrough.asKnown().isPresent) 1 else 0) + (if (challenge.asKnown().isPresent) 1 else 0) + (if (endingPoint.asKnown().isPresent) 1 else 0) + (if (season.asKnown().isPresent) 1 else 0) + (if (startingPoint.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is GrowthArc &&
-            breakthrough == other.breakthrough &&
-            challenge == other.challenge &&
-            endingPoint == other.endingPoint &&
-            season == other.season &&
-            startingPoint == other.startingPoint &&
-            additionalProperties == other.additionalProperties
+      return other is GrowthArc && breakthrough == other.breakthrough && challenge == other.challenge && endingPoint == other.endingPoint && season == other.season && startingPoint == other.startingPoint && additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy {
-        Objects.hash(
-            breakthrough,
-            challenge,
-            endingPoint,
-            season,
-            startingPoint,
-            additionalProperties,
-        )
-    }
+    private val hashCode: Int by lazy { Objects.hash(breakthrough, challenge, endingPoint, season, startingPoint, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "GrowthArc{breakthrough=$breakthrough, challenge=$challenge, endingPoint=$endingPoint, season=$season, startingPoint=$startingPoint, additionalProperties=$additionalProperties}"
+    override fun toString() = "GrowthArc{breakthrough=$breakthrough, challenge=$challenge, endingPoint=$endingPoint, season=$season, startingPoint=$startingPoint, additionalProperties=$additionalProperties}"
 }

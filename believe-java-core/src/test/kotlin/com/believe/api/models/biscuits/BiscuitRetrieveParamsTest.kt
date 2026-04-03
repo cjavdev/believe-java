@@ -2,6 +2,7 @@
 
 package com.believe.api.models.biscuits
 
+import com.believe.api.models.biscuits.BiscuitRetrieveParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,15 +10,19 @@ internal class BiscuitRetrieveParamsTest {
 
     @Test
     fun create() {
-        BiscuitRetrieveParams.builder().biscuitId("biscuit_id").build()
+      BiscuitRetrieveParams.builder()
+          .biscuitId("biscuit_id")
+          .build()
     }
 
     @Test
     fun pathParams() {
-        val params = BiscuitRetrieveParams.builder().biscuitId("biscuit_id").build()
+      val params = BiscuitRetrieveParams.builder()
+          .biscuitId("biscuit_id")
+          .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("biscuit_id")
-        // out-of-bound path param
-        assertThat(params._pathParam(1)).isEqualTo("")
+      assertThat(params._pathParam(0)).isEqualTo("biscuit_id")
+      // out-of-bound path param
+      assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

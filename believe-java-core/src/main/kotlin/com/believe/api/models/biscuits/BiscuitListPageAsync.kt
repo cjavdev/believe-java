@@ -5,6 +5,9 @@ package com.believe.api.models.biscuits
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
+import com.believe.api.models.biscuits.Biscuit
+import com.believe.api.models.biscuits.BiscuitListPageResponse
+import com.believe.api.models.biscuits.BiscuitListParams
 import com.believe.api.services.async.BiscuitServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,12 +17,12 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see BiscuitServiceAsync.list */
-class BiscuitListPageAsync
-private constructor(
+class BiscuitListPageAsync private constructor(
     private val service: BiscuitServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: BiscuitListParams,
     private val response: BiscuitListPageResponse,
+
 ) : PageAsync<Biscuit> {
 
     /**
@@ -46,24 +49,28 @@ private constructor(
     override fun items(): List<Biscuit> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): BiscuitListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<BiscuitListPageAsync> =
-        service.list(nextPageParams())
+    override fun nextPage(): CompletableFuture<BiscuitListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Biscuit> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<Biscuit> =
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): BiscuitListParams = params
@@ -79,6 +86,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [BiscuitListPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -86,7 +94,8 @@ private constructor(
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [BiscuitListPageAsync]. */
@@ -98,24 +107,35 @@ private constructor(
         private var response: BiscuitListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(biscuitListPageAsync: BiscuitListPageAsync) = apply {
-            service = biscuitListPageAsync.service
-            streamHandlerExecutor = biscuitListPageAsync.streamHandlerExecutor
-            params = biscuitListPageAsync.params
-            response = biscuitListPageAsync.response
-        }
+        internal fun from(biscuitListPageAsync: BiscuitListPageAsync) =
+            apply {
+                service = biscuitListPageAsync.service
+                streamHandlerExecutor = biscuitListPageAsync.streamHandlerExecutor
+                params = biscuitListPageAsync.params
+                response = biscuitListPageAsync.response
+            }
 
-        fun service(service: BiscuitServiceAsync) = apply { this.service = service }
+        fun service(service: BiscuitServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: BiscuitListParams) = apply { this.params = params }
+        fun params(params: BiscuitListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: BiscuitListPageResponse) = apply { this.response = response }
+        fun response(response: BiscuitListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [BiscuitListPageAsync].
@@ -123,6 +143,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -134,27 +155,30 @@ private constructor(
          */
         fun build(): BiscuitListPageAsync =
             BiscuitListPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is BiscuitListPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            response == other.response
+      return other is BiscuitListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, response)
 
-    override fun toString() =
-        "BiscuitListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
+    override fun toString() = "BiscuitListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

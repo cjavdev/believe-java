@@ -2,11 +2,12 @@
 
 package com.believe.api.core.handlers
 
-import com.believe.api.core.http.HttpResponse
-import com.believe.api.core.http.HttpResponse.Handler
-import com.believe.api.errors.BelieveInvalidDataException
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.believe.api.core.http.HttpResponse
+import com.believe.api.core.http.HttpResponse.Handler
+import com.believe.api.errors.BelieveException
+import com.believe.api.errors.BelieveInvalidDataException
 
 @JvmSynthetic
 internal inline fun <reified T> jsonHandler(jsonMapper: JsonMapper): Handler<T> =

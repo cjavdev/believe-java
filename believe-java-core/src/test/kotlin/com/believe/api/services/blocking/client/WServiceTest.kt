@@ -3,6 +3,7 @@
 package com.believe.api.services.blocking.client
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.client.ws.WTestParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,9 +12,11 @@ internal class WServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun test() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val wService = client.client().ws()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val wService = client.client().ws()
 
-        wService.test()
+      wService.test()
     }
 }

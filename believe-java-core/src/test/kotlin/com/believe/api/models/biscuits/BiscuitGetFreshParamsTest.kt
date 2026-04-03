@@ -2,12 +2,13 @@
 
 package com.believe.api.models.biscuits
 
+import com.believe.api.models.biscuits.BiscuitGetFreshParams
 import org.junit.jupiter.api.Test
 
 internal class BiscuitGetFreshParamsTest {
 
     @Test
     fun create() {
-        BiscuitGetFreshParams.builder().build()
+      BiscuitGetFreshParams.builder().build()
     }
 }

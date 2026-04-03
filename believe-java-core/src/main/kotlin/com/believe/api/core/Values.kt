@@ -111,8 +111,8 @@ sealed class JsonField<out T : Any> {
         asString().orElseThrow { BelieveInvalidDataException("Value is not a string") }
 
     /**
-     * Returns an [Optional] containing this field's list value, or an empty [Optional] if it
-     * doesn't contain a list.
+     * Returns an [Optional] containing this field's list value, or an empty [Optional] if it doesn't
+     * contain a list.
      *
      * This method checks for both a [KnownValue] containing a list and for [JsonArray].
      */

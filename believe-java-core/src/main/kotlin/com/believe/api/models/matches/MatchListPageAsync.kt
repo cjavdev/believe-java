@@ -5,6 +5,9 @@ package com.believe.api.models.matches
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
+import com.believe.api.models.matches.Match
+import com.believe.api.models.matches.MatchListPageResponse
+import com.believe.api.models.matches.MatchListParams
 import com.believe.api.services.async.MatchServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,12 +17,12 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see MatchServiceAsync.list */
-class MatchListPageAsync
-private constructor(
+class MatchListPageAsync private constructor(
     private val service: MatchServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: MatchListParams,
     private val response: MatchListPageResponse,
+
 ) : PageAsync<Match> {
 
     /**
@@ -46,23 +49,28 @@ private constructor(
     override fun items(): List<Match> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): MatchListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): CompletableFuture<MatchListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Match> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<Match> =
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): MatchListParams = params
@@ -78,6 +86,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [MatchListPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -85,7 +94,8 @@ private constructor(
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [MatchListPageAsync]. */
@@ -97,24 +107,35 @@ private constructor(
         private var response: MatchListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(matchListPageAsync: MatchListPageAsync) = apply {
-            service = matchListPageAsync.service
-            streamHandlerExecutor = matchListPageAsync.streamHandlerExecutor
-            params = matchListPageAsync.params
-            response = matchListPageAsync.response
-        }
+        internal fun from(matchListPageAsync: MatchListPageAsync) =
+            apply {
+                service = matchListPageAsync.service
+                streamHandlerExecutor = matchListPageAsync.streamHandlerExecutor
+                params = matchListPageAsync.params
+                response = matchListPageAsync.response
+            }
 
-        fun service(service: MatchServiceAsync) = apply { this.service = service }
+        fun service(service: MatchServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: MatchListParams) = apply { this.params = params }
+        fun params(params: MatchListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: MatchListPageResponse) = apply { this.response = response }
+        fun response(response: MatchListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [MatchListPageAsync].
@@ -122,6 +143,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -133,27 +155,30 @@ private constructor(
          */
         fun build(): MatchListPageAsync =
             MatchListPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is MatchListPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            response == other.response
+      return other is MatchListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, response)
 
-    override fun toString() =
-        "MatchListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
+    override fun toString() = "MatchListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

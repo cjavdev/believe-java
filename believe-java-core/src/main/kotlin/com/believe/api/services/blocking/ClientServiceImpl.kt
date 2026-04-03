@@ -3,40 +3,36 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
+import com.believe.api.services.blocking.ClientService
+import com.believe.api.services.blocking.ClientServiceImpl
 import com.believe.api.services.blocking.client.WService
 import com.believe.api.services.blocking.client.WServiceImpl
 import java.util.function.Consumer
 
-class ClientServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    ClientService {
+class ClientServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: ClientService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : ClientService {
+
+    private val withRawResponse: ClientService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     private val ws: WService by lazy { WServiceImpl(clientOptions) }
 
     override fun withRawResponse(): ClientService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientService =
-        ClientServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientService = ClientServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
     override fun ws(): WService = ws
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        ClientService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val ws: WService.WithRawResponse by lazy {
-            WServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+    ) : ClientService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): ClientService.WithRawResponse =
-            ClientServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
-            )
+        private val ws: WService.WithRawResponse by lazy { WServiceImpl.WithRawResponseImpl(clientOptions) }
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ClientService.WithRawResponse = ClientServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
         /** WebSocket endpoints for real-time bidirectional communication - Live match simulation */
         override fun ws(): WService.WithRawResponse = ws

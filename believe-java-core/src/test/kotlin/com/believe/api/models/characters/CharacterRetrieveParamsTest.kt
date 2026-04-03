@@ -2,6 +2,7 @@
 
 package com.believe.api.models.characters
 
+import com.believe.api.models.characters.CharacterRetrieveParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,15 +10,19 @@ internal class CharacterRetrieveParamsTest {
 
     @Test
     fun create() {
-        CharacterRetrieveParams.builder().characterId("character_id").build()
+      CharacterRetrieveParams.builder()
+          .characterId("character_id")
+          .build()
     }
 
     @Test
     fun pathParams() {
-        val params = CharacterRetrieveParams.builder().characterId("character_id").build()
+      val params = CharacterRetrieveParams.builder()
+          .characterId("character_id")
+          .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("character_id")
-        // out-of-bound path param
-        assertThat(params._pathParam(1)).isEqualTo("")
+      assertThat(params._pathParam(0)).isEqualTo("character_id")
+      // out-of-bound path param
+      assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

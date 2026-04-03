@@ -3,6 +3,9 @@
 package com.believe.api.services.blocking.coaching
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
+import com.believe.api.models.coaching.principles.PrincipleGetRandomParams
+import com.believe.api.models.coaching.principles.PrincipleListParams
+import com.believe.api.models.coaching.principles.PrincipleRetrieveParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -11,33 +14,39 @@ internal class PrincipleServiceTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val principleService = client.coaching().principles()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val principleService = client.coaching().principles()
 
-        val coachingPrinciple = principleService.retrieve("principle_id")
+      val coachingPrinciple = principleService.retrieve("principle_id")
 
-        coachingPrinciple.validate()
+      coachingPrinciple.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val principleService = client.coaching().principles()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val principleService = client.coaching().principles()
 
-        val page = principleService.list()
+      val page = principleService.list()
 
-        page.response().validate()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun getRandom() {
-        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
-        val principleService = client.coaching().principles()
+      val client = BelieveOkHttpClient.builder()
+          .apiKey("My API Key")
+          .build()
+      val principleService = client.coaching().principles()
 
-        val coachingPrinciple = principleService.getRandom()
+      val coachingPrinciple = principleService.getRandom()
 
-        coachingPrinciple.validate()
+      coachingPrinciple.validate()
     }
 }

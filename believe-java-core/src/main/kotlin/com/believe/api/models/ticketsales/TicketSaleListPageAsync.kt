@@ -5,6 +5,9 @@ package com.believe.api.models.ticketsales
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
+import com.believe.api.models.ticketsales.TicketSale
+import com.believe.api.models.ticketsales.TicketSaleListPageResponse
+import com.believe.api.models.ticketsales.TicketSaleListParams
 import com.believe.api.services.async.TicketSaleServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,12 +17,12 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see TicketSaleServiceAsync.list */
-class TicketSaleListPageAsync
-private constructor(
+class TicketSaleListPageAsync private constructor(
     private val service: TicketSaleServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: TicketSaleListParams,
     private val response: TicketSaleListPageResponse,
+
 ) : PageAsync<TicketSale> {
 
     /**
@@ -46,24 +49,28 @@ private constructor(
     override fun items(): List<TicketSale> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): TicketSaleListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<TicketSaleListPageAsync> =
-        service.list(nextPageParams())
+    override fun nextPage(): CompletableFuture<TicketSaleListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<TicketSale> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<TicketSale> =
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): TicketSaleListParams = params
@@ -79,6 +86,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [TicketSaleListPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -86,7 +94,8 @@ private constructor(
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TicketSaleListPageAsync]. */
@@ -98,24 +107,35 @@ private constructor(
         private var response: TicketSaleListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(ticketSaleListPageAsync: TicketSaleListPageAsync) = apply {
-            service = ticketSaleListPageAsync.service
-            streamHandlerExecutor = ticketSaleListPageAsync.streamHandlerExecutor
-            params = ticketSaleListPageAsync.params
-            response = ticketSaleListPageAsync.response
-        }
+        internal fun from(ticketSaleListPageAsync: TicketSaleListPageAsync) =
+            apply {
+                service = ticketSaleListPageAsync.service
+                streamHandlerExecutor = ticketSaleListPageAsync.streamHandlerExecutor
+                params = ticketSaleListPageAsync.params
+                response = ticketSaleListPageAsync.response
+            }
 
-        fun service(service: TicketSaleServiceAsync) = apply { this.service = service }
+        fun service(service: TicketSaleServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TicketSaleListParams) = apply { this.params = params }
+        fun params(params: TicketSaleListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: TicketSaleListPageResponse) = apply { this.response = response }
+        fun response(response: TicketSaleListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [TicketSaleListPageAsync].
@@ -123,6 +143,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -134,27 +155,30 @@ private constructor(
          */
         fun build(): TicketSaleListPageAsync =
             TicketSaleListPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TicketSaleListPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            response == other.response
+      return other is TicketSaleListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, response)
 
-    override fun toString() =
-        "TicketSaleListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
+    override fun toString() = "TicketSaleListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

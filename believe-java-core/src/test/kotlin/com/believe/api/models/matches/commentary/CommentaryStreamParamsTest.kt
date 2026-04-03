@@ -2,6 +2,7 @@
 
 package com.believe.api.models.matches.commentary
 
+import com.believe.api.models.matches.commentary.CommentaryStreamParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,15 +10,19 @@ internal class CommentaryStreamParamsTest {
 
     @Test
     fun create() {
-        CommentaryStreamParams.builder().matchId("match_id").build()
+      CommentaryStreamParams.builder()
+          .matchId("match_id")
+          .build()
     }
 
     @Test
     fun pathParams() {
-        val params = CommentaryStreamParams.builder().matchId("match_id").build()
+      val params = CommentaryStreamParams.builder()
+          .matchId("match_id")
+          .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("match_id")
-        // out-of-bound path param
-        assertThat(params._pathParam(1)).isEqualTo("")
+      assertThat(params._pathParam(0)).isEqualTo("match_id")
+      // out-of-bound path param
+      assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

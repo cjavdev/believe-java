@@ -5,6 +5,12 @@ package com.believe.api.services.async
 import com.believe.api.client.okhttp.BelieveOkHttpClientAsync
 import com.believe.api.models.teammembers.Position
 import com.believe.api.models.teammembers.TeamMemberCreateParams
+import com.believe.api.models.teammembers.TeamMemberDeleteParams
+import com.believe.api.models.teammembers.TeamMemberListCoachesParams
+import com.believe.api.models.teammembers.TeamMemberListParams
+import com.believe.api.models.teammembers.TeamMemberListPlayersParams
+import com.believe.api.models.teammembers.TeamMemberListStaffParams
+import com.believe.api.models.teammembers.TeamMemberRetrieveParams
 import com.believe.api.models.teammembers.TeamMemberUpdateParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -14,124 +20,132 @@ internal class TeamMemberServiceAsyncTest {
     @Disabled("Mock server tests are disabled")
     @Test
     fun create() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val teamMemberFuture =
-            teamMemberServiceAsync.create(
-                TeamMemberCreateParams.Member.Player.builder()
-                    .characterId("jamie-tartt")
-                    .jerseyNumber(9L)
-                    .position(Position.FORWARD)
-                    .teamId("afc-richmond")
-                    .yearsWithTeam(3L)
-                    .assists(23L)
-                    .goalsScored(47L)
-                    .isCaptain(false)
-                    .memberType(TeamMemberCreateParams.Member.Player.MemberType.PLAYER)
-                    .build()
-            )
+      val teamMemberFuture = teamMemberServiceAsync.create(TeamMemberCreateParams.Member.Player.builder()
+          .characterId("jamie-tartt")
+          .jerseyNumber(9L)
+          .position(Position.FORWARD)
+          .teamId("afc-richmond")
+          .yearsWithTeam(3L)
+          .assists(23L)
+          .goalsScored(47L)
+          .isCaptain(false)
+          .memberType(TeamMemberCreateParams.Member.Player.MemberType.PLAYER)
+          .build())
 
-        val teamMember = teamMemberFuture.get()
-        teamMember.validate()
+      val teamMember = teamMemberFuture.get()
+      teamMember.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun retrieve() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val teamMemberFuture = teamMemberServiceAsync.retrieve("member_id")
+      val teamMemberFuture = teamMemberServiceAsync.retrieve("member_id")
 
-        val teamMember = teamMemberFuture.get()
-        teamMember.validate()
+      val teamMember = teamMemberFuture.get()
+      teamMember.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun update() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val teamMemberFuture =
-            teamMemberServiceAsync.update(
-                TeamMemberUpdateParams.builder()
-                    .memberId("member_id")
-                    .updates(
-                        TeamMemberUpdateParams.Updates.PlayerUpdate.builder()
-                            .assists(0L)
-                            .goalsScored(0L)
-                            .isCaptain(true)
-                            .jerseyNumber(1L)
-                            .position(Position.GOALKEEPER)
-                            .teamId("team_id")
-                            .yearsWithTeam(0L)
-                            .build()
-                    )
-                    .build()
-            )
+      val teamMemberFuture = teamMemberServiceAsync.update(TeamMemberUpdateParams.builder()
+          .memberId("member_id")
+          .updates(TeamMemberUpdateParams.Updates.PlayerUpdate.builder()
+              .assists(0L)
+              .goalsScored(0L)
+              .isCaptain(true)
+              .jerseyNumber(1L)
+              .position(Position.GOALKEEPER)
+              .teamId("team_id")
+              .yearsWithTeam(0L)
+              .build())
+          .build())
 
-        val teamMember = teamMemberFuture.get()
-        teamMember.validate()
+      val teamMember = teamMemberFuture.get()
+      teamMember.validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun list() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val pageFuture = teamMemberServiceAsync.list()
+      val pageFuture = teamMemberServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.response().validate()
+      val page = pageFuture.get()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun delete() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val future = teamMemberServiceAsync.delete("member_id")
+      val future = teamMemberServiceAsync.delete("member_id")
 
-        val response = future.get()
+      val response = future.get()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun listCoaches() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val pageFuture = teamMemberServiceAsync.listCoaches()
+      val pageFuture = teamMemberServiceAsync.listCoaches()
 
-        val page = pageFuture.get()
-        page.response().validate()
+      val page = pageFuture.get()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun listPlayers() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val pageFuture = teamMemberServiceAsync.listPlayers()
+      val pageFuture = teamMemberServiceAsync.listPlayers()
 
-        val page = pageFuture.get()
-        page.response().validate()
+      val page = pageFuture.get()
+      page.response().validate()
     }
 
     @Disabled("Mock server tests are disabled")
     @Test
     fun listStaff() {
-        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
-        val teamMemberServiceAsync = client.teamMembers()
+      val client = BelieveOkHttpClientAsync.builder()
+          .apiKey("My API Key")
+          .build()
+      val teamMemberServiceAsync = client.teamMembers()
 
-        val pageFuture = teamMemberServiceAsync.listStaff()
+      val pageFuture = teamMemberServiceAsync.listStaff()
 
-        val page = pageFuture.get()
-        page.response().validate()
+      val page = pageFuture.get()
+      page.response().validate()
     }
 }

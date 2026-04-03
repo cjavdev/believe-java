@@ -16,66 +16,61 @@ import com.believe.api.core.http.parseable
 import com.believe.api.core.prepare
 import com.believe.api.models.stream.StreamTestConnectionParams
 import com.believe.api.models.stream.StreamTestConnectionResponse
+import com.believe.api.services.blocking.StreamService
+import com.believe.api.services.blocking.StreamServiceImpl
 import java.util.function.Consumer
 
 /** Server-Sent Events (SSE) streaming endpoints */
-class StreamServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    StreamService {
+class StreamServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: StreamService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : StreamService {
+
+    private val withRawResponse: StreamService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): StreamService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StreamService =
-        StreamServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StreamService = StreamServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun testConnection(
-        params: StreamTestConnectionParams,
-        requestOptions: RequestOptions,
-    ): StreamTestConnectionResponse =
+    override fun testConnection(params: StreamTestConnectionParams, requestOptions: RequestOptions): StreamTestConnectionResponse =
         // get /stream/test
         withRawResponse().testConnection(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        StreamService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : StreamService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): StreamService.WithRawResponse =
-            StreamServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StreamService.WithRawResponse = StreamServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val testConnectionHandler: Handler<StreamTestConnectionResponse> = jsonHandler<StreamTestConnectionResponse>(clientOptions.jsonMapper)
+
+        override fun testConnection(params: StreamTestConnectionParams, requestOptions: RequestOptions): HttpResponseFor<StreamTestConnectionResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("stream", "test")
+            .build()
+            .prepare(
+              clientOptions, params
             )
-
-        private val testConnectionHandler: Handler<StreamTestConnectionResponse> =
-            jsonHandler<StreamTestConnectionResponse>(clientOptions.jsonMapper)
-
-        override fun testConnection(
-            params: StreamTestConnectionParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<StreamTestConnectionResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("stream", "test")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { testConnectionHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  testConnectionHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

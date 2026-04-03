@@ -7,15 +7,14 @@ import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.models.believe.BelieveSubmitParams
 import com.believe.api.models.believe.BelieveSubmitResponse
+import com.believe.api.services.blocking.BelieveService
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
 /** Interactive endpoints for motivation and guidance */
 interface BelieveService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -27,13 +26,12 @@ interface BelieveService {
 
     /** Submit your situation and receive Ted Lasso-style motivational guidance. */
     fun submit(params: BelieveSubmitParams): BelieveSubmitResponse =
-        submit(params, RequestOptions.none())
+        submit(
+          params, RequestOptions.none()
+        )
 
     /** @see submit */
-    fun submit(
-        params: BelieveSubmitParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): BelieveSubmitResponse
+    fun submit(params: BelieveSubmitParams, requestOptions: RequestOptions = RequestOptions.none()): BelieveSubmitResponse
 
     /** A view of [BelieveService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -45,19 +43,15 @@ interface BelieveService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): BelieveService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /believe`, but is otherwise the same as
-         * [BelieveService.submit].
-         */
+        /** Returns a raw HTTP response for `post /believe`, but is otherwise the             same as [BelieveService.submit]. */
         @MustBeClosed
         fun submit(params: BelieveSubmitParams): HttpResponseFor<BelieveSubmitResponse> =
-            submit(params, RequestOptions.none())
+            submit(
+              params, RequestOptions.none()
+            )
 
         /** @see submit */
         @MustBeClosed
-        fun submit(
-            params: BelieveSubmitParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BelieveSubmitResponse>
+        fun submit(params: BelieveSubmitParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<BelieveSubmitResponse>
     }
 }

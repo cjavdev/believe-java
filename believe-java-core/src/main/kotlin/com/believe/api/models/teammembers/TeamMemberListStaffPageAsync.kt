@@ -5,6 +5,9 @@ package com.believe.api.models.teammembers
 import com.believe.api.core.AutoPagerAsync
 import com.believe.api.core.PageAsync
 import com.believe.api.core.checkRequired
+import com.believe.api.models.teammembers.TeamMemberListStaffPageResponse
+import com.believe.api.models.teammembers.TeamMemberListStaffParams
+import com.believe.api.models.teammembers.TeamMemberListStaffResponse
 import com.believe.api.services.async.TeamMemberServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,12 +17,12 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see TeamMemberServiceAsync.listStaff */
-class TeamMemberListStaffPageAsync
-private constructor(
+class TeamMemberListStaffPageAsync private constructor(
     private val service: TeamMemberServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: TeamMemberListStaffParams,
     private val response: TeamMemberListStaffPageResponse,
+
 ) : PageAsync<TeamMemberListStaffResponse> {
 
     /**
@@ -27,8 +30,7 @@ private constructor(
      *
      * @see TeamMemberListStaffPageResponse.data
      */
-    fun data(): List<TeamMemberListStaffResponse> =
-        response._data().getOptional("data").getOrNull() ?: emptyList()
+    fun data(): List<TeamMemberListStaffResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [TeamMemberListStaffPageResponse], but gracefully handles missing data.
@@ -47,25 +49,28 @@ private constructor(
     override fun items(): List<TeamMemberListStaffResponse> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): TeamMemberListStaffParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<TeamMemberListStaffPageAsync> =
-        service.listStaff(nextPageParams())
+    override fun nextPage(): CompletableFuture<TeamMemberListStaffPageAsync> = service.listStaff(nextPageParams())
 
     fun autoPager(): AutoPagerAsync<TeamMemberListStaffResponse> =
-        AutoPagerAsync.from(this, streamHandlerExecutor)
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): TeamMemberListStaffParams = params
@@ -81,6 +86,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [TeamMemberListStaffPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -88,7 +94,8 @@ private constructor(
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TeamMemberListStaffPageAsync]. */
@@ -100,24 +107,35 @@ private constructor(
         private var response: TeamMemberListStaffPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(teamMemberListStaffPageAsync: TeamMemberListStaffPageAsync) = apply {
-            service = teamMemberListStaffPageAsync.service
-            streamHandlerExecutor = teamMemberListStaffPageAsync.streamHandlerExecutor
-            params = teamMemberListStaffPageAsync.params
-            response = teamMemberListStaffPageAsync.response
-        }
+        internal fun from(teamMemberListStaffPageAsync: TeamMemberListStaffPageAsync) =
+            apply {
+                service = teamMemberListStaffPageAsync.service
+                streamHandlerExecutor = teamMemberListStaffPageAsync.streamHandlerExecutor
+                params = teamMemberListStaffPageAsync.params
+                response = teamMemberListStaffPageAsync.response
+            }
 
-        fun service(service: TeamMemberServiceAsync) = apply { this.service = service }
+        fun service(service: TeamMemberServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TeamMemberListStaffParams) = apply { this.params = params }
+        fun params(params: TeamMemberListStaffParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: TeamMemberListStaffPageResponse) = apply { this.response = response }
+        fun response(response: TeamMemberListStaffPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [TeamMemberListStaffPageAsync].
@@ -125,6 +143,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -136,27 +155,30 @@ private constructor(
          */
         fun build(): TeamMemberListStaffPageAsync =
             TeamMemberListStaffPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberListStaffPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            response == other.response
+      return other is TeamMemberListStaffPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, response)
 
-    override fun toString() =
-        "TeamMemberListStaffPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
+    override fun toString() = "TeamMemberListStaffPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

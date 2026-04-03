@@ -11,30 +11,32 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import java.util.Collections
 import java.util.Objects
 
-class StreamTestConnectionResponse
-@JsonCreator(mode = JsonCreator.Mode.DISABLED)
-private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+class StreamTestConnectionResponse @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
+    private val additionalProperties: MutableMap<String, JsonValue>,
 
-    @JsonCreator private constructor() : this(mutableMapOf())
+) {
+
+    @JsonCreator
+    private constructor(
+
+    ) : this(mutableMapOf())
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
-        additionalProperties.put(key, value)
+      additionalProperties.put(key, value)
     }
 
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalProperties)
+    fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [StreamTestConnectionResponse].
-         */
-        @JvmStatic fun builder() = Builder()
+        /** Returns a mutable builder for constructing an instance of [StreamTestConnectionResponse]. */
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [StreamTestConnectionResponse]. */
@@ -43,47 +45,55 @@ private constructor(private val additionalProperties: MutableMap<String, JsonVal
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(streamTestConnectionResponse: StreamTestConnectionResponse) = apply {
-            additionalProperties = streamTestConnectionResponse.additionalProperties.toMutableMap()
-        }
+        internal fun from(streamTestConnectionResponse: StreamTestConnectionResponse) =
+            apply {
+                additionalProperties = streamTestConnectionResponse.additionalProperties.toMutableMap()
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [StreamTestConnectionResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): StreamTestConnectionResponse =
-            StreamTestConnectionResponse(additionalProperties.toMutableMap())
+        fun build(): StreamTestConnectionResponse = StreamTestConnectionResponse(additionalProperties.toMutableMap())
     }
 
     private var validated: Boolean = false
 
-    fun validate(): StreamTestConnectionResponse = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): StreamTestConnectionResponse =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        validated = true
-    }
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -98,21 +108,20 @@ private constructor(private val additionalProperties: MutableMap<String, JsonVal
      *
      * Used for best match union deserialization.
      */
-    @JvmSynthetic internal fun validity(): Int = 0
+    @JvmSynthetic
+    internal fun validity(): Int = 0
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is StreamTestConnectionResponse &&
-            additionalProperties == other.additionalProperties
+      return other is StreamTestConnectionResponse && additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "StreamTestConnectionResponse{additionalProperties=$additionalProperties}"
+    override fun toString() = "StreamTestConnectionResponse{additionalProperties=$additionalProperties}"
 }

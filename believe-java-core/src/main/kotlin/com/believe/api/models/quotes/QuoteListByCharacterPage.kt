@@ -5,6 +5,9 @@ package com.believe.api.models.quotes
 import com.believe.api.core.AutoPager
 import com.believe.api.core.Page
 import com.believe.api.core.checkRequired
+import com.believe.api.models.quotes.PaginatedResponseQuote
+import com.believe.api.models.quotes.Quote
+import com.believe.api.models.quotes.QuoteListByCharacterParams
 import com.believe.api.services.blocking.QuoteService
 import java.util.Objects
 import java.util.Optional
@@ -12,11 +15,11 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see QuoteService.listByCharacter */
-class QuoteListByCharacterPage
-private constructor(
+class QuoteListByCharacterPage private constructor(
     private val service: QuoteService,
     private val params: QuoteListByCharacterParams,
     private val response: PaginatedResponseQuote,
+
 ) : Page<Quote> {
 
     /**
@@ -43,18 +46,20 @@ private constructor(
     override fun items(): List<Quote> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): QuoteListByCharacterParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): QuoteListByCharacterPage = service.listByCharacter(nextPageParams())
@@ -75,13 +80,15 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [QuoteListByCharacterPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [QuoteListByCharacterPage]. */
@@ -92,19 +99,29 @@ private constructor(
         private var response: PaginatedResponseQuote? = null
 
         @JvmSynthetic
-        internal fun from(quoteListByCharacterPage: QuoteListByCharacterPage) = apply {
-            service = quoteListByCharacterPage.service
-            params = quoteListByCharacterPage.params
-            response = quoteListByCharacterPage.response
-        }
+        internal fun from(quoteListByCharacterPage: QuoteListByCharacterPage) =
+            apply {
+                service = quoteListByCharacterPage.service
+                params = quoteListByCharacterPage.params
+                response = quoteListByCharacterPage.response
+            }
 
-        fun service(service: QuoteService) = apply { this.service = service }
+        fun service(service: QuoteService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: QuoteListByCharacterParams) = apply { this.params = params }
+        fun params(params: QuoteListByCharacterParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: PaginatedResponseQuote) = apply { this.response = response }
+        fun response(response: PaginatedResponseQuote) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [QuoteListByCharacterPage].
@@ -112,6 +129,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -122,25 +140,27 @@ private constructor(
          */
         fun build(): QuoteListByCharacterPage =
             QuoteListByCharacterPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is QuoteListByCharacterPage &&
-            service == other.service &&
-            params == other.params &&
-            response == other.response
+      return other is QuoteListByCharacterPage && service == other.service && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, response)
 
-    override fun toString() =
-        "QuoteListByCharacterPage{service=$service, params=$params, response=$response}"
+    override fun toString() = "QuoteListByCharacterPage{service=$service, params=$params, response=$response}"
 }

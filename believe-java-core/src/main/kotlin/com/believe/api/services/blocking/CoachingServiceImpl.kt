@@ -3,40 +3,36 @@
 package com.believe.api.services.blocking
 
 import com.believe.api.core.ClientOptions
+import com.believe.api.services.blocking.CoachingService
+import com.believe.api.services.blocking.CoachingServiceImpl
 import com.believe.api.services.blocking.coaching.PrincipleService
 import com.believe.api.services.blocking.coaching.PrincipleServiceImpl
 import java.util.function.Consumer
 
-class CoachingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    CoachingService {
+class CoachingServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: CoachingService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : CoachingService {
+
+    private val withRawResponse: CoachingService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     private val principles: PrincipleService by lazy { PrincipleServiceImpl(clientOptions) }
 
     override fun withRawResponse(): CoachingService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CoachingService =
-        CoachingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CoachingService = CoachingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     /** Interactive endpoints for motivation and guidance */
     override fun principles(): PrincipleService = principles
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        CoachingService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val principles: PrincipleService.WithRawResponse by lazy {
-            PrincipleServiceImpl.WithRawResponseImpl(clientOptions)
-        }
+    ) : CoachingService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): CoachingService.WithRawResponse =
-            CoachingServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
-            )
+        private val principles: PrincipleService.WithRawResponse by lazy { PrincipleServiceImpl.WithRawResponseImpl(clientOptions) }
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CoachingService.WithRawResponse = CoachingServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
         /** Interactive endpoints for motivation and guidance */
         override fun principles(): PrincipleService.WithRawResponse = principles

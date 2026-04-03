@@ -4,10 +4,15 @@ package com.believe.api.errors
 
 import com.believe.api.core.JsonValue
 import com.believe.api.core.http.Headers
+import com.believe.api.errors.BelieveException
 
-abstract class BelieveServiceException
-protected constructor(message: String, cause: Throwable? = null) :
-    BelieveException(message, cause) {
+abstract class BelieveServiceException protected constructor(
+    message: String,
+    cause: Throwable? = null,
+
+) : BelieveException(
+  message, cause
+) {
 
     abstract fun statusCode(): Int
 

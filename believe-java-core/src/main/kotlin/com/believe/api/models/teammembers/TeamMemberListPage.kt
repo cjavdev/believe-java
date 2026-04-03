@@ -5,6 +5,9 @@ package com.believe.api.models.teammembers
 import com.believe.api.core.AutoPager
 import com.believe.api.core.Page
 import com.believe.api.core.checkRequired
+import com.believe.api.models.teammembers.TeamMemberListPageResponse
+import com.believe.api.models.teammembers.TeamMemberListParams
+import com.believe.api.models.teammembers.TeamMemberListResponse
 import com.believe.api.services.blocking.TeamMemberService
 import java.util.Objects
 import java.util.Optional
@@ -12,11 +15,11 @@ import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
 
 /** @see TeamMemberService.list */
-class TeamMemberListPage
-private constructor(
+class TeamMemberListPage private constructor(
     private val service: TeamMemberService,
     private val params: TeamMemberListParams,
     private val response: TeamMemberListPageResponse,
+
 ) : Page<TeamMemberListResponse> {
 
     /**
@@ -24,8 +27,7 @@ private constructor(
      *
      * @see TeamMemberListPageResponse.data
      */
-    fun data(): List<TeamMemberListResponse> =
-        response._data().getOptional("data").getOrNull() ?: emptyList()
+    fun data(): List<TeamMemberListResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [TeamMemberListPageResponse], but gracefully handles missing data.
@@ -44,18 +46,20 @@ private constructor(
     override fun items(): List<TeamMemberListResponse> = data()
 
     override fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
+      if (items().isEmpty()) {
+          return false
+      }
 
-        val offset = skip().getOrDefault(0)
-        val totalCount = total().getOrNull()
-        return totalCount == null || offset + items().size < totalCount
+      val offset = skip().getOrDefault(0)
+      val totalCount = total().getOrNull()
+      return totalCount == null || offset + items().size < totalCount;
     }
 
     fun nextPageParams(): TeamMemberListParams {
-        val offset = skip().getOrDefault(0)
-        return params.toBuilder().skip(offset + items().size).build()
+      val offset = skip().getOrDefault(0)
+      return params.toBuilder()
+          .skip(offset + items().size)
+          .build()
     }
 
     override fun nextPage(): TeamMemberListPage = service.list(nextPageParams())
@@ -76,13 +80,15 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [TeamMemberListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
          * .response()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TeamMemberListPage]. */
@@ -93,19 +99,29 @@ private constructor(
         private var response: TeamMemberListPageResponse? = null
 
         @JvmSynthetic
-        internal fun from(teamMemberListPage: TeamMemberListPage) = apply {
-            service = teamMemberListPage.service
-            params = teamMemberListPage.params
-            response = teamMemberListPage.response
-        }
+        internal fun from(teamMemberListPage: TeamMemberListPage) =
+            apply {
+                service = teamMemberListPage.service
+                params = teamMemberListPage.params
+                response = teamMemberListPage.response
+            }
 
-        fun service(service: TeamMemberService) = apply { this.service = service }
+        fun service(service: TeamMemberService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TeamMemberListParams) = apply { this.params = params }
+        fun params(params: TeamMemberListParams) =
+            apply {
+                this.params = params
+            }
 
         /** The response that this page was parsed from. */
-        fun response(response: TeamMemberListPageResponse) = apply { this.response = response }
+        fun response(response: TeamMemberListPageResponse) =
+            apply {
+                this.response = response
+            }
 
         /**
          * Returns an immutable instance of [TeamMemberListPage].
@@ -113,6 +129,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -123,25 +140,27 @@ private constructor(
          */
         fun build(): TeamMemberListPage =
             TeamMemberListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "response", response
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TeamMemberListPage &&
-            service == other.service &&
-            params == other.params &&
-            response == other.response
+      return other is TeamMemberListPage && service == other.service && params == other.params && response == other.response
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, response)
 
-    override fun toString() =
-        "TeamMemberListPage{service=$service, params=$params, response=$response}"
+    override fun toString() = "TeamMemberListPage{service=$service, params=$params, response=$response}"
 }
