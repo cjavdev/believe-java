@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.3.0 (2026-04-03)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/cjavdev/believe-java/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* Add ticket sales data model and more examples ([ac79018](https://github.com/cjavdev/believe-java/commit/ac790185127244950d3491279f0a5cbd896f6b75))
+* **api:** enable tree shaking ([f29e3ae](https://github.com/cjavdev/believe-java/commit/f29e3aee7d5b8a8b309cb37e406d0d9ad27b5612))
+* **api:** manual updates ([07c07fc](https://github.com/cjavdev/believe-java/commit/07c07fc81e319c2708dc5905cd7bc8169fecb33f))
+* **api:** manual updates ([babe65b](https://github.com/cjavdev/believe-java/commit/babe65b09077924352461525a8c0f8669471e9ce))
+* **api:** manual updates ([9082961](https://github.com/cjavdev/believe-java/commit/9082961193cbf65a3b9acf8eb6dae8013db42cbb))
+
+
+### Bug Fixes
+
+* **client:** allow updating header/query affecting fields in `toBuilder()` ([75dd55f](https://github.com/cjavdev/believe-java/commit/75dd55f345552bb914823c4e3e43a54b415232bc))
+* **client:** incorrect `Retry-After` parsing ([76db845](https://github.com/cjavdev/believe-java/commit/76db845fe41a0325eefa0a29262b213c6bffd9f7))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([0f85a10](https://github.com/cjavdev/believe-java/commit/0f85a10565a59a4618ea21b1e69c2265656e43cc))
+* **ci:** skip uploading artifacts on stainless-internal branches ([0a83247](https://github.com/cjavdev/believe-java/commit/0a83247ae7f658ce047b97b1115f3c9f104a6c24))
+* drop apache dependency ([01b4473](https://github.com/cjavdev/believe-java/commit/01b4473a2bee937341bdf6e081cc42fa8971776c))
+* **internal:** bump ktfmt ([749c3ac](https://github.com/cjavdev/believe-java/commit/749c3acd1b63aeff12aa368c9c484bc5b45129b8))
+* **internal:** bump palantir-java-format ([9047a6e](https://github.com/cjavdev/believe-java/commit/9047a6e5f2a778bd460f84efb23d31455a546e5b))
+* **internal:** codegen related update ([0543e2d](https://github.com/cjavdev/believe-java/commit/0543e2d51d07b350aa1b763f1abe8f2666b6b6f2))
+* **internal:** codegen related update ([77ad007](https://github.com/cjavdev/believe-java/commit/77ad0076e8bc3eda077575e9f17dd18efe118d4e))
+* **internal:** expand imports ([e486dbe](https://github.com/cjavdev/believe-java/commit/e486dbe248def8f97df3886ecbf0e7ae21998fdb))
+* **internal:** tweak CI branches ([5224f6a](https://github.com/cjavdev/believe-java/commit/5224f6aa568702012ad2c64a5716e128add811d7))
+* **internal:** update gitignore ([ff4c9c3](https://github.com/cjavdev/believe-java/commit/ff4c9c3aa48aaa2c5fb9875fca428f953c02ffb3))
+* **internal:** update retry delay tests ([a2fa116](https://github.com/cjavdev/believe-java/commit/a2fa1169c9fc8b433bebd29ff194a583b18d54fc))
+* make `Properties` more resilient to `null` ([144282b](https://github.com/cjavdev/believe-java/commit/144282bf060969c16fd59fafa2ee6dd11391921c))
+* update placeholder string ([5cbfc1c](https://github.com/cjavdev/believe-java/commit/5cbfc1c342313d7e0739926f9bd95101f82a9241))
+
 ## 0.2.0 (2026-02-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/cjavdev/believe-java/compare/v0.1.0...v0.2.0)
