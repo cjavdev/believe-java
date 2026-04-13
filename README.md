@@ -1,13 +1,13 @@
 # Believe Java API Library
 
 <!-- x-release-please-start-version -->
-
-[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.3.0)
-[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.3.0/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.3.0)
-
+[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.0.1)
+[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.0.1/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.0.1)
 <!-- x-release-please-end -->
 
-The Believe Java SDK provides convenient access to the Believe REST API from applications written in Java.
+The Believe Java SDK provides convenient access to the Believe REST API   from applications written in Java.
+
+
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -22,7 +22,7 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 <!-- x-release-please-start-version -->
 
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.3.0).
+Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.0.1).
 
 <!-- x-release-please-end -->
 
@@ -32,19 +32,19 @@ Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/be
 
 ### Gradle
 
-```kotlin
-implementation("com.believe.api:believe-java:0.3.0")
-```
+~~~kotlin
+implementation("com.believe.api:believe-java:0.0.1")
+~~~
 
 ### Maven
 
-```xml
+~~~xml
 <dependency>
   <groupId>com.believe.api</groupId>
   <artifactId>believe-java</artifactId>
-  <version>0.3.0</version>
+  <version>0.0.1</version>
 </dependency>
-```
+~~~
 
 <!-- x-release-please-end -->
 
@@ -120,7 +120,7 @@ System properties take precedence over environment variables.
 
 ### Modifying configuration
 
-To temporarily use a modified client configuration, while reusing the same connection and thread pools, call `withOptions()` on any client or service:
+To temporarily use a modified client configuration, while reusing the same connection and thread       pools, call `withOptions()` on any client or service:
 
 ```java
 import com.believe.api.client.BelieveClient;
@@ -135,15 +135,15 @@ The `withOptions()` method does not affect the original client or service.
 
 ## Requests and responses
 
-To send a request to the Believe API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a Java class.
+To send a request to the Believe API, build an instance of some `Params` class and pass it to the     corresponding client method. When the response is received, it will be deserialized into an instance of     a Java class.
 
-For example, `client.characters().list(...)` should be called with an instance of `CharacterListParams`, and it will return an instance of `CharacterListPage`.
+For example, `client.characters().list(...)` should be called with an instance of `CharacterListParams`, and it     will return an instance of `CharacterListPage`.
 
 ## Immutability
 
-Each class in the SDK has an associated [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java) or factory method for constructing it.
+Each class in the SDK has an associated   [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java)   or factory method for constructing it.
 
-Each class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html) once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can be used to convert it back to a builder for making a modified copy.
+Each class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html)   once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can   be used to convert it back to a builder for making a modified copy.
 
 Because each class is immutable, builder modification will _never_ affect already built class instances.
 
@@ -182,6 +182,8 @@ CompletableFuture<CharacterListPageAsync> page = client.characters().list();
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
+
+
 
 ## File uploads
 
@@ -228,7 +230,7 @@ LogoUploadParams params = LogoUploadParams.builder()
 FileUpload fileUpload = client.teams().logo().upload(params);
 ```
 
-Note that when passing a non-`Path` its filename is unknown so it will not be included in the request. To manually set a filename, pass a [`MultipartField`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt):
+Note that when passing a non-`Path` its filename is unknown so it will not be included in the request.     To manually set a filename, pass a [`MultipartField`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt):
 
 ```java
 import com.believe.api.core.MultipartField;
@@ -247,9 +249,11 @@ LogoUploadParams params = LogoUploadParams.builder()
 FileUpload fileUpload = client.teams().logo().upload(params);
 ```
 
+
+
 ## Raw responses
 
-The SDK defines methods that deserialize responses into instances of Java classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+The SDK defines methods that deserialize responses into instances of Java classes.       However, these methods don't provide access to the response headers, status code, or the raw response       body.
 
 To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
 
@@ -277,34 +281,34 @@ CharacterListPage parsedPage = page.parse();
 
 The SDK throws custom unchecked exception types:
 
-- [`BelieveServiceException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
+- [`BelieveServiceException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveServiceException.kt): Base class for HTTP errors. See this table for which exception       subclass is thrown for each HTTP status code:
 
-  | Status | Exception                                                                                                                    |
-  | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-  | 400    | [`BadRequestException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BadRequestException.kt)                     |
-  | 401    | [`UnauthorizedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnauthorizedException.kt)                 |
-  | 403    | [`PermissionDeniedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/PermissionDeniedException.kt)         |
-  | 404    | [`NotFoundException`](believe-java-core/src/main/kotlin/com/believe/api/errors/NotFoundException.kt)                         |
-  | 422    | [`UnprocessableEntityException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnprocessableEntityException.kt)   |
-  | 429    | [`RateLimitException`](believe-java-core/src/main/kotlin/com/believe/api/errors/RateLimitException.kt)                       |
-  | 5xx    | [`InternalServerException`](believe-java-core/src/main/kotlin/com/believe/api/errors/InternalServerException.kt)             |
+  | Status | Exception                                          |
+  | ------ | -------------------------------------------------- |
+  | 400    | [`BadRequestException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BadRequestException.kt)           |
+  | 401    | [`UnauthorizedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnauthorizedException.kt)         |
+  | 403    | [`PermissionDeniedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/PermissionDeniedException.kt)     |
+  | 404    | [`NotFoundException`](believe-java-core/src/main/kotlin/com/believe/api/errors/NotFoundException.kt)             |
+  | 422    | [`UnprocessableEntityException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnprocessableEntityException.kt)  |
+  | 429    | [`RateLimitException`](believe-java-core/src/main/kotlin/com/believe/api/errors/RateLimitException.kt)            |
+  | 5xx    | [`InternalServerException`](believe-java-core/src/main/kotlin/com/believe/api/errors/InternalServerException.kt)       |
   | others | [`UnexpectedStatusCodeException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnexpectedStatusCodeException.kt) |
 
 - [`BelieveIoException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveIoException.kt): I/O networking errors.
 
 - [`BelieveRetryableException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveRetryableException.kt): Generic error indicating a failure that could be retried by the client.
 
-- [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
+- [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt): Failure to interpret successfully parsed data. For example,       when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the       response.
 
-- [`BelieveException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
+- [`BelieveException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveException.kt): Base class for all exceptions. Most errors will result in one of the       previously mentioned ones, but completely generic errors may be thrown using the base class.
 
 ## Pagination
 
-The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access     the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
+To iterate through all results across all pages, use the `autoPager()` method, which automatically     fetches more pages as needed.
 
 When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
@@ -400,9 +404,9 @@ while (true) {
 
 ## Logging
 
-The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
+The SDK uses the standard   [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
 
-Enable logging by setting the `BELIEVE_LOG` environment variable to `info`:
+Enable logging by setting the `BELIEVE_LOG` environment variable to   `info`:
 
 ```sh
 export BELIEVE_LOG=info
@@ -416,22 +420,26 @@ export BELIEVE_LOG=debug
 
 ## ProGuard and R8
 
-Although the SDK uses reflection, it is still usable with [ProGuard](https://github.com/Guardsquare/proguard) and [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because `believe-java-core` is published with a [configuration file](believe-java-core/src/main/resources/META-INF/proguard/believe-java-core.pro) containing [keep rules](https://www.guardsquare.com/manual/configuration/usage).
+Although the SDK uses reflection, it is still usable with     [ProGuard](https://github.com/Guardsquare/proguard) and     [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because     `believe-java-core` is published with a     [configuration file](believe-java-core/src/main/resources/META-INF/proguard/believe-java-core.pro) containing     [keep rules](https://www.guardsquare.com/manual/configuration/usage).
 
-ProGuard and R8 should automatically detect and use the published rules, but you can also manually copy the keep rules if necessary.
+ProGuard and R8 should automatically detect and use the published rules, but you can also manually copy     the keep rules if necessary.
+
+
+
+
 
 ## Jackson
 
-The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization. It is compatible with version 2.13.4 or higher, but depends on version 2.18.2 by default.
+The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON     serialization/deserialization. It is compatible with version 2.13.4 or higher,     but depends on version 2.18.2 by default.
 
-The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the default version was overridden in your Maven or Gradle config).
+The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the     default version was overridden in your Maven or Gradle config).
 
-If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt).
+If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version     check using the `checkJacksonVersionCompatibility` on [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or     [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt).
 
 > [!CAUTION]
 > We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
 
-Also note that there are bugs in older Jackson versions that can affect the SDK. We don't work around all Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to upgrade Jackson for those instead.
+Also note that there are bugs in older Jackson versions that can affect the SDK. We don't work around all     Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to     upgrade Jackson for those instead.
 
 ## Network options
 
@@ -440,7 +448,6 @@ Also note that there are bugs in older Jackson versions that can affect the SDK.
 The SDK automatically retries 2 times by default, with a short exponential backoff between requests.
 
 Only the following error types are retried:
-
 - Connection errors (for example, due to a network connectivity problem)
 - 408 Request Timeout
 - 409 Conflict
@@ -508,7 +515,7 @@ BelieveClient client = BelieveOkHttpClient.builder()
 
 ### Connection pooling
 
-To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
+To customize the underlying OkHttp connection pool, configure the client using the   `maxIdleConnections` and `keepAliveDuration` methods:
 
 ```java
 import com.believe.api.client.BelieveClient;
@@ -531,7 +538,7 @@ If both options are unset, OkHttp's default connection pool settings are used.
 > Most applications should not call these methods, and instead use the system defaults. The defaults include
 > special optimizations that can be lost if the implementations are modified.
 
-To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`, `trustManager`, and `hostnameVerifier` methods:
+To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`,   `trustManager`, and `hostnameVerifier` methods:
 
 ```java
 import com.believe.api.client.BelieveClient;
@@ -546,17 +553,18 @@ BelieveClient client = BelieveOkHttpClient.builder()
     .build();
 ```
 
+
+
 ### Custom HTTP client
 
 The SDK consists of three artifacts:
-
 - `believe-java-core`
   - Contains core SDK logic
   - Does not depend on [OkHttp](https://square.github.io/okhttp)
-  - Exposes [`BelieveClient`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClient.kt), [`BelieveClientAsync`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsync.kt), [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt), and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), all of which can work with any HTTP client
+  - Exposes [`BelieveClient`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClient.kt), [`BelieveClientAsync`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsync.kt),             [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt), and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), all of which can             work with any HTTP client
 - `believe-java-client-okhttp`
   - Depends on [OkHttp](https://square.github.io/okhttp)
-  - Exposes [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) and [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), which provide a way to construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), respectively, using OkHttp
+  - Exposes [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) and [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), which             provide a way to construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) and             [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), respectively, using OkHttp
 - `believe-java`
   - Depends on and exposes the APIs of both `believe-java-core` and `believe-java-client-okhttp`
   - Does not have its own logic
@@ -571,8 +579,8 @@ This structure allows replacing the SDK's default HTTP client without pulling in
 To use a customized `OkHttpClient`:
 
 1. Replace your [`believe-java` dependency](#installation) with `believe-java-core`
-2. Copy `believe-java-client-okhttp`'s [`OkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/OkHttpClient.kt) class into your code and customize it
-3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your customized client
+2. Copy `believe-java-client-okhttp`'s [`OkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/OkHttpClient.kt) class into your code and        customize it
+3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to        [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your        customized client
 
 ### Completely custom HTTP client
 
@@ -580,7 +588,7 @@ To use a completely custom HTTP client:
 
 1. Replace your [`believe-java` dependency](#installation) with `believe-java-core`
 2. Write a class that implements the [`HttpClient`](believe-java-core/src/main/kotlin/com/believe/api/core/http/HttpClient.kt) interface
-3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your new client class
+3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to        [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your new        client class
 
 ## Undocumented API functionality
 
@@ -588,7 +596,7 @@ The SDK is typed for convenient usage of the documented API. However, it also su
 
 ### Parameters
 
-To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or `putAdditionalBodyProperty` methods on any `Params` class:
+To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or       `putAdditionalBodyProperty` methods on any `Params` class:
 
 ```java
 import com.believe.api.core.JsonValue;
@@ -601,9 +609,9 @@ CharacterListParams params = CharacterListParams.builder()
     .build();
 ```
 
-These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
+These can be accessed on the built object later using the `_additionalHeaders()`,       `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
 
-To set undocumented parameters on _nested_ headers, query params, or body classes, call the `putAdditionalProperty` method on the nested class:
+To set undocumented parameters on _nested_ headers, query params, or body classes, call the         `putAdditionalProperty` method on the nested class:
 
 ```java
 import com.believe.api.core.JsonValue;
@@ -617,9 +625,9 @@ CharacterCreateParams params = CharacterCreateParams.builder()
     .build();
 ```
 
-These properties can be accessed on the nested built object later using the `_additionalProperties()` method.
+These properties can be accessed on the nested built object later using the         `_additionalProperties()` method.
 
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) object to its setter:
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a       [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) object to its setter:
 
 ```java
 import com.believe.api.models.characters.CharacterListParams;
@@ -627,7 +635,7 @@ import com.believe.api.models.characters.CharacterListParams;
 CharacterListParams params = CharacterListParams.builder().build();
 ```
 
-The most straightforward way to create a [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) is using its `from(...)` method:
+The most straightforward way to create a [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) is using its       `from(...)` method:
 
 ```java
 import com.believe.api.core.JsonValue;
@@ -666,7 +674,7 @@ JsonValue complexValue = JsonValue.from(Map.of(
 ));
 ```
 
-Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
+Normally a `Builder` class's `build` method will throw         [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html)         if any required parameter or property is unset.
 
 To forcibly omit a required parameter or property, pass [`JsonMissing`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt):
 
@@ -754,11 +762,11 @@ if (background.isMissing()) {
 
 ### Response validation
 
-In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `String`, but the API could return something else.
+In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK     may expect a property to contain a `String`, but the API could return something else.
 
-By default, the SDK will not throw an exception in this case. It will throw [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt) only if you directly access the property.
+By default, the SDK will not throw an exception in this case. It will throw     [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt) only if you directly access the property.
 
-If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
+If you would prefer to check that the response is completely well-typed upfront, then either call     `validate()`:
 
 ```java
 import com.believe.api.models.characters.Character;
@@ -790,7 +798,7 @@ BelieveClient client = BelieveOkHttpClient.builder()
 
 ### Why don't you use plain `enum` classes?
 
-Java `enum` classes are not trivially [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.
+Java `enum` classes are not trivially   [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in   the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.
 
 ### Why do you represent fields using `JsonField<T>` instead of just plain `T`?
 
@@ -802,11 +810,11 @@ Using `JsonField<T>` enables a few features:
 
 ### Why don't you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?
 
-It is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api) and we don't want to introduce a breaking change every time we add a field to a class.
+It is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api)   and we don't want to introduce a breaking change every time we add a field to a class.
 
 ### Why don't you use checked exceptions?
 
-Checked exceptions are widely considered a mistake in the Java programming language. In fact, they were omitted from Kotlin for this reason.
+Checked exceptions are widely considered a mistake in the Java programming language. In fact, they were   omitted from Kotlin for this reason.
 
 Checked exceptions:
 
