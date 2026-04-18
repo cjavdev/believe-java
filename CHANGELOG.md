@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-04-18)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/cjavdev/believe-java/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** manual updates ([a1ed9ca](https://github.com/cjavdev/believe-java/commit/a1ed9ca6c532a8e41ecc8d0bd79f44497d3530bc))
+
 ## 0.3.0 (2026-04-03)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/cjavdev/believe-java/compare/v0.2.0...v0.3.0)

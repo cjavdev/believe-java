@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.3.0)
-[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.3.0/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.3.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.4.0)
+[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.4.0/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.4.0)
 
 <!-- x-release-please-end -->
 
@@ -22,7 +22,7 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 <!-- x-release-please-start-version -->
 
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.3.0).
+Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.4.0).
 
 <!-- x-release-please-end -->
 
@@ -33,7 +33,7 @@ Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/be
 ### Gradle
 
 ```kotlin
-implementation("com.believe.api:believe-java:0.3.0")
+implementation("com.believe.api:believe-java:0.4.0")
 ```
 
 ### Maven
@@ -42,7 +42,7 @@ implementation("com.believe.api:believe-java:0.3.0")
 <dependency>
   <groupId>com.believe.api</groupId>
   <artifactId>believe-java</artifactId>
-  <version>0.3.0</version>
+  <version>0.4.0</version>
 </dependency>
 ```
 
@@ -309,13 +309,13 @@ To iterate through all results across all pages, use the `autoPager()` method, w
 When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
-import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPage;
+import com.believe.api.models.characters.Characterz;
 
 CharacterListPage page = client.characters().list();
 
 // Process as an Iterable
-for (Character character : page.autoPager()) {
+for (Characterz character : page.autoPager()) {
     System.out.println(character);
 }
 
@@ -330,8 +330,8 @@ When using the asynchronous client, the method returns an [`AsyncStreamResponse`
 
 ```java
 import com.believe.api.core.http.AsyncStreamResponse;
-import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPageAsync;
+import com.believe.api.models.characters.Characterz;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -344,7 +344,7 @@ pageFuture.thenRun(page -> page.autoPager().subscribe(character -> {
 // If you need to handle errors or completion of the stream
 pageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {
     @Override
-    public void onNext(Character character) {
+    public void onNext(Characterz character) {
         System.out.println(character);
     }
 
@@ -381,12 +381,12 @@ To access individual page items and manually request the next page, use the `ite
 `hasNextPage()`, and `nextPage()` methods:
 
 ```java
-import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPage;
+import com.believe.api.models.characters.Characterz;
 
 CharacterListPage page = client.characters().list();
 while (true) {
-    for (Character character : page.items()) {
+    for (Characterz character : page.items()) {
         System.out.println(character);
     }
 
@@ -761,9 +761,9 @@ By default, the SDK will not throw an exception in this case. It will throw [`Be
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```java
-import com.believe.api.models.characters.Character;
+import com.believe.api.models.characters.Characterz;
 
-Character character = client.characters().create(params).validate();
+Characterz characterz = client.characters().create(params).validate();
 ```
 
 Or configure the method call to validate the response using the `responseValidation` method:
