@@ -20,7 +20,7 @@ internal class CharacterServiceTest {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val characterService = client.characters()
 
-        val characterz =
+        val character =
             characterService.create(
                 CharacterCreateParams.builder()
                     .background(
@@ -58,7 +58,7 @@ internal class CharacterServiceTest {
                     .build()
             )
 
-        characterz.validate()
+        character.validate()
     }
 
     @Disabled("Mock server tests are disabled")
@@ -67,9 +67,9 @@ internal class CharacterServiceTest {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val characterService = client.characters()
 
-        val characterz = characterService.retrieve("character_id")
+        val character = characterService.retrieve("character_id")
 
-        characterz.validate()
+        character.validate()
     }
 
     @Disabled("Mock server tests are disabled")
@@ -78,7 +78,7 @@ internal class CharacterServiceTest {
         val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
         val characterService = client.characters()
 
-        val characterz =
+        val character =
             characterService.update(
                 CharacterUpdateParams.builder()
                     .characterId("character_id")
@@ -114,7 +114,7 @@ internal class CharacterServiceTest {
                     .build()
             )
 
-        characterz.validate()
+        character.validate()
     }
 
     @Disabled("Mock server tests are disabled")
