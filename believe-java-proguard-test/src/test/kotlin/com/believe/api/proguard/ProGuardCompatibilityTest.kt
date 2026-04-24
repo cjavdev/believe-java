@@ -4,8 +4,8 @@ package com.believe.api.proguard
 
 import com.believe.api.client.okhttp.BelieveOkHttpClient
 import com.believe.api.core.jsonMapper
+import com.believe.api.models.characters.Character
 import com.believe.api.models.characters.CharacterRole
-import com.believe.api.models.characters.Characterz
 import com.believe.api.models.characters.EmotionalStats
 import com.believe.api.models.characters.GrowthArc
 import com.believe.api.models.teammembers.Player
@@ -76,10 +76,10 @@ internal class ProGuardCompatibilityTest {
     }
 
     @Test
-    fun characterzRoundtrip() {
+    fun characterRoundtrip() {
         val jsonMapper = jsonMapper()
-        val characterz =
-            Characterz.builder()
+        val character =
+            Character.builder()
                 .id("ted-lasso")
                 .background(
                     "Former American football coach from Kansas who moved to London to coach AFC Richmond"
@@ -115,13 +115,13 @@ internal class ProGuardCompatibilityTest {
                 .teamId("afc-richmond")
                 .build()
 
-        val roundtrippedCharacterz =
+        val roundtrippedCharacter =
             jsonMapper.readValue(
-                jsonMapper.writeValueAsString(characterz),
-                jacksonTypeRef<Characterz>(),
+                jsonMapper.writeValueAsString(character),
+                jacksonTypeRef<Character>(),
             )
 
-        assertThat(roundtrippedCharacterz).isEqualTo(characterz)
+        assertThat(roundtrippedCharacter).isEqualTo(character)
     }
 
     @Test
