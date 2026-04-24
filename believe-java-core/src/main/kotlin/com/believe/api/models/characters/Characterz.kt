@@ -21,7 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** Full character model with ID. */
-class Character
+class Characterz
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
@@ -331,7 +331,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [Character].
+         * Returns a mutable builder for constructing an instance of [Characterz].
          *
          * The following fields are required:
          * ```java
@@ -346,7 +346,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [Character]. */
+    /** A builder for [Characterz]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -366,22 +366,22 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(character: Character) = apply {
-            id = character.id
-            background = character.background
-            emotionalStats = character.emotionalStats
-            name = character.name
-            personalityTraits = character.personalityTraits.map { it.toMutableList() }
-            role = character.role
-            dateOfBirth = character.dateOfBirth
-            email = character.email
-            growthArcs = character.growthArcs.map { it.toMutableList() }
-            heightMeters = character.heightMeters
-            profileImageUrl = character.profileImageUrl
-            salaryGbp = character.salaryGbp
-            signatureQuotes = character.signatureQuotes.map { it.toMutableList() }
-            teamId = character.teamId
-            additionalProperties = character.additionalProperties.toMutableMap()
+        internal fun from(characterz: Characterz) = apply {
+            id = characterz.id
+            background = characterz.background
+            emotionalStats = characterz.emotionalStats
+            name = characterz.name
+            personalityTraits = characterz.personalityTraits.map { it.toMutableList() }
+            role = characterz.role
+            dateOfBirth = characterz.dateOfBirth
+            email = characterz.email
+            growthArcs = characterz.growthArcs.map { it.toMutableList() }
+            heightMeters = characterz.heightMeters
+            profileImageUrl = characterz.profileImageUrl
+            salaryGbp = characterz.salaryGbp
+            signatureQuotes = characterz.signatureQuotes.map { it.toMutableList() }
+            teamId = characterz.teamId
+            additionalProperties = characterz.additionalProperties.toMutableMap()
         }
 
         /** Unique identifier */
@@ -648,7 +648,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [Character].
+         * Returns an immutable instance of [Characterz].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -664,8 +664,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): Character =
-            Character(
+        fun build(): Characterz =
+            Characterz(
                 checkRequired("id", id),
                 checkRequired("background", background),
                 checkRequired("emotionalStats", emotionalStats),
@@ -686,7 +686,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): Character = apply {
+    fun validate(): Characterz = apply {
         if (validated) {
             return@apply
         }
@@ -743,7 +743,7 @@ private constructor(
             return true
         }
 
-        return other is Character &&
+        return other is Characterz &&
             id == other.id &&
             background == other.background &&
             emotionalStats == other.emotionalStats &&
@@ -784,5 +784,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Character{id=$id, background=$background, emotionalStats=$emotionalStats, name=$name, personalityTraits=$personalityTraits, role=$role, dateOfBirth=$dateOfBirth, email=$email, growthArcs=$growthArcs, heightMeters=$heightMeters, profileImageUrl=$profileImageUrl, salaryGbp=$salaryGbp, signatureQuotes=$signatureQuotes, teamId=$teamId, additionalProperties=$additionalProperties}"
+        "Characterz{id=$id, background=$background, emotionalStats=$emotionalStats, name=$name, personalityTraits=$personalityTraits, role=$role, dateOfBirth=$dateOfBirth, email=$email, growthArcs=$growthArcs, heightMeters=$heightMeters, profileImageUrl=$profileImageUrl, salaryGbp=$salaryGbp, signatureQuotes=$signatureQuotes, teamId=$teamId, additionalProperties=$additionalProperties}"
 }
