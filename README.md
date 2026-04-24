@@ -309,13 +309,13 @@ To iterate through all results across all pages, use the `autoPager()` method, w
 When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
+import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPage;
-import com.believe.api.models.characters.Characterz;
 
 CharacterListPage page = client.characters().list();
 
 // Process as an Iterable
-for (Characterz character : page.autoPager()) {
+for (Character character : page.autoPager()) {
     System.out.println(character);
 }
 
@@ -330,8 +330,8 @@ When using the asynchronous client, the method returns an [`AsyncStreamResponse`
 
 ```java
 import com.believe.api.core.http.AsyncStreamResponse;
+import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPageAsync;
-import com.believe.api.models.characters.Characterz;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -344,7 +344,7 @@ pageFuture.thenRun(page -> page.autoPager().subscribe(character -> {
 // If you need to handle errors or completion of the stream
 pageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {
     @Override
-    public void onNext(Characterz character) {
+    public void onNext(Character character) {
         System.out.println(character);
     }
 
@@ -381,12 +381,12 @@ To access individual page items and manually request the next page, use the `ite
 `hasNextPage()`, and `nextPage()` methods:
 
 ```java
+import com.believe.api.models.characters.Character;
 import com.believe.api.models.characters.CharacterListPage;
-import com.believe.api.models.characters.Characterz;
 
 CharacterListPage page = client.characters().list();
 while (true) {
-    for (Characterz character : page.items()) {
+    for (Character character : page.items()) {
         System.out.println(character);
     }
 
@@ -761,9 +761,9 @@ By default, the SDK will not throw an exception in this case. It will throw [`Be
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```java
-import com.believe.api.models.characters.Characterz;
+import com.believe.api.models.characters.Character;
 
-Characterz characterz = client.characters().create(params).validate();
+Character character = client.characters().create(params).validate();
 ```
 
 Or configure the method call to validate the response using the `responseValidation` method:
