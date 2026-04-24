@@ -6,7 +6,6 @@ import com.believe.api.core.ClientOptions
 import com.believe.api.core.RequestOptions
 import com.believe.api.core.http.HttpResponse
 import com.believe.api.core.http.HttpResponseFor
-import com.believe.api.models.characters.Character
 import com.believe.api.models.characters.CharacterCreateParams
 import com.believe.api.models.characters.CharacterDeleteParams
 import com.believe.api.models.characters.CharacterGetQuotesParams
@@ -14,6 +13,7 @@ import com.believe.api.models.characters.CharacterListPageAsync
 import com.believe.api.models.characters.CharacterListParams
 import com.believe.api.models.characters.CharacterRetrieveParams
 import com.believe.api.models.characters.CharacterUpdateParams
+import com.believe.api.models.characters.Characterz
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -33,17 +33,17 @@ interface CharacterServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): CharacterServiceAsync
 
     /** Add a new character to the Ted Lasso universe. */
-    fun create(params: CharacterCreateParams): CompletableFuture<Character> =
+    fun create(params: CharacterCreateParams): CompletableFuture<Characterz> =
         create(params, RequestOptions.none())
 
     /** @see create */
     fun create(
         params: CharacterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Character>
+    ): CompletableFuture<Characterz>
 
     /** Retrieve detailed information about a specific character. */
-    fun retrieve(characterId: String): CompletableFuture<Character> =
+    fun retrieve(characterId: String): CompletableFuture<Characterz> =
         retrieve(characterId, CharacterRetrieveParams.none())
 
     /** @see retrieve */
@@ -51,34 +51,34 @@ interface CharacterServiceAsync {
         characterId: String,
         params: CharacterRetrieveParams = CharacterRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Character> =
+    ): CompletableFuture<Characterz> =
         retrieve(params.toBuilder().characterId(characterId).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
         characterId: String,
         params: CharacterRetrieveParams = CharacterRetrieveParams.none(),
-    ): CompletableFuture<Character> = retrieve(characterId, params, RequestOptions.none())
+    ): CompletableFuture<Characterz> = retrieve(characterId, params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         params: CharacterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Character>
+    ): CompletableFuture<Characterz>
 
     /** @see retrieve */
-    fun retrieve(params: CharacterRetrieveParams): CompletableFuture<Character> =
+    fun retrieve(params: CharacterRetrieveParams): CompletableFuture<Characterz> =
         retrieve(params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         characterId: String,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Character> =
+    ): CompletableFuture<Characterz> =
         retrieve(characterId, CharacterRetrieveParams.none(), requestOptions)
 
     /** Update specific fields of an existing character. */
-    fun update(characterId: String): CompletableFuture<Character> =
+    fun update(characterId: String): CompletableFuture<Characterz> =
         update(characterId, CharacterUpdateParams.none())
 
     /** @see update */
@@ -86,27 +86,27 @@ interface CharacterServiceAsync {
         characterId: String,
         params: CharacterUpdateParams = CharacterUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Character> =
+    ): CompletableFuture<Characterz> =
         update(params.toBuilder().characterId(characterId).build(), requestOptions)
 
     /** @see update */
     fun update(
         characterId: String,
         params: CharacterUpdateParams = CharacterUpdateParams.none(),
-    ): CompletableFuture<Character> = update(characterId, params, RequestOptions.none())
+    ): CompletableFuture<Characterz> = update(characterId, params, RequestOptions.none())
 
     /** @see update */
     fun update(
         params: CharacterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Character>
+    ): CompletableFuture<Characterz>
 
     /** @see update */
-    fun update(params: CharacterUpdateParams): CompletableFuture<Character> =
+    fun update(params: CharacterUpdateParams): CompletableFuture<Characterz> =
         update(params, RequestOptions.none())
 
     /** @see update */
-    fun update(characterId: String, requestOptions: RequestOptions): CompletableFuture<Character> =
+    fun update(characterId: String, requestOptions: RequestOptions): CompletableFuture<Characterz> =
         update(characterId, CharacterUpdateParams.none(), requestOptions)
 
     /** Get a paginated list of Ted Lasso characters. */
@@ -212,20 +212,20 @@ interface CharacterServiceAsync {
          * Returns a raw HTTP response for `post /characters`, but is otherwise the same as
          * [CharacterServiceAsync.create].
          */
-        fun create(params: CharacterCreateParams): CompletableFuture<HttpResponseFor<Character>> =
+        fun create(params: CharacterCreateParams): CompletableFuture<HttpResponseFor<Characterz>> =
             create(params, RequestOptions.none())
 
         /** @see create */
         fun create(
             params: CharacterCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Character>>
+        ): CompletableFuture<HttpResponseFor<Characterz>>
 
         /**
          * Returns a raw HTTP response for `get /characters/{character_id}`, but is otherwise the
          * same as [CharacterServiceAsync.retrieve].
          */
-        fun retrieve(characterId: String): CompletableFuture<HttpResponseFor<Character>> =
+        fun retrieve(characterId: String): CompletableFuture<HttpResponseFor<Characterz>> =
             retrieve(characterId, CharacterRetrieveParams.none())
 
         /** @see retrieve */
@@ -233,39 +233,39 @@ interface CharacterServiceAsync {
             characterId: String,
             params: CharacterRetrieveParams = CharacterRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             retrieve(params.toBuilder().characterId(characterId).build(), requestOptions)
 
         /** @see retrieve */
         fun retrieve(
             characterId: String,
             params: CharacterRetrieveParams = CharacterRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             retrieve(characterId, params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             params: CharacterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Character>>
+        ): CompletableFuture<HttpResponseFor<Characterz>>
 
         /** @see retrieve */
         fun retrieve(
             params: CharacterRetrieveParams
-        ): CompletableFuture<HttpResponseFor<Character>> = retrieve(params, RequestOptions.none())
+        ): CompletableFuture<HttpResponseFor<Characterz>> = retrieve(params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             characterId: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             retrieve(characterId, CharacterRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /characters/{character_id}`, but is otherwise the
          * same as [CharacterServiceAsync.update].
          */
-        fun update(characterId: String): CompletableFuture<HttpResponseFor<Character>> =
+        fun update(characterId: String): CompletableFuture<HttpResponseFor<Characterz>> =
             update(characterId, CharacterUpdateParams.none())
 
         /** @see update */
@@ -273,31 +273,31 @@ interface CharacterServiceAsync {
             characterId: String,
             params: CharacterUpdateParams = CharacterUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             update(params.toBuilder().characterId(characterId).build(), requestOptions)
 
         /** @see update */
         fun update(
             characterId: String,
             params: CharacterUpdateParams = CharacterUpdateParams.none(),
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             update(characterId, params, RequestOptions.none())
 
         /** @see update */
         fun update(
             params: CharacterUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Character>>
+        ): CompletableFuture<HttpResponseFor<Characterz>>
 
         /** @see update */
-        fun update(params: CharacterUpdateParams): CompletableFuture<HttpResponseFor<Character>> =
+        fun update(params: CharacterUpdateParams): CompletableFuture<HttpResponseFor<Characterz>> =
             update(params, RequestOptions.none())
 
         /** @see update */
         fun update(
             characterId: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Character>> =
+        ): CompletableFuture<HttpResponseFor<Characterz>> =
             update(characterId, CharacterUpdateParams.none(), requestOptions)
 
         /**
