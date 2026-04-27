@@ -20,14 +20,14 @@ private constructor(
     private val streamHandlerExecutor: Executor,
     private val params: CharacterListParams,
     private val response: CharacterListPageResponse,
-) : PageAsync<Character> {
+) : PageAsync<Characterz> {
 
     /**
      * Delegates to [CharacterListPageResponse], but gracefully handles missing data.
      *
      * @see CharacterListPageResponse.data
      */
-    fun data(): List<Character> = response._data().getOptional("data").getOrNull() ?: emptyList()
+    fun data(): List<Characterz> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [CharacterListPageResponse], but gracefully handles missing data.
@@ -43,7 +43,7 @@ private constructor(
      */
     fun skip(): Optional<Long> = response._skip().getOptional("skip")
 
-    override fun items(): List<Character> = data()
+    override fun items(): List<Characterz> = data()
 
     override fun hasNextPage(): Boolean {
         if (items().isEmpty()) {
@@ -63,7 +63,7 @@ private constructor(
     override fun nextPage(): CompletableFuture<CharacterListPageAsync> =
         service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Character> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<Characterz> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): CharacterListParams = params
