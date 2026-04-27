@@ -223,8 +223,10 @@ interface MatchService {
      * ## Example WebSocket URL
      *
      * ```
-     * ws://localhost:8000/matches/live?home_team=AFC%20Richmond&away_team=Manchester%20City&speed=2.0&excitement_level=7
+     * ws://localhost:8000/matches/live
      * ```
+     *
+     * Append query parameters from the list above to customize the simulation.
      *
      * ## Server Messages
      *
