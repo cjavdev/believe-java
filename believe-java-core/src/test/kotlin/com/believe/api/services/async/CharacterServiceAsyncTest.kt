@@ -20,7 +20,7 @@ internal class CharacterServiceAsyncTest {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val characterServiceAsync = client.characters()
 
-        val characterFuture =
+        val characterzFuture =
             characterServiceAsync.create(
                 CharacterCreateParams.builder()
                     .background(
@@ -58,8 +58,8 @@ internal class CharacterServiceAsyncTest {
                     .build()
             )
 
-        val character = characterFuture.get()
-        character.validate()
+        val characterz = characterzFuture.get()
+        characterz.validate()
     }
 
     @Disabled("Mock server tests are disabled")
@@ -68,10 +68,10 @@ internal class CharacterServiceAsyncTest {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val characterServiceAsync = client.characters()
 
-        val characterFuture = characterServiceAsync.retrieve("character_id")
+        val characterzFuture = characterServiceAsync.retrieve("character_id")
 
-        val character = characterFuture.get()
-        character.validate()
+        val characterz = characterzFuture.get()
+        characterz.validate()
     }
 
     @Disabled("Mock server tests are disabled")
@@ -80,7 +80,7 @@ internal class CharacterServiceAsyncTest {
         val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
         val characterServiceAsync = client.characters()
 
-        val characterFuture =
+        val characterzFuture =
             characterServiceAsync.update(
                 CharacterUpdateParams.builder()
                     .characterId("character_id")
@@ -116,8 +116,8 @@ internal class CharacterServiceAsyncTest {
                     .build()
             )
 
-        val character = characterFuture.get()
-        character.validate()
+        val characterz = characterzFuture.get()
+        characterz.validate()
     }
 
     @Disabled("Mock server tests are disabled")

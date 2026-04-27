@@ -15,7 +15,7 @@ internal class CharacterListPageResponseTest {
         val characterListPageResponse =
             CharacterListPageResponse.builder()
                 .addData(
-                    Character.builder()
+                    Characterz.builder()
                         .id("ted-lasso")
                         .background(
                             "Former American football coach from Kansas who moved to London to coach AFC Richmond"
@@ -61,7 +61,7 @@ internal class CharacterListPageResponseTest {
 
         assertThat(characterListPageResponse.data())
             .containsExactly(
-                Character.builder()
+                Characterz.builder()
                     .id("ted-lasso")
                     .background(
                         "Former American football coach from Kansas who moved to London to coach AFC Richmond"
@@ -111,7 +111,7 @@ internal class CharacterListPageResponseTest {
         val characterListPageResponse =
             CharacterListPageResponse.builder()
                 .addData(
-                    Character.builder()
+                    Characterz.builder()
                         .id("ted-lasso")
                         .background(
                             "Former American football coach from Kansas who moved to London to coach AFC Richmond"
