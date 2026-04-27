@@ -17,6 +17,7 @@ import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.core.http.json
 import com.believe.api.core.http.parseable
 import com.believe.api.core.prepareAsync
+import com.believe.api.models.characters.Character
 import com.believe.api.models.characters.CharacterCreateParams
 import com.believe.api.models.characters.CharacterDeleteParams
 import com.believe.api.models.characters.CharacterGetQuotesParams
@@ -25,7 +26,6 @@ import com.believe.api.models.characters.CharacterListPageResponse
 import com.believe.api.models.characters.CharacterListParams
 import com.believe.api.models.characters.CharacterRetrieveParams
 import com.believe.api.models.characters.CharacterUpdateParams
-import com.believe.api.models.characters.Characterz
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
@@ -46,21 +46,21 @@ class CharacterServiceAsyncImpl internal constructor(private val clientOptions: 
     override fun create(
         params: CharacterCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Characterz> =
+    ): CompletableFuture<Character> =
         // post /characters
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: CharacterRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Characterz> =
+    ): CompletableFuture<Character> =
         // get /characters/{character_id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CharacterUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Characterz> =
+    ): CompletableFuture<Character> =
         // patch /characters/{character_id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -98,13 +98,13 @@ class CharacterServiceAsyncImpl internal constructor(private val clientOptions: 
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun create(
             params: CharacterCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Characterz>> {
+        ): CompletableFuture<HttpResponseFor<Character>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -129,13 +129,13 @@ class CharacterServiceAsyncImpl internal constructor(private val clientOptions: 
                 }
         }
 
-        private val retrieveHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: CharacterRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Characterz>> {
+        ): CompletableFuture<HttpResponseFor<Character>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("characterId", params.characterId().getOrNull())
@@ -162,13 +162,13 @@ class CharacterServiceAsyncImpl internal constructor(private val clientOptions: 
                 }
         }
 
-        private val updateHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun update(
             params: CharacterUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Characterz>> {
+        ): CompletableFuture<HttpResponseFor<Character>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("characterId", params.characterId().getOrNull())
