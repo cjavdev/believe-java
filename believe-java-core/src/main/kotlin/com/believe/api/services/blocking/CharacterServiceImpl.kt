@@ -17,6 +17,7 @@ import com.believe.api.core.http.HttpResponseFor
 import com.believe.api.core.http.json
 import com.believe.api.core.http.parseable
 import com.believe.api.core.prepare
+import com.believe.api.models.characters.Character
 import com.believe.api.models.characters.CharacterCreateParams
 import com.believe.api.models.characters.CharacterDeleteParams
 import com.believe.api.models.characters.CharacterGetQuotesParams
@@ -25,7 +26,6 @@ import com.believe.api.models.characters.CharacterListPageResponse
 import com.believe.api.models.characters.CharacterListParams
 import com.believe.api.models.characters.CharacterRetrieveParams
 import com.believe.api.models.characters.CharacterUpdateParams
-import com.believe.api.models.characters.Characterz
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -42,18 +42,18 @@ class CharacterServiceImpl internal constructor(private val clientOptions: Clien
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CharacterService =
         CharacterServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(params: CharacterCreateParams, requestOptions: RequestOptions): Characterz =
+    override fun create(params: CharacterCreateParams, requestOptions: RequestOptions): Character =
         // post /characters
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: CharacterRetrieveParams,
         requestOptions: RequestOptions,
-    ): Characterz =
+    ): Character =
         // get /characters/{character_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: CharacterUpdateParams, requestOptions: RequestOptions): Characterz =
+    override fun update(params: CharacterUpdateParams, requestOptions: RequestOptions): Character =
         // patch /characters/{character_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -89,13 +89,13 @@ class CharacterServiceImpl internal constructor(private val clientOptions: Clien
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun create(
             params: CharacterCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Characterz> {
+        ): HttpResponseFor<Character> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -117,13 +117,13 @@ class CharacterServiceImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val retrieveHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: CharacterRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Characterz> {
+        ): HttpResponseFor<Character> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("characterId", params.characterId().getOrNull())
@@ -147,13 +147,13 @@ class CharacterServiceImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<Characterz> =
-            jsonHandler<Characterz>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Character> =
+            jsonHandler<Character>(clientOptions.jsonMapper)
 
         override fun update(
             params: CharacterUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Characterz> {
+        ): HttpResponseFor<Character> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("characterId", params.characterId().getOrNull())
