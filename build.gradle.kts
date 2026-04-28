@@ -9,7 +9,7 @@ repositories {
 
 allprojects {
     group = "com.believe.api"
-    version = "0.7.0" // x-release-please-version
+    version = "0.8.0" // x-release-please-version
 }
 
 subprojects {
