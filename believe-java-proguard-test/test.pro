@@ -1,5 +1,5 @@
 # Specify the entrypoint where ProGuard starts to determine what's reachable.
--keep class com.believe.api.proguard.** { *; }
+-keep class dev.cjav.believe.proguard.** { *; }
 
 # For the testing framework.
 -keep class org.junit.** { *; }
