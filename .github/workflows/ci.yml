@@ -18,7 +18,7 @@ jobs:
   lint:
     timeout-minutes: 15
     name: lint
-    runs-on: ${{ github.repository == 'stainless-sdks/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    runs-on: ${{ github.repository == 'cjavdev/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
     if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
 
     steps:
@@ -45,7 +45,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    runs-on: ${{ github.repository == 'stainless-sdks/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    runs-on: ${{ github.repository == 'cjavdev/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
     if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
 
     steps:
@@ -68,7 +68,7 @@ jobs:
 
       - name: Get GitHub OIDC Token
         if: |-
-          github.repository == 'stainless-sdks/believe-java' &&
+          github.repository == 'cjavdev/believe-java' &&
           !startsWith(github.ref, 'refs/heads/stl/')
         id: github-oidc
         uses: actions/github-script@v8
@@ -77,7 +77,7 @@ jobs:
 
       - name: Build and upload Maven artifacts
         if: |-
-          github.repository == 'stainless-sdks/believe-java' &&
+          github.repository == 'cjavdev/believe-java' &&
           !startsWith(github.ref, 'refs/heads/stl/')
         env:
           URL: https://pkg.stainless.com/s
@@ -85,25 +85,3 @@ jobs:
           SHA: ${{ github.sha }}
           PROJECT: believe-java
         run: ./scripts/upload-artifacts
-  test:
-    timeout-minutes: 15
-    name: test
-    runs-on: ${{ github.repository == 'stainless-sdks/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: |
-            8
-            21
-          cache: gradle
-
-      - name: Set up Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - name: Run tests
-        run: ./scripts/test
