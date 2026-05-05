@@ -76,7 +76,7 @@ private constructor(
     fun diagnosis(): String = diagnosis.getRequired("diagnosis")
 
     /**
-     * Advice from the Diamond Dogs support group
+     * Advice from the Diamond Dogs support groups
      *
      * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -242,7 +242,7 @@ private constructor(
          */
         fun diagnosis(diagnosis: JsonField<String>) = apply { this.diagnosis = diagnosis }
 
-        /** Advice from the Diamond Dogs support group */
+        /** Advice from the Diamond Dogs support groups */
         fun diamondDogsAdvice(diamondDogsAdvice: String) =
             diamondDogsAdvice(JsonField.of(diamondDogsAdvice))
 
