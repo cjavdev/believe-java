@@ -1,0 +1,66 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package dev.cjav.believe.services.async.teams
+
+import dev.cjav.believe.client.okhttp.BelieveOkHttpClientAsync
+import dev.cjav.believe.models.teams.logo.LogoDeleteParams
+import dev.cjav.believe.models.teams.logo.LogoDownloadParams
+import dev.cjav.believe.models.teams.logo.LogoUploadParams
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
+
+internal class LogoServiceAsyncTest {
+
+    @Disabled("Mock server tests are disabled")
+    @Test
+    fun delete() {
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
+        val logoServiceAsync = client.teams().logo()
+
+        val future =
+            logoServiceAsync.delete(
+                LogoDeleteParams.builder()
+                    .teamId("team_id")
+                    .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .build()
+            )
+
+        val response = future.get()
+    }
+
+    @Disabled("Mock server tests are disabled")
+    @Test
+    fun download() {
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
+        val logoServiceAsync = client.teams().logo()
+
+        val responseFuture =
+            logoServiceAsync.download(
+                LogoDownloadParams.builder()
+                    .teamId("team_id")
+                    .fileId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .build()
+            )
+
+        val response = responseFuture.get()
+        response.validate()
+    }
+
+    @Disabled("Mock server tests are disabled")
+    @Test
+    fun upload() {
+        val client = BelieveOkHttpClientAsync.builder().apiKey("My API Key").build()
+        val logoServiceAsync = client.teams().logo()
+
+        val fileUploadFuture =
+            logoServiceAsync.upload(
+                LogoUploadParams.builder()
+                    .teamId("team_id")
+                    .file("Example data".byteInputStream())
+                    .build()
+            )
+
+        val fileUpload = fileUploadFuture.get()
+        fileUpload.validate()
+    }
+}
