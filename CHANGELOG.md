@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.8.0 (2026-04-28)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/cjavdev/believe-java/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* support setting headers via env ([1df9ae2](https://github.com/cjavdev/believe-java/commit/1df9ae23fd8d80f684e5961537a6f8afb45d8bce))
+
+## 0.7.0 (2026-04-27)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/cjavdev/believe-java/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** manual updates ([afbdd42](https://github.com/cjavdev/believe-java/commit/afbdd4225904a01d991d18bea8acf5df9d9a013d))
+* **api:** manual updates ([f298853](https://github.com/cjavdev/believe-java/commit/f2988531a896ddea4a3ce0de8f4229fccb7aa4e0))
+
+## 0.6.0 (2026-04-24)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/cjavdev/believe-java/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** manual updates ([7fc5907](https://github.com/cjavdev/believe-java/commit/7fc5907c3d51f1ef85481246b1928f07e325aea0))
+* **api:** manual updates ([a138b50](https://github.com/cjavdev/believe-java/commit/a138b501a8efd001526fec95b64c576debe67776))
+
 ## 0.5.0 (2026-04-22)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/cjavdev/believe-java/compare/v0.4.0...v0.5.0)
