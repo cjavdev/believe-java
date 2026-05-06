@@ -1,6 +1,5 @@
 # Changelog
 
-<<<<<<< HEAD
 ## [0.8.1](https://github.com/cjavdev/believe-java/compare/v0.8.0...v0.8.1) (2026-05-05)
 
 
@@ -9,8 +8,6 @@
 * regenerate from believe[#56](https://github.com/cjavdev/believe-java/issues/56) ([f2bc454](https://github.com/cjavdev/believe-java/commit/f2bc454dec33f7ca12950313a19a2054cd9ef6c0))
 * regenerate SDKs from believe[#56](https://github.com/cjavdev/believe-java/issues/56) (still publish even half done) ([3fb3088](https://github.com/cjavdev/believe-java/commit/3fb3088c783e8510f39bd467c7f14204b7f45090))
 
-=======
->>>>>>> c76843b (Apply custom code)
 ## 0.8.0 (2026-04-28)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/cjavdev/believe-java/compare/v0.7.0...v0.8.0)

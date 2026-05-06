@@ -8,11 +8,7 @@ repositories {
 
 allprojects {
     group = "dev.cjav.believe"
-<<<<<<< HEAD
     version = "0.8.1" // x-release-please-version
-=======
-    version = "0.5.0" // x-release-please-version
->>>>>>> c76843b (Apply custom code)
 }
 
 subprojects {

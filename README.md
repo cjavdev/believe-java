@@ -2,13 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-<<<<<<< HEAD
 [![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.1)
 [![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1)
-=======
-[![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.5.0)
-[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.5.0/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.5.0)
->>>>>>> c76843b (Apply custom code)
 
 <!-- x-release-please-end -->
 
@@ -29,11 +24,7 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 <!-- x-release-please-start-version -->
 
-<<<<<<< HEAD
 Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1).
-=======
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.5.0).
->>>>>>> c76843b (Apply custom code)
 
 <!-- x-release-please-end -->
 
@@ -44,11 +35,7 @@ Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/b
 ### Gradle
 
 ```kotlin
-<<<<<<< HEAD
 implementation("dev.cjav.believe:believe-java:0.8.1")
-=======
-implementation("dev.cjav.believe:believe-java:0.5.0")
->>>>>>> c76843b (Apply custom code)
 ```
 
 ### Maven
@@ -57,11 +44,7 @@ implementation("dev.cjav.believe:believe-java:0.5.0")
 <dependency>
   <groupId>dev.cjav.believe</groupId>
   <artifactId>believe-java</artifactId>
-<<<<<<< HEAD
   <version>0.8.1</version>
-=======
-  <version>0.5.0</version>
->>>>>>> c76843b (Apply custom code)
 </dependency>
 ```
 
