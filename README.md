@@ -2,28 +2,15 @@
 
 <!-- x-release-please-start-version -->
 
-<<<<<<< HEAD
 [![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.1)
 [![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1)
-=======
-<<<<<<< HEAD
-[![Maven Central](https://img.shields.io/maven-central/v/com.believe.api/believe-java)](https://central.sonatype.com/artifact/com.believe.api/believe-java/0.8.0)
-[![javadoc](https://javadoc.io/badge2/com.believe.api/believe-java/0.8.0/javadoc.svg)](https://javadoc.io/doc/com.believe.api/believe-java/0.8.0)
-=======
-[![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.1)
-[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1)
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
->>>>>>> 0f27df6 (Apply custom code)
 
 <!-- x-release-please-end -->
 
 The Believe Java SDK provides convenient access to the Believe REST API from applications written in Java.
 
-<<<<<<< HEAD
-=======
 The Believe Java SDK is similar to the Believe Kotlin SDK but with minor differences that make it more ergonomic for use in Java, such as `Optional` instead of nullable values, `Stream` instead of `Sequence`, and `CompletableFuture` instead of suspend functions.
 
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## MCP Server
@@ -37,15 +24,7 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 <!-- x-release-please-start-version -->
 
-<<<<<<< HEAD
 Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1).
-=======
-<<<<<<< HEAD
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.believe.api/believe-java/0.8.0).
-=======
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1).
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
->>>>>>> 0f27df6 (Apply custom code)
 
 <!-- x-release-please-end -->
 
@@ -56,33 +35,16 @@ Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/b
 ### Gradle
 
 ```kotlin
-<<<<<<< HEAD
 implementation("dev.cjav.believe:believe-java:0.8.1")
-=======
-<<<<<<< HEAD
-implementation("com.believe.api:believe-java:0.8.0")
-=======
-implementation("dev.cjav.believe:believe-java:0.8.1")
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
->>>>>>> 0f27df6 (Apply custom code)
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-<<<<<<< HEAD
-  <groupId>com.believe.api</groupId>
-  <artifactId>believe-java</artifactId>
-  <version>0.8.0</version>
-=======
   <groupId>dev.cjav.believe</groupId>
   <artifactId>believe-java</artifactId>
   <version>0.8.1</version>
-<<<<<<< HEAD
-=======
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
->>>>>>> 0f27df6 (Apply custom code)
 </dependency>
 ```
 
@@ -95,17 +57,10 @@ This library requires Java 8 or later.
 ## Usage
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-import com.believe.api.models.characters.CharacterListPage;
-import com.believe.api.models.characters.CharacterListParams;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
 import dev.cjav.believe.models.characters.CharacterListPage;
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 // Configures using the `believe.apiKey` and `believe.baseUrl` system properties
 // Or configures using the `BELIEVE_API_KEY` and `BELIEVE_BASE_URL` environment variables
@@ -119,13 +74,8 @@ CharacterListPage page = client.characters().list();
 Configure the client using system properties or environment variables:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 // Configures using the `believe.apiKey` and `believe.baseUrl` system properties
 // Or configures using the `BELIEVE_API_KEY` and `BELIEVE_BASE_URL` environment variables
@@ -135,13 +85,8 @@ BelieveClient client = BelieveOkHttpClient.fromEnv();
 Or manually:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient client = BelieveOkHttpClient.builder()
     .apiKey("My API Key")
@@ -151,13 +96,8 @@ BelieveClient client = BelieveOkHttpClient.builder()
 Or using a combination of the two approaches:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient client = BelieveOkHttpClient.builder()
     // Configures using the `believe.apiKey` and `believe.baseUrl` system properties
@@ -185,11 +125,7 @@ System properties take precedence over environment variables.
 To temporarily use a modified client configuration, while reusing the same connection and thread pools, call `withOptions()` on any client or service:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient clientWithOptions = client.withOptions(optionsBuilder -> {
     optionsBuilder.baseUrl("https://example.com");
@@ -218,17 +154,10 @@ Because each class is immutable, builder modification will _never_ affect alread
 The default client is synchronous. To switch to asynchronous execution, call the `async()` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-import com.believe.api.models.characters.CharacterListPageAsync;
-import com.believe.api.models.characters.CharacterListParams;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
 import dev.cjav.believe.models.characters.CharacterListPageAsync;
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.concurrent.CompletableFuture;
 
 // Configures using the `believe.apiKey` and `believe.baseUrl` system properties
@@ -241,17 +170,10 @@ CompletableFuture<CharacterListPageAsync> page = client.async().characters().lis
 Or create an asynchronous client from the beginning:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClientAsync;
-import com.believe.api.client.okhttp.BelieveOkHttpClientAsync;
-import com.believe.api.models.characters.CharacterListPageAsync;
-import com.believe.api.models.characters.CharacterListParams;
-=======
 import dev.cjav.believe.client.BelieveClientAsync;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClientAsync;
 import dev.cjav.believe.models.characters.CharacterListPageAsync;
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.concurrent.CompletableFuture;
 
 // Configures using the `believe.apiKey` and `believe.baseUrl` system properties
@@ -270,13 +192,8 @@ The SDK defines methods that accept files.
 To upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.teams.logo.FileUpload;
-import com.believe.api.models.teams.logo.LogoUploadParams;
-=======
 import dev.cjav.believe.models.teams.logo.FileUpload;
 import dev.cjav.believe.models.teams.logo.LogoUploadParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.nio.file.Paths;
 
 LogoUploadParams params = LogoUploadParams.builder()
@@ -289,13 +206,8 @@ FileUpload fileUpload = client.teams().logo().upload(params);
 Or an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.teams.logo.FileUpload;
-import com.believe.api.models.teams.logo.LogoUploadParams;
-=======
 import dev.cjav.believe.models.teams.logo.FileUpload;
 import dev.cjav.believe.models.teams.logo.LogoUploadParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.net.URL;
 
 LogoUploadParams params = LogoUploadParams.builder()
@@ -308,13 +220,8 @@ FileUpload fileUpload = client.teams().logo().upload(params);
 Or a `byte[]` array:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.teams.logo.FileUpload;
-import com.believe.api.models.teams.logo.LogoUploadParams;
-=======
 import dev.cjav.believe.models.teams.logo.FileUpload;
 import dev.cjav.believe.models.teams.logo.LogoUploadParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 LogoUploadParams params = LogoUploadParams.builder()
     .teamId("team_id")
@@ -323,21 +230,12 @@ LogoUploadParams params = LogoUploadParams.builder()
 FileUpload fileUpload = client.teams().logo().upload(params);
 ```
 
-<<<<<<< HEAD
-Note that when passing a non-`Path` its filename is unknown so it will not be included in the request. To manually set a filename, pass a [`MultipartField`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt):
-
-```java
-import com.believe.api.core.MultipartField;
-import com.believe.api.models.teams.logo.FileUpload;
-import com.believe.api.models.teams.logo.LogoUploadParams;
-=======
 Note that when passing a non-`Path` its filename is unknown so it will not be included in the request. To manually set a filename, pass a [`MultipartField`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/Values.kt):
 
 ```java
 import dev.cjav.believe.core.MultipartField;
 import dev.cjav.believe.models.teams.logo.FileUpload;
 import dev.cjav.believe.models.teams.logo.LogoUploadParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.io.InputStream;
 import java.net.URL;
 
@@ -358,17 +256,10 @@ The SDK defines methods that deserialize responses into instances of Java classe
 To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.core.http.Headers;
-import com.believe.api.core.http.HttpResponseFor;
-import com.believe.api.models.characters.CharacterListPage;
-import com.believe.api.models.characters.CharacterListParams;
-=======
 import dev.cjav.believe.core.http.Headers;
 import dev.cjav.believe.core.http.HttpResponseFor;
 import dev.cjav.believe.models.characters.CharacterListPage;
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 HttpResponseFor<CharacterListPage> page = client.characters().withRawResponse().list();
 
@@ -379,11 +270,7 @@ Headers headers = page.headers();
 You can still deserialize the response into an instance of a Java class if needed:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.characters.CharacterListPage;
-=======
 import dev.cjav.believe.models.characters.CharacterListPage;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListPage parsedPage = page.parse();
 ```
@@ -392,28 +279,6 @@ CharacterListPage parsedPage = page.parse();
 
 The SDK throws custom unchecked exception types:
 
-<<<<<<< HEAD
-- [`BelieveServiceException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
-
-  | Status | Exception                                                                                                                    |
-  | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-  | 400    | [`BadRequestException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BadRequestException.kt)                     |
-  | 401    | [`UnauthorizedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnauthorizedException.kt)                 |
-  | 403    | [`PermissionDeniedException`](believe-java-core/src/main/kotlin/com/believe/api/errors/PermissionDeniedException.kt)         |
-  | 404    | [`NotFoundException`](believe-java-core/src/main/kotlin/com/believe/api/errors/NotFoundException.kt)                         |
-  | 422    | [`UnprocessableEntityException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnprocessableEntityException.kt)   |
-  | 429    | [`RateLimitException`](believe-java-core/src/main/kotlin/com/believe/api/errors/RateLimitException.kt)                       |
-  | 5xx    | [`InternalServerException`](believe-java-core/src/main/kotlin/com/believe/api/errors/InternalServerException.kt)             |
-  | others | [`UnexpectedStatusCodeException`](believe-java-core/src/main/kotlin/com/believe/api/errors/UnexpectedStatusCodeException.kt) |
-
-- [`BelieveIoException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveIoException.kt): I/O networking errors.
-
-- [`BelieveRetryableException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveRetryableException.kt): Generic error indicating a failure that could be retried by the client.
-
-- [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
-
-- [`BelieveException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
-=======
 - [`BelieveServiceException`](believe-java-core/src/main/kotlin/dev/cjav/believe/errors/BelieveServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
   | Status | Exception                                                                                                                     |
@@ -434,7 +299,6 @@ The SDK throws custom unchecked exception types:
 - [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/dev/cjav/believe/errors/BelieveInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - [`BelieveException`](believe-java-core/src/main/kotlin/dev/cjav/believe/errors/BelieveException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 ## Pagination
 
@@ -447,13 +311,8 @@ To iterate through all results across all pages, use the `autoPager()` method, w
 When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.characters.Character;
-import com.believe.api.models.characters.CharacterListPage;
-=======
 import dev.cjav.believe.models.characters.Character;
 import dev.cjav.believe.models.characters.CharacterListPage;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListPage page = client.characters().list();
 
@@ -469,21 +328,12 @@ page.autoPager()
     .forEach(character -> System.out.println(character));
 ```
 
-<<<<<<< HEAD
-When using the asynchronous client, the method returns an [`AsyncStreamResponse`](believe-java-core/src/main/kotlin/com/believe/api/core/http/AsyncStreamResponse.kt):
-
-```java
-import com.believe.api.core.http.AsyncStreamResponse;
-import com.believe.api.models.characters.Character;
-import com.believe.api.models.characters.CharacterListPageAsync;
-=======
 When using the asynchronous client, the method returns an [`AsyncStreamResponse`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/http/AsyncStreamResponse.kt):
 
 ```java
 import dev.cjav.believe.core.http.AsyncStreamResponse;
 import dev.cjav.believe.models.characters.Character;
 import dev.cjav.believe.models.characters.CharacterListPageAsync;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -533,13 +383,8 @@ To access individual page items and manually request the next page, use the `ite
 `hasNextPage()`, and `nextPage()` methods:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.characters.Character;
-import com.believe.api.models.characters.CharacterListPage;
-=======
 import dev.cjav.believe.models.characters.Character;
 import dev.cjav.believe.models.characters.CharacterListPage;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListPage page = client.characters().list();
 while (true) {
@@ -583,11 +428,7 @@ The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON seri
 
 The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the default version was overridden in your Maven or Gradle config).
 
-<<<<<<< HEAD
-If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt).
-=======
 If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClientAsync.kt).
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 > [!CAUTION]
 > We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
@@ -613,13 +454,8 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `maxRetries` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient client = BelieveOkHttpClient.builder()
     .fromEnv()
@@ -634,11 +470,7 @@ Requests time out after 1 minute by default.
 To set a custom timeout, configure the method call using the `timeout` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.characters.CharacterListPage;
-=======
 import dev.cjav.believe.models.characters.CharacterListPage;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListPage page = client.characters().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());
 ```
@@ -646,13 +478,8 @@ CharacterListPage page = client.characters().list(RequestOptions.builder().timeo
 Or configure the default for all method calls at the client level:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.time.Duration;
 
 BelieveClient client = BelieveOkHttpClient.builder()
@@ -666,13 +493,8 @@ BelieveClient client = BelieveOkHttpClient.builder()
 To route requests through a proxy, configure the client using the `proxy` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 
@@ -691,13 +513,8 @@ BelieveClient client = BelieveOkHttpClient.builder()
 To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.time.Duration;
 
 BelieveClient client = BelieveOkHttpClient.builder()
@@ -719,13 +536,8 @@ If both options are unset, OkHttp's default connection pool settings are used.
 To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`, `trustManager`, and `hostnameVerifier` methods:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient client = BelieveOkHttpClient.builder()
     .fromEnv()
@@ -743,17 +555,10 @@ The SDK consists of three artifacts:
 - `believe-java-core`
   - Contains core SDK logic
   - Does not depend on [OkHttp](https://square.github.io/okhttp)
-<<<<<<< HEAD
-  - Exposes [`BelieveClient`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClient.kt), [`BelieveClientAsync`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsync.kt), [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt), and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), all of which can work with any HTTP client
-- `believe-java-client-okhttp`
-  - Depends on [OkHttp](https://square.github.io/okhttp)
-  - Exposes [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) and [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), which provide a way to construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), respectively, using OkHttp
-=======
   - Exposes [`BelieveClient`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClient.kt), [`BelieveClientAsync`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientAsync.kt), [`BelieveClientImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientImpl.kt), and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientAsyncImpl.kt), all of which can work with any HTTP client
 - `believe-java-client-okhttp`
   - Depends on [OkHttp](https://square.github.io/okhttp)
   - Exposes [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClient.kt) and [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClientAsync.kt), which provide a way to construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientImpl.kt) and [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientAsyncImpl.kt), respectively, using OkHttp
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 - `believe-java`
   - Depends on and exposes the APIs of both `believe-java-core` and `believe-java-client-okhttp`
   - Does not have its own logic
@@ -768,26 +573,16 @@ This structure allows replacing the SDK's default HTTP client without pulling in
 To use a customized `OkHttpClient`:
 
 1. Replace your [`believe-java` dependency](#installation) with `believe-java-core`
-<<<<<<< HEAD
-2. Copy `believe-java-client-okhttp`'s [`OkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/OkHttpClient.kt) class into your code and customize it
-3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your customized client
-=======
 2. Copy `believe-java-client-okhttp`'s [`OkHttpClient`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/OkHttpClient.kt) class into your code and customize it
 3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClientAsync.kt), using your customized client
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 ### Completely custom HTTP client
 
 To use a completely custom HTTP client:
 
 1. Replace your [`believe-java` dependency](#installation) with `believe-java-core`
-<<<<<<< HEAD
-2. Write a class that implements the [`HttpClient`](believe-java-core/src/main/kotlin/com/believe/api/core/http/HttpClient.kt) interface
-3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/com/believe/api/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/com/believe/api/client/okhttp/BelieveOkHttpClientAsync.kt), using your new client class
-=======
 2. Write a class that implements the [`HttpClient`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/http/HttpClient.kt) interface
 3. Construct [`BelieveClientImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientImpl.kt) or [`BelieveClientAsyncImpl`](believe-java-core/src/main/kotlin/dev/cjav/believe/client/BelieveClientAsyncImpl.kt), similarly to [`BelieveOkHttpClient`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClient.kt) or [`BelieveOkHttpClientAsync`](believe-java-client-okhttp/src/main/kotlin/dev/cjav/believe/client/okhttp/BelieveOkHttpClientAsync.kt), using your new client class
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 ## Undocumented API functionality
 
@@ -798,13 +593,8 @@ The SDK is typed for convenient usage of the documented API. However, it also su
 To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or `putAdditionalBodyProperty` methods on any `Params` class:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.core.JsonValue;
-import com.believe.api.models.characters.CharacterListParams;
-=======
 import dev.cjav.believe.core.JsonValue;
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListParams params = CharacterListParams.builder()
     .putAdditionalHeader("Secret-Header", "42")
@@ -818,15 +608,9 @@ These can be accessed on the built object later using the `_additionalHeaders()`
 To set undocumented parameters on _nested_ headers, query params, or body classes, call the `putAdditionalProperty` method on the nested class:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.core.JsonValue;
-import com.believe.api.models.characters.CharacterCreateParams;
-import com.believe.api.models.characters.EmotionalStats;
-=======
 import dev.cjav.believe.core.JsonValue;
 import dev.cjav.believe.models.characters.CharacterCreateParams;
 import dev.cjav.believe.models.characters.EmotionalStats;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterCreateParams params = CharacterCreateParams.builder()
     .emotionalStats(EmotionalStats.builder()
@@ -837,32 +621,18 @@ CharacterCreateParams params = CharacterCreateParams.builder()
 
 These properties can be accessed on the nested built object later using the `_additionalProperties()` method.
 
-<<<<<<< HEAD
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) object to its setter:
-
-```java
-import com.believe.api.models.characters.CharacterListParams;
-=======
 To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/Values.kt) object to its setter:
 
 ```java
 import dev.cjav.believe.models.characters.CharacterListParams;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListParams params = CharacterListParams.builder().build();
 ```
 
-<<<<<<< HEAD
-The most straightforward way to create a [`JsonValue`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt) is using its `from(...)` method:
-
-```java
-import com.believe.api.core.JsonValue;
-=======
 The most straightforward way to create a [`JsonValue`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/Values.kt) is using its `from(...)` method:
 
 ```java
 import dev.cjav.believe.core.JsonValue;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.List;
 import java.util.Map;
 
@@ -900,16 +670,6 @@ JsonValue complexValue = JsonValue.from(Map.of(
 
 Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
 
-<<<<<<< HEAD
-To forcibly omit a required parameter or property, pass [`JsonMissing`](believe-java-core/src/main/kotlin/com/believe/api/core/Values.kt):
-
-```java
-import com.believe.api.core.JsonMissing;
-import com.believe.api.models.characters.CharacterCreateParams;
-import com.believe.api.models.characters.CharacterListParams;
-import com.believe.api.models.characters.CharacterRole;
-import com.believe.api.models.characters.EmotionalStats;
-=======
 To forcibly omit a required parameter or property, pass [`JsonMissing`](believe-java-core/src/main/kotlin/dev/cjav/believe/core/Values.kt):
 
 ```java
@@ -918,7 +678,6 @@ import dev.cjav.believe.models.characters.CharacterCreateParams;
 import dev.cjav.believe.models.characters.CharacterListParams;
 import dev.cjav.believe.models.characters.CharacterRole;
 import dev.cjav.believe.models.characters.EmotionalStats;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.List;
 
 CharacterListParams params = CharacterCreateParams.builder()
@@ -946,11 +705,7 @@ CharacterListParams params = CharacterCreateParams.builder()
 To access undocumented response properties, call the `_additionalProperties()` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.core.JsonValue;
-=======
 import dev.cjav.believe.core.JsonValue;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.Map;
 
 Map<String, JsonValue> additionalProperties = client.characters().create(params)._additionalProperties();
@@ -980,11 +735,7 @@ String result = secretPropertyValue.accept(new JsonValue.Visitor<>() {
 To access a property's raw JSON value, which may be undocumented, call its `_` prefixed method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.core.JsonField;
-=======
 import dev.cjav.believe.core.JsonField;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 import java.util.Optional;
 
 JsonField<String> background = client.characters().create(params)._background();
@@ -1007,14 +758,6 @@ if (background.isMissing()) {
 
 In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `String`, but the API could return something else.
 
-<<<<<<< HEAD
-By default, the SDK will not throw an exception in this case. It will throw [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/com/believe/api/errors/BelieveInvalidDataException.kt) only if you directly access the property.
-
-If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
-
-```java
-import com.believe.api.models.characters.Character;
-=======
 By default, the SDK will not throw an exception in this case. It will throw [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/dev/cjav/believe/errors/BelieveInvalidDataException.kt) only if you directly access the property.
 
 Validating the response is _not_ forwards compatible with new types from the API for existing fields.
@@ -1023,7 +766,6 @@ If you would still prefer to check that the response is completely well-typed up
 
 ```java
 import dev.cjav.believe.models.characters.Character;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 Character character = client.characters().create(params).validate();
 ```
@@ -1031,11 +773,7 @@ Character character = client.characters().create(params).validate();
 Or configure the method call to validate the response using the `responseValidation` method:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.models.characters.CharacterListPage;
-=======
 import dev.cjav.believe.models.characters.CharacterListPage;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 CharacterListPage page = client.characters().list(RequestOptions.builder().responseValidation(true).build());
 ```
@@ -1043,13 +781,8 @@ CharacterListPage page = client.characters().list(RequestOptions.builder().respo
 Or configure the default for all method calls at the client level:
 
 ```java
-<<<<<<< HEAD
-import com.believe.api.client.BelieveClient;
-import com.believe.api.client.okhttp.BelieveOkHttpClient;
-=======
 import dev.cjav.believe.client.BelieveClient;
 import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
->>>>>>> 6389e9d38a8031c1bd31da4ed81beac8b108958f
 
 BelieveClient client = BelieveOkHttpClient.builder()
     .fromEnv()
