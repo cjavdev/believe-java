@@ -506,6 +506,21 @@ BelieveClient client = BelieveOkHttpClient.builder()
     .build();
 ```
 
+If the proxy responds with `407 Proxy Authentication Required`, supply credentials by also configuring `proxyAuthenticator`:
+
+```java
+import com.believe.api.client.BelieveClient;
+import com.believe.api.client.okhttp.BelieveOkHttpClient;
+import com.believe.api.core.http.ProxyAuthenticator;
+
+BelieveClient client = BelieveOkHttpClient.builder()
+    .fromEnv()
+    .proxy(...)
+    // Or a custom implementation of `ProxyAuthenticator`.
+    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))
+    .build();
+```
+
 ### Connection pooling
 
 To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
