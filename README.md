@@ -3,7 +3,7 @@
 <!-- x-release-please-start-version -->
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.1)
-[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.0)
+[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1)
 
 <!-- x-release-please-end -->
 
