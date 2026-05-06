@@ -7,8 +7,8 @@ cd "$(dirname "$0")/.."
 echo "==> Detecting breaking changes"
 
 TEST_PATHS=(
-	believe-java-core/src/test/kotlin/com/believe/api/models
-	believe-java-core/src/test/kotlin/com/believe/api/services
+	believe-java-core/src/test/kotlin/dev/cjav/believe/models
+	believe-java-core/src/test/kotlin/dev/cjav/believe/services
 )
 
 for PATHSPEC in "${TEST_PATHS[@]}"; do
