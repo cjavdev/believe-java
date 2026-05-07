@@ -557,15 +557,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws BelieveInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
         fun validate(): Body = apply {
             if (validated) {
                 return@apply
@@ -704,15 +695,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws BelieveInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
         fun validate(): EventType = apply {
             if (validated) {
                 return@apply
@@ -781,35 +763,6 @@ private constructor(
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
-        /**
-         * Maps this instance's current variant to a value of type [T] using the given [visitor].
-         *
-         * Note that this method is _not_ forwards compatible with new variants from the API, unless
-         * [visitor] overrides [Visitor.unknown]. To handle variants not known to this version of
-         * the SDK gracefully, consider overriding [Visitor.unknown]:
-         * ```java
-         * import dev.cjav.believe.core.JsonValue;
-         * import java.util.Optional;
-         *
-         * Optional<String> result = payload.accept(new Payload.Visitor<Optional<String>>() {
-         *     @Override
-         *     public Optional<String> visitMatchCompleted(MatchCompleted matchCompleted) {
-         *         return Optional.of(matchCompleted.toString());
-         *     }
-         *
-         *     // ...
-         *
-         *     @Override
-         *     public Optional<String> unknown(JsonValue json) {
-         *         // Or inspect the `json`.
-         *         return Optional.empty();
-         *     }
-         * });
-         * ```
-         *
-         * @throws BelieveInvalidDataException if [Visitor.unknown] is not overridden in [visitor]
-         *   and the current variant is unknown.
-         */
         fun <T> accept(visitor: Visitor<T>): T =
             when {
                 matchCompleted != null -> visitor.visitMatchCompleted(matchCompleted)
@@ -820,15 +773,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws BelieveInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
         fun validate(): Payload = apply {
             if (validated) {
                 return@apply
@@ -1140,16 +1084,6 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws BelieveInvalidDataException if any value type in this object doesn't match
-             *   its expected type.
-             */
             fun validate(): MatchCompleted = apply {
                 if (validated) {
                     return@apply
@@ -1742,16 +1676,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws BelieveInvalidDataException if any value type in this object doesn't
-                 *   match its expected type.
-                 */
                 fun validate(): Data = apply {
                     if (validated) {
                         return@apply
@@ -1914,16 +1838,6 @@ private constructor(
 
                     private var validated: Boolean = false
 
-                    /**
-                     * Validates that the types of all values in this object match their expected
-                     * types recursively.
-                     *
-                     * This method is _not_ forwards compatible with new types from the API for
-                     * existing fields.
-                     *
-                     * @throws BelieveInvalidDataException if any value type in this object doesn't
-                     *   match its expected type.
-                     */
                     fun validate(): MatchType = apply {
                         if (validated) {
                             return@apply
@@ -2065,16 +1979,6 @@ private constructor(
 
                     private var validated: Boolean = false
 
-                    /**
-                     * Validates that the types of all values in this object match their expected
-                     * types recursively.
-                     *
-                     * This method is _not_ forwards compatible with new types from the API for
-                     * existing fields.
-                     *
-                     * @throws BelieveInvalidDataException if any value type in this object doesn't
-                     *   match its expected type.
-                     */
                     fun validate(): Result = apply {
                         if (validated) {
                             return@apply
@@ -2245,16 +2149,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws BelieveInvalidDataException if any value type in this object doesn't
-                 *   match its expected type.
-                 */
                 fun validate(): EventType = apply {
                     if (validated) {
                         return@apply
@@ -2475,16 +2369,6 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws BelieveInvalidDataException if any value type in this object doesn't match
-             *   its expected type.
-             */
             fun validate(): TeamMemberTransferred = apply {
                 if (validated) {
                     return@apply
@@ -3147,16 +3031,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws BelieveInvalidDataException if any value type in this object doesn't
-                 *   match its expected type.
-                 */
                 fun validate(): Data = apply {
                     if (validated) {
                         return@apply
@@ -3316,16 +3190,6 @@ private constructor(
 
                     private var validated: Boolean = false
 
-                    /**
-                     * Validates that the types of all values in this object match their expected
-                     * types recursively.
-                     *
-                     * This method is _not_ forwards compatible with new types from the API for
-                     * existing fields.
-                     *
-                     * @throws BelieveInvalidDataException if any value type in this object doesn't
-                     *   match its expected type.
-                     */
                     fun validate(): MemberType = apply {
                         if (validated) {
                             return@apply
@@ -3464,16 +3328,6 @@ private constructor(
 
                     private var validated: Boolean = false
 
-                    /**
-                     * Validates that the types of all values in this object match their expected
-                     * types recursively.
-                     *
-                     * This method is _not_ forwards compatible with new types from the API for
-                     * existing fields.
-                     *
-                     * @throws BelieveInvalidDataException if any value type in this object doesn't
-                     *   match its expected type.
-                     */
                     fun validate(): TransferType = apply {
                         if (validated) {
                             return@apply
@@ -3646,16 +3500,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws BelieveInvalidDataException if any value type in this object doesn't
-                 *   match its expected type.
-                 */
                 fun validate(): EventType = apply {
                     if (validated) {
                         return@apply

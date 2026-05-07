@@ -5,16 +5,12 @@ package dev.cjav.believe.errors
 import dev.cjav.believe.core.JsonValue
 import dev.cjav.believe.core.checkRequired
 import dev.cjav.believe.core.http.Headers
-import dev.cjav.believe.core.jsonMapper
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionDeniedException
 private constructor(private val headers: Headers, private val body: JsonValue, cause: Throwable?) :
-    BelieveServiceException(
-        "403: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
-        cause,
-    ) {
+    BelieveServiceException("403: $body", cause) {
 
     override fun statusCode(): Int = 403
 
