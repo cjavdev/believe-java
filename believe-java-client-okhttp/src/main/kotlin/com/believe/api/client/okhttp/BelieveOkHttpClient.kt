@@ -5,6 +5,7 @@ package com.believe.api.client.okhttp
 import com.believe.api.client.BelieveClient
 import com.believe.api.client.BelieveClientImpl
 import com.believe.api.core.ClientOptions
+import com.believe.api.core.LogLevel
 import com.believe.api.core.Sleeper
 import com.believe.api.core.Timeout
 import com.believe.api.core.http.AsyncStreamResponse
@@ -289,6 +290,15 @@ class BelieveOkHttpClient private constructor() {
          * Defaults to 2.
          */
         fun maxRetries(maxRetries: Int) = apply { clientOptions.maxRetries(maxRetries) }
+
+        /**
+         * The level at which to log request and response information.
+         *
+         * [fromEnv] will set the level from environment variables. See [LogLevel.fromEnv].
+         *
+         * Defaults to [LogLevel.fromEnv].
+         */
+        fun logLevel(logLevel: LogLevel) = apply { clientOptions.logLevel(logLevel) }
 
         fun apiKey(apiKey: String) = apply { clientOptions.apiKey(apiKey) }
 
