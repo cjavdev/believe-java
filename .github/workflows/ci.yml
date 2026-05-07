@@ -18,7 +18,7 @@ jobs:
   lint:
     timeout-minutes: 15
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.repository == 'cjavdev/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
     if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
 
     steps:
@@ -45,7 +45,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.repository == 'cjavdev/believe-java' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
     if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
 
     steps:
@@ -66,6 +66,22 @@ jobs:
       - name: Build SDK
         run: ./scripts/build
 
+      - name: Get GitHub OIDC Token
+        if: |-
+          github.repository == 'cjavdev/believe-java' &&
+          !startsWith(github.ref, 'refs/heads/stl/')
+        id: github-oidc
+        uses: actions/github-script@v8
+        with:
+          script: core.setOutput('github_token', await core.getIDToken());
 
-
-
+      - name: Build and upload Maven artifacts
+        if: |-
+          github.repository == 'cjavdev/believe-java' &&
+          !startsWith(github.ref, 'refs/heads/stl/')
+        env:
+          URL: https://pkg.stainless.com/s
+          AUTH: ${{ steps.github-oidc.outputs.github_token }}
+          SHA: ${{ github.sha }}
+          PROJECT: believe-java
+        run: ./scripts/upload-artifacts

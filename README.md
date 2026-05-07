@@ -508,21 +508,6 @@ BelieveClient client = BelieveOkHttpClient.builder()
     .build();
 ```
 
-If the proxy responds with `407 Proxy Authentication Required`, supply credentials by also configuring `proxyAuthenticator`:
-
-```java
-import dev.cjav.believe.client.BelieveClient;
-import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
-import dev.cjav.believe.core.http.ProxyAuthenticator;
-
-BelieveClient client = BelieveOkHttpClient.builder()
-    .fromEnv()
-    .proxy(...)
-    // Or a custom implementation of `ProxyAuthenticator`.
-    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))
-    .build();
-```
-
 ### Connection pooling
 
 To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
@@ -775,9 +760,7 @@ In rare cases, the API may return a response that doesn't match the expected typ
 
 By default, the SDK will not throw an exception in this case. It will throw [`BelieveInvalidDataException`](believe-java-core/src/main/kotlin/dev/cjav/believe/errors/BelieveInvalidDataException.kt) only if you directly access the property.
 
-Validating the response is _not_ forwards compatible with new types from the API for existing fields.
-
-If you would still prefer to check that the response is completely well-typed upfront, then either call `validate()`:
+If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```java
 import dev.cjav.believe.models.characters.Character;
