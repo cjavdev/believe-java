@@ -1,0 +1,22 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package dev.cjav.believe.services.blocking
+
+import dev.cjav.believe.client.okhttp.BelieveOkHttpClient
+import dev.cjav.believe.models.peptalk.PepTalkRetrieveParams
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
+
+internal class PepTalkServiceTest {
+
+    @Disabled("Mock server tests are disabled")
+    @Test
+    fun retrieve() {
+        val client = BelieveOkHttpClient.builder().apiKey("My API Key").build()
+        val pepTalkService = client.pepTalk()
+
+        val pepTalk = pepTalkService.retrieve(PepTalkRetrieveParams.builder().stream(true).build())
+
+        pepTalk.validate()
+    }
+}
