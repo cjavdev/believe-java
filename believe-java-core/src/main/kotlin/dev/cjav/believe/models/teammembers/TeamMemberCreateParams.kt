@@ -601,7 +601,7 @@ private constructor(
             fun jerseyNumber(): Long = jerseyNumber.getRequired("jersey_number")
 
             /**
-             * Playing position on the field
+             * Players position on the field
              *
              * @throws BelieveInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
@@ -828,7 +828,7 @@ private constructor(
                     this.jerseyNumber = jerseyNumber
                 }
 
-                /** Playing position on the field */
+                /** Players position on the field */
                 fun position(position: Position) = position(JsonField.of(position))
 
                 /**
