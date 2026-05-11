@@ -20,7 +20,7 @@ tasks.withType<JavaCompile>().configureEach {
 application {
     // Use `./gradlew :believe-java-example:run` to run `Main`
     // Use `./gradlew :believe-java-example:run -Pexample=Something` to run `SomethingExample`
-    mainClass = "com.believe.api.example.${
+    mainClass = "dev.cjav.believe.example.${
         if (project.hasProperty("example"))
             "${project.property("example")}Example"
         else
