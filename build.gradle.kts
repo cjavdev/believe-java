@@ -1,29 +1,35 @@
 plugins {
-    id("believe.kotlin")
-    id("believe.publish")
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
-dependencies {
-    api(project(":believe-java-client-okhttp"))
+repositories {
+    mavenCentral()
 }
 
-// Redefine `dokkaJavadoc` to:
-// - Depend on the root project's task for merging the docs of all the projects
-// - Forward that task's output to this task's output
-tasks.named("dokkaJavadoc").configure {
-    actions.clear()
+allprojects {
+    group = "dev.cjav.believe"
+    version = "0.8.2" // x-release-please-version
+}
 
-    val dokkaJavadocCollector = rootProject.tasks["dokkaJavadocCollector"]
-    dependsOn(dokkaJavadocCollector)
-
-    val outputDirectory = project.layout.buildDirectory.dir("dokka/javadoc")
-    doLast {
-        copy {
-            from(dokkaJavadocCollector.outputs.files)
-            into(outputDirectory)
-            duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        }
+subprojects {
+    // These are populated with dependencies by `buildSrc` scripts.
+    tasks.register("format") {
+        group = "Verification"
+        description = "Formats all source files."
     }
+    tasks.register("lint") {
+        group = "Verification"
+        description = "Verifies all source files are formatted."
+    }
+}
 
-    outputs.dir(outputDirectory)
+subprojects {
+    apply(plugin = "org.jetbrains.dokka")
+}
+
+// Avoid race conditions between `dokkaJavadocCollector` and `dokkaJavadocJar` tasks
+tasks.named("dokkaJavadocCollector").configure {
+    subprojects.flatMap { it.tasks }
+        .filter { it.project.name != "believe-java" && it.name == "dokkaJavadocJar" }
+        .forEach { mustRunAfter(it) }
 }
