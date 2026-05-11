@@ -33,6 +33,7 @@ private constructor(
     private val isFunny: JsonField<Boolean>,
     private val isInspirational: JsonField<Boolean>,
     private val popularityScore: JsonField<Double>,
+    private val season: JsonField<Long>,
     private val secondaryThemes: JsonField<List<QuoteTheme>>,
     private val timesShared: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -58,6 +59,7 @@ private constructor(
         @JsonProperty("popularity_score")
         @ExcludeMissing
         popularityScore: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("season") @ExcludeMissing season: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("secondary_themes")
         @ExcludeMissing
         secondaryThemes: JsonField<List<QuoteTheme>> = JsonMissing.of(),
@@ -75,6 +77,7 @@ private constructor(
         isFunny,
         isInspirational,
         popularityScore,
+        season,
         secondaryThemes,
         timesShared,
         mutableMapOf(),
@@ -159,6 +162,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun popularityScore(): Optional<Double> = popularityScore.getOptional("popularity_score")
+
+    /**
+     * Season number (1-3) when the quote occurred
+     *
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun season(): Optional<Long> = season.getOptional("season")
 
     /**
      * Additional themes
@@ -256,6 +267,13 @@ private constructor(
     fun _popularityScore(): JsonField<Double> = popularityScore
 
     /**
+     * Returns the raw JSON value of [season].
+     *
+     * Unlike [season], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("season") @ExcludeMissing fun _season(): JsonField<Long> = season
+
+    /**
      * Returns the raw JSON value of [secondaryThemes].
      *
      * Unlike [secondaryThemes], this method doesn't throw if the JSON field has an unexpected type.
@@ -314,6 +332,7 @@ private constructor(
         private var isFunny: JsonField<Boolean> = JsonMissing.of()
         private var isInspirational: JsonField<Boolean> = JsonMissing.of()
         private var popularityScore: JsonField<Double> = JsonMissing.of()
+        private var season: JsonField<Long> = JsonMissing.of()
         private var secondaryThemes: JsonField<MutableList<QuoteTheme>>? = null
         private var timesShared: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -330,6 +349,7 @@ private constructor(
             isFunny = quote.isFunny
             isInspirational = quote.isInspirational
             popularityScore = quote.popularityScore
+            season = quote.season
             secondaryThemes = quote.secondaryThemes.map { it.toMutableList() }
             timesShared = quote.timesShared
             additionalProperties = quote.additionalProperties.toMutableMap()
@@ -471,6 +491,27 @@ private constructor(
             this.popularityScore = popularityScore
         }
 
+        /** Season number (1-3) when the quote occurred */
+        fun season(season: Long?) = season(JsonField.ofNullable(season))
+
+        /**
+         * Alias for [Builder.season].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun season(season: Long) = season(season as Long?)
+
+        /** Alias for calling [Builder.season] with `season.orElse(null)`. */
+        fun season(season: Optional<Long>) = season(season.getOrNull())
+
+        /**
+         * Sets [Builder.season] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.season] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun season(season: JsonField<Long>) = apply { this.season = season }
+
         /** Additional themes */
         fun secondaryThemes(secondaryThemes: List<QuoteTheme>) =
             secondaryThemes(JsonField.of(secondaryThemes))
@@ -568,6 +609,7 @@ private constructor(
                 isFunny,
                 isInspirational,
                 popularityScore,
+                season,
                 (secondaryThemes ?: JsonMissing.of()).map { it.toImmutable() },
                 timesShared,
                 additionalProperties.toMutableMap(),
@@ -599,6 +641,7 @@ private constructor(
         isFunny()
         isInspirational()
         popularityScore()
+        season()
         secondaryThemes().ifPresent { it.forEach { it.validate() } }
         timesShared()
         validated = true
@@ -629,6 +672,7 @@ private constructor(
             (if (isFunny.asKnown().isPresent) 1 else 0) +
             (if (isInspirational.asKnown().isPresent) 1 else 0) +
             (if (popularityScore.asKnown().isPresent) 1 else 0) +
+            (if (season.asKnown().isPresent) 1 else 0) +
             (secondaryThemes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (timesShared.asKnown().isPresent) 1 else 0)
 
@@ -648,6 +692,7 @@ private constructor(
             isFunny == other.isFunny &&
             isInspirational == other.isInspirational &&
             popularityScore == other.popularityScore &&
+            season == other.season &&
             secondaryThemes == other.secondaryThemes &&
             timesShared == other.timesShared &&
             additionalProperties == other.additionalProperties
@@ -665,6 +710,7 @@ private constructor(
             isFunny,
             isInspirational,
             popularityScore,
+            season,
             secondaryThemes,
             timesShared,
             additionalProperties,
@@ -674,5 +720,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Quote{id=$id, characterId=$characterId, context=$context, momentType=$momentType, text=$text, theme=$theme, episodeId=$episodeId, isFunny=$isFunny, isInspirational=$isInspirational, popularityScore=$popularityScore, secondaryThemes=$secondaryThemes, timesShared=$timesShared, additionalProperties=$additionalProperties}"
+        "Quote{id=$id, characterId=$characterId, context=$context, momentType=$momentType, text=$text, theme=$theme, episodeId=$episodeId, isFunny=$isFunny, isInspirational=$isInspirational, popularityScore=$popularityScore, season=$season, secondaryThemes=$secondaryThemes, timesShared=$timesShared, additionalProperties=$additionalProperties}"
 }
