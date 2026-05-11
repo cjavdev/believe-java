@@ -80,6 +80,12 @@ private constructor(
      * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    fun season(): Optional<Long> = body.season()
+
+    /**
+     * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun secondaryThemes(): Optional<List<QuoteTheme>> = body.secondaryThemes()
 
     /**
@@ -150,6 +156,13 @@ private constructor(
      * Unlike [popularityScore], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _popularityScore(): JsonField<Double> = body._popularityScore()
+
+    /**
+     * Returns the raw JSON value of [season].
+     *
+     * Unlike [season], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _season(): JsonField<Long> = body._season()
 
     /**
      * Returns the raw JSON value of [secondaryThemes].
@@ -359,6 +372,26 @@ private constructor(
         fun popularityScore(popularityScore: JsonField<Double>) = apply {
             body.popularityScore(popularityScore)
         }
+
+        fun season(season: Long?) = apply { body.season(season) }
+
+        /**
+         * Alias for [Builder.season].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun season(season: Long) = season(season as Long?)
+
+        /** Alias for calling [Builder.season] with `season.orElse(null)`. */
+        fun season(season: Optional<Long>) = season(season.getOrNull())
+
+        /**
+         * Sets [Builder.season] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.season] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun season(season: JsonField<Long>) = apply { body.season(season) }
 
         fun secondaryThemes(secondaryThemes: List<QuoteTheme>?) = apply {
             body.secondaryThemes(secondaryThemes)
@@ -591,6 +624,7 @@ private constructor(
         private val isInspirational: JsonField<Boolean>,
         private val momentType: JsonField<QuoteMoment>,
         private val popularityScore: JsonField<Double>,
+        private val season: JsonField<Long>,
         private val secondaryThemes: JsonField<List<QuoteTheme>>,
         private val text: JsonField<String>,
         private val theme: JsonField<QuoteTheme>,
@@ -619,6 +653,7 @@ private constructor(
             @JsonProperty("popularity_score")
             @ExcludeMissing
             popularityScore: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("season") @ExcludeMissing season: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("secondary_themes")
             @ExcludeMissing
             secondaryThemes: JsonField<List<QuoteTheme>> = JsonMissing.of(),
@@ -635,6 +670,7 @@ private constructor(
             isInspirational,
             momentType,
             popularityScore,
+            season,
             secondaryThemes,
             text,
             theme,
@@ -685,6 +721,12 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun popularityScore(): Optional<Double> = popularityScore.getOptional("popularity_score")
+
+        /**
+         * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun season(): Optional<Long> = season.getOptional("season")
 
         /**
          * @throws BelieveInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -773,6 +815,13 @@ private constructor(
         fun _popularityScore(): JsonField<Double> = popularityScore
 
         /**
+         * Returns the raw JSON value of [season].
+         *
+         * Unlike [season], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("season") @ExcludeMissing fun _season(): JsonField<Long> = season
+
+        /**
          * Returns the raw JSON value of [secondaryThemes].
          *
          * Unlike [secondaryThemes], this method doesn't throw if the JSON field has an unexpected
@@ -833,6 +882,7 @@ private constructor(
             private var isInspirational: JsonField<Boolean> = JsonMissing.of()
             private var momentType: JsonField<QuoteMoment> = JsonMissing.of()
             private var popularityScore: JsonField<Double> = JsonMissing.of()
+            private var season: JsonField<Long> = JsonMissing.of()
             private var secondaryThemes: JsonField<MutableList<QuoteTheme>>? = null
             private var text: JsonField<String> = JsonMissing.of()
             private var theme: JsonField<QuoteTheme> = JsonMissing.of()
@@ -848,6 +898,7 @@ private constructor(
                 isInspirational = body.isInspirational
                 momentType = body.momentType
                 popularityScore = body.popularityScore
+                season = body.season
                 secondaryThemes = body.secondaryThemes.map { it.toMutableList() }
                 text = body.text
                 theme = body.theme
@@ -989,6 +1040,27 @@ private constructor(
                 this.popularityScore = popularityScore
             }
 
+            fun season(season: Long?) = season(JsonField.ofNullable(season))
+
+            /**
+             * Alias for [Builder.season].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun season(season: Long) = season(season as Long?)
+
+            /** Alias for calling [Builder.season] with `season.orElse(null)`. */
+            fun season(season: Optional<Long>) = season(season.getOrNull())
+
+            /**
+             * Sets [Builder.season] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.season] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun season(season: JsonField<Long>) = apply { this.season = season }
+
             fun secondaryThemes(secondaryThemes: List<QuoteTheme>?) =
                 secondaryThemes(JsonField.ofNullable(secondaryThemes))
 
@@ -1102,6 +1174,7 @@ private constructor(
                     isInspirational,
                     momentType,
                     popularityScore,
+                    season,
                     (secondaryThemes ?: JsonMissing.of()).map { it.toImmutable() },
                     text,
                     theme,
@@ -1133,6 +1206,7 @@ private constructor(
             isInspirational()
             momentType().ifPresent { it.validate() }
             popularityScore()
+            season()
             secondaryThemes().ifPresent { it.forEach { it.validate() } }
             text()
             theme().ifPresent { it.validate() }
@@ -1163,6 +1237,7 @@ private constructor(
                 (if (isInspirational.asKnown().isPresent) 1 else 0) +
                 (momentType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (popularityScore.asKnown().isPresent) 1 else 0) +
+                (if (season.asKnown().isPresent) 1 else 0) +
                 (secondaryThemes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (text.asKnown().isPresent) 1 else 0) +
                 (theme.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1181,6 +1256,7 @@ private constructor(
                 isInspirational == other.isInspirational &&
                 momentType == other.momentType &&
                 popularityScore == other.popularityScore &&
+                season == other.season &&
                 secondaryThemes == other.secondaryThemes &&
                 text == other.text &&
                 theme == other.theme &&
@@ -1197,6 +1273,7 @@ private constructor(
                 isInspirational,
                 momentType,
                 popularityScore,
+                season,
                 secondaryThemes,
                 text,
                 theme,
@@ -1208,7 +1285,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{characterId=$characterId, context=$context, episodeId=$episodeId, isFunny=$isFunny, isInspirational=$isInspirational, momentType=$momentType, popularityScore=$popularityScore, secondaryThemes=$secondaryThemes, text=$text, theme=$theme, timesShared=$timesShared, additionalProperties=$additionalProperties}"
+            "Body{characterId=$characterId, context=$context, episodeId=$episodeId, isFunny=$isFunny, isInspirational=$isInspirational, momentType=$momentType, popularityScore=$popularityScore, season=$season, secondaryThemes=$secondaryThemes, text=$text, theme=$theme, timesShared=$timesShared, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
