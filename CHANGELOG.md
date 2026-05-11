@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.3](https://github.com/cjavdev/believe-java/compare/v0.8.2...v0.8.3) (2026-05-11)
+
+
+### Chores
+
+* regenerate from believe[#82](https://github.com/cjavdev/believe-java/issues/82) ([fe1489f](https://github.com/cjavdev/believe-java/commit/fe1489fe72e9360dea38dc3b7a07abe941431a66))
+* regenerate SDKs from believe[#82](https://github.com/cjavdev/believe-java/issues/82) (building from custom code on saas again with refs pushed for go,ruby,csharp to see if that fixes custom code) ([a222a7f](https://github.com/cjavdev/believe-java/commit/a222a7ff4f301a967b568a5e6585971d47a5e69b))
+
 ## 0.5.0 (2026-04-22)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/cjavdev/believe-java/compare/v0.4.0...v0.5.0)
