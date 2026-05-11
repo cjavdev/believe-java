@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.1)
-[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.1/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.cjav.believe/believe-java)](https://central.sonatype.com/artifact/dev.cjav.believe/believe-java/0.8.2)
+[![javadoc](https://javadoc.io/badge2/dev.cjav.believe/believe-java/0.8.2/javadoc.svg)](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.2)
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ Use the Believe MCP Server to enable AI assistants to interact with this API, al
 
 <!-- x-release-please-start-version -->
 
-Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.1).
+Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/believe-java/0.8.2).
 
 <!-- x-release-please-end -->
 
@@ -35,7 +35,7 @@ Javadocs are available on [javadoc.io](https://javadoc.io/doc/dev.cjav.believe/b
 ### Gradle
 
 ```kotlin
-implementation("dev.cjav.believe:believe-java:0.8.1")
+implementation("dev.cjav.believe:believe-java:0.8.2")
 ```
 
 ### Maven
@@ -44,7 +44,7 @@ implementation("dev.cjav.believe:believe-java:0.8.1")
 <dependency>
   <groupId>dev.cjav.believe</groupId>
   <artifactId>believe-java</artifactId>
-  <version>0.8.1</version>
+  <version>0.8.2</version>
 </dependency>
 ```
 
@@ -402,8 +402,6 @@ while (true) {
 
 ## Logging
 
-The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
 Enable logging by setting the `BELIEVE_LOG` environment variable to `info`:
 
 ```sh
@@ -414,6 +412,19 @@ Or to `debug` for more verbose logging:
 
 ```sh
 export BELIEVE_LOG=debug
+```
+
+Or configure the client manually using the `logLevel` method:
+
+```java
+import dev.cjav.believe.client.BelieveClient;
+import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
+import dev.cjav.believe.core.LogLevel;
+
+BelieveClient client = BelieveOkHttpClient.builder()
+    .fromEnv()
+    .logLevel(LogLevel.INFO)
+    .build();
 ```
 
 ## ProGuard and R8
@@ -505,6 +516,21 @@ BelieveClient client = BelieveOkHttpClient.builder()
         "https://example.com", 8080
       )
     ))
+    .build();
+```
+
+If the proxy responds with `407 Proxy Authentication Required`, supply credentials by also configuring `proxyAuthenticator`:
+
+```java
+import dev.cjav.believe.client.BelieveClient;
+import dev.cjav.believe.client.okhttp.BelieveOkHttpClient;
+import dev.cjav.believe.core.http.ProxyAuthenticator;
+
+BelieveClient client = BelieveOkHttpClient.builder()
+    .fromEnv()
+    .proxy(...)
+    // Or a custom implementation of `ProxyAuthenticator`.
+    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))
     .build();
 ```
 
